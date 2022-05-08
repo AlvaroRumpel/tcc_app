@@ -1,0 +1,20 @@
+import 'package:flutter/material.dart';
+
+class CustomColors {
+  static const MaterialColor primaryColor = MaterialColor(
+    0xffE1462D, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+    <int, Color>{
+      50: Color(0xffE1462D), //10%
+      100: Color(0xffE1462D), //20%
+      200: Color(0xffE1462D), //30%
+      300: Color(0xffE1462D), //40%
+      400: Color(0xffE1462D), //50%
+      500: Color(0xffE1462D), //60%
+      600: Color(0xffE1462D), //70%
+      700: Color(0xffE1462D), //80%
+      800: Color(0xffE1462D), //90%
+      900: Color(0xffE1462D), //100%
+    },
+  );
+  static const Color whiteStandard = Color(0xffF6F6F6);
+}

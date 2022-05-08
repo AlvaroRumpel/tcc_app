@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "861066208446",
+    "project_id": "tcc-app-acr",
+    "storage_bucket": "tcc-app-acr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861066208446:android:6f324b27d25505a89daaef",
+        "android_client_info": {
+          "package_name": "com.acr.tcc_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861066208446-lvnqi7io1boj0s9cj4m3i8tq66hv0bda.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvaV_AireuXQwSeEXwgVbezKbiXLfGhPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861066208446-lvnqi7io1boj0s9cj4m3i8tq66hv0bda.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
