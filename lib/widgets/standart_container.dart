@@ -24,7 +24,7 @@ class StandartContainer extends StatelessWidget {
               offset: const Offset(2, 2), // changes position of shadow
             ),
           ],
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           color: CustomColors.whiteStandard,
         ),
         child: child,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomScaffold extends StatelessWidget {
+class StandardScaffold extends StatelessWidget {
   Widget body;
 
-  CustomScaffold({
+  StandardScaffold({
     Key? key,
     required this.body,
   }) : super(key: key);
