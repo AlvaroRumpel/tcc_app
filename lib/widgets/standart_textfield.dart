@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
 class StandartTextfield extends StatelessWidget {
   String labelText;
+  bool? obscure;
   StandartTextfield({
     Key? key,
+    this.obscure = false,
     required this.labelText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
@@ -25,6 +28,7 @@ class StandartTextfield extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: TextFormField(
+          obscureText: obscure!,
           style: const TextStyle(
             color: CustomColors.secondaryColor,
             fontSize: 16,
@@ -61,7 +65,7 @@ class StandartTextfield extends StatelessWidget {
               ),
             ),
             label: Text(labelText),
-            labelStyle: const TextStyle(
+            labelStyle: GoogleFonts.poppins(
               color: CustomColors.labelColor,
             ),
           ),

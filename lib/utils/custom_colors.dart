@@ -17,7 +17,9 @@ class CustomColors {
     },
   );
   static const Color whiteStandard = Color(0xffF6F6F6);
+  static const Color blackStandard = Color(0xff364151);
   static const Color secondaryColor = Color(0xffEA9E42);
   static const Color labelColor = Color(0xffBCBCBC);
   static const Color whiteSecondary = Color(0xffF0F0F0);
+  static const Color containerButton = Color(0xffECECEC);
 }

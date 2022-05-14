@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:tcc_app/firebase_options.dart';
 import 'package:tcc_app/screens/login/view/login_page.dart';
+import 'package:tcc_app/screens/singup/view/singup_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
 void main() async {
@@ -25,7 +26,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: CustomColors.primaryColor,
       ),
-      home: const LoginPage(),
+      home: LoginPage(),
+      initialRoute: '/login',
+      getPages: [
+        GetPage(
+          name: '/login',
+          page: () => LoginPage(),
+        ),
+        GetPage(
+          name: '/cadastro',
+          page: () => SingupPage(),
+        ),
+      ],
     );
   }
 }

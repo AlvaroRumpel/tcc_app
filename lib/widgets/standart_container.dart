@@ -3,8 +3,10 @@ import 'package:tcc_app/utils/custom_colors.dart';
 
 class StandartContainer extends StatelessWidget {
   Widget child;
+  Alignment? alignment;
   StandartContainer({
     Key? key,
+    this.alignment = Alignment.topCenter,
     required this.child,
   }) : super(key: key);
 
@@ -12,6 +14,7 @@ class StandartContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        alignment: alignment,
         padding: const EdgeInsets.all(16),
         height: (MediaQuery.of(context).size.height) * 0.85,
         width: (MediaQuery.of(context).size.width) * 0.85,
