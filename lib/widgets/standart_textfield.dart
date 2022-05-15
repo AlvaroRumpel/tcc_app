@@ -1,20 +1,39 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:tcc_app/utils/custom_colors.dart';
 
 class StandartTextfield extends StatelessWidget {
   String labelText;
   bool? obscure;
+  Function validator;
+  String errorText;
+  TextEditingController controller;
+  bool spaced = false;
+  TextInputType? keyboardType;
+  String? hintText;
+  bool date = false;
+
   StandartTextfield({
     Key? key,
-    this.obscure = false,
     required this.labelText,
+    this.obscure = false,
+    required this.validator,
+    required this.errorText,
+    required this.controller,
+    this.keyboardType = TextInputType.none,
+    this.spaced = false,
+    this.date = false,
+    this.hintText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
+      padding: spaced
+          ? EdgeInsets.only(top: 8, bottom: 24, left: 16, right: 16.0)
+          : const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
@@ -27,49 +46,118 @@ class StandartTextfield extends StatelessWidget {
           ],
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
-        child: TextFormField(
-          obscureText: obscure!,
-          style: const TextStyle(
-            color: CustomColors.secondaryColor,
-            fontSize: 16,
-          ),
-          decoration: InputDecoration(
-            fillColor: CustomColors.whiteSecondary,
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: const BorderSide(
-                color: CustomColors.primaryColor,
-                width: 2,
+        child: date
+            ? DateTimePicker(
+                style: GoogleFonts.poppins(
+                  color: CustomColors.secondaryColor,
+                  fontSize: 16,
+                ),
+                decoration: InputDecoration(
+                  fillColor: CustomColors.whiteSecondary,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: CustomColors.primaryColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: CustomColors.secondaryColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: Color(0xffff1111),
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: Color(0xffff1111),
+                      width: 2,
+                    ),
+                  ),
+                  hintText: hintText,
+                  hintStyle: GoogleFonts.poppins(
+                    color: CustomColors.labelColor,
+                  ),
+                  label: Text(labelText),
+                  labelStyle: GoogleFonts.poppins(
+                    color: CustomColors.labelColor,
+                  ),
+                  errorStyle: GoogleFonts.poppins(
+                    color: CustomColors.errorColor,
+                  ),
+                ),
+                controller: controller,
+                type: DateTimePickerType.date,
+                dateMask: 'dd/MM/yyyy',
+                firstDate: DateTime(1900),
+                lastDate: DateTime(2100),
+                dateLabelText: 'Date',
+                validator: (value) => validator(value) ? null : errorText,
+                // onSaved: (val) => print(val),
+              )
+            : TextFormField(
+                keyboardType: keyboardType,
+                controller: controller,
+                obscureText: obscure!,
+                style: GoogleFonts.poppins(
+                  color: CustomColors.secondaryColor,
+                  fontSize: 16,
+                ),
+                decoration: InputDecoration(
+                  fillColor: CustomColors.whiteSecondary,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: CustomColors.primaryColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: CustomColors.secondaryColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: Color(0xffff1111),
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: Color(0xffff1111),
+                      width: 2,
+                    ),
+                  ),
+                  hintText: hintText,
+                  hintStyle: GoogleFonts.poppins(
+                    color: CustomColors.labelColor,
+                  ),
+                  label: Text(labelText),
+                  labelStyle: GoogleFonts.poppins(
+                    color: CustomColors.labelColor,
+                  ),
+                  errorStyle: GoogleFonts.poppins(
+                    color: CustomColors.errorColor,
+                  ),
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) => validator(value) ? null : errorText,
               ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: const BorderSide(
-                color: CustomColors.secondaryColor,
-                width: 2,
-              ),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: const BorderSide(
-                color: Color(0xffff1111),
-                width: 2,
-              ),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: const BorderSide(
-                color: Color(0xffff1111),
-                width: 2,
-              ),
-            ),
-            label: Text(labelText),
-            labelStyle: GoogleFonts.poppins(
-              color: CustomColors.labelColor,
-            ),
-          ),
-        ),
       ),
     );
   }

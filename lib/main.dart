@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:tcc_app/firebase_options.dart';
+import 'package:tcc_app/screens/home/view/home_page.dart';
 import 'package:tcc_app/screens/login/view/login_page.dart';
 import 'package:tcc_app/screens/singup/view/singup_page.dart';
+import 'package:tcc_app/screens/singupForms/client/view/singup_client_form_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
 void main() async {
@@ -26,9 +29,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: CustomColors.primaryColor,
       ),
-      home: LoginPage(),
-      initialRoute: '/login',
+      initialRoute:
+          FirebaseAuth.instance.currentUser == null ? '/login' : '/home',
       getPages: [
+        GetPage(
+          name: '/home',
+          page: () => HomePage(),
+        ),
         GetPage(
           name: '/login',
           page: () => LoginPage(),
@@ -37,6 +44,10 @@ class MyApp extends StatelessWidget {
           name: '/cadastro',
           page: () => SingupPage(),
         ),
+        GetPage(
+          name: '/client-singup',
+          page: () => SingupClientFormPage(),
+        )
       ],
     );
   }

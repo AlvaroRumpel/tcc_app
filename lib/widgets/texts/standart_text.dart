@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
-class TitleText extends StatelessWidget {
+class StandartText extends StatelessWidget {
   String text;
-  bool subtitle = false;
-  TitleText({
+  bool isLabel = false;
+  StandartText({
     Key? key,
     required this.text,
-    this.subtitle = false,
+    this.isLabel = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
+      padding: isLabel
+          ? const EdgeInsets.symmetric(vertical: 0, horizontal: 8)
+          : const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Text(
         text,
         style: GoogleFonts.poppins(
-          color: CustomColors.primaryColor,
-          fontSize: subtitle ? 40 : 56,
-          fontWeight: FontWeight.bold,
+          fontSize: isLabel ? 16 : 24,
+          color: isLabel ? CustomColors.labelColor : CustomColors.primaryColor,
         ),
       ),
     );

@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StandardScaffold(
+    return StandartScaffold(
       body: StandartContainer(
         alignment: Alignment.center,
         child: SingleChildScrollView(
@@ -38,11 +38,17 @@ class LoginPage extends StatelessWidget {
                     color: CustomColors.labelColor, fontSize: 24),
               ),
               StandartTextfield(
-                labelText: 'Usuário',
+                controller: ct.emailController,
+                labelText: 'Email',
+                validator: ct.validator.emailValidator,
+                errorText: 'Email inválido',
               ),
               StandartTextfield(
+                controller: ct.passController,
                 labelText: 'Senha',
                 obscure: true,
+                validator: ct.validator.passValidator,
+                errorText: 'Senha deve conter no minimo 8 caracteres',
               ),
               StandartTextButton(
                 dense: true,
@@ -51,7 +57,7 @@ class LoginPage extends StatelessWidget {
               ),
               StandartButton(
                 text: 'Entrar',
-                function: () {},
+                function: () => ct.login(),
               ),
               StandartTextButton(
                 text: 'Não tenho conta',

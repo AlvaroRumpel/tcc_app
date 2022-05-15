@@ -38,6 +38,11 @@ dependencies:
   get: ^4.6.1
   fluttericon: ^2.0.0
   flutter_svg: ^1.0.3
+  firebase_auth: ^3.3.18
+  date_time_picker: ^2.1.0
+  dropdown_plus: ^0.0.9
+  convex_bottom_bar: ^3.0.0
+  avatars: ^3.0.2
 
 dev_dependencies:
   flutter_test:

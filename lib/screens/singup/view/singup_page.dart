@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tcc_app/screens/singup/controller/singup_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/svg_logo_icon.dart';
 import 'package:tcc_app/widgets/buttons/google_button.dart';
@@ -13,11 +14,13 @@ import 'package:tcc_app/widgets/standart_textfield.dart';
 import 'package:tcc_app/widgets/texts/title_text.dart';
 
 class SingupPage extends StatelessWidget {
-  const SingupPage({Key? key}) : super(key: key);
+  SingupPage({Key? key}) : super(key: key);
+
+  SingupController ct = Get.put(SingupController());
 
   @override
   Widget build(BuildContext context) {
-    return StandardScaffold(
+    return StandartScaffold(
       body: StandartContainer(
         child: SingleChildScrollView(
           child: Column(
@@ -31,25 +34,34 @@ class SingupPage extends StatelessWidget {
               const SvgLogoIcon(),
               TitleText(text: 'Cadastro'),
               StandartTextfield(
+                controller: ct.userController,
                 labelText: 'Usuário',
+                validator: ct.validator.userValidator,
+                errorText: 'Usuário invalido',
               ),
               StandartTextfield(
+                controller: ct.emailController,
+                labelText: 'Email',
+                validator: ct.validator.emailValidator,
+                errorText: 'Email invalido',
+              ),
+              StandartTextfield(
+                controller: ct.passController,
                 labelText: 'Senha',
                 obscure: true,
-              ),
-              StandartTextfield(
-                labelText: 'Confirmar a senha',
-                obscure: true,
+                validator: ct.validator.passValidator,
+                errorText: 'Senha inválida, no minimo 8 caracteres',
               ),
               StandartButton(
-                text: 'Cadastrar',
-                function: () {},
+                text: 'Cadastrar como um cliente',
+                smallText: true,
+                function: () => ct.singup(),
               ),
               StandartTextButton(
                 text: 'Cadastrar como um personal',
                 function: () => Get.toNamed('/cadastro'),
               ),
-              GoogleButton(function: () {}),
+              GoogleButton(function: () => Get.toNamed('/client-singup')),
             ],
           ),
         ),

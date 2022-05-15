@@ -6,10 +6,12 @@ import 'package:tcc_app/utils/custom_colors.dart';
 class StandartButton extends StatelessWidget {
   String text;
   Function function;
+  bool smallText = false;
   StandartButton({
     Key? key,
     required this.text,
     required this.function,
+    this.smallText = false,
   }) : super(key: key);
 
   @override
@@ -29,11 +31,14 @@ class StandartButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              text,
-              style: GoogleFonts.poppins(
-                color: CustomColors.containerButton,
-                fontSize: 24,
+            Expanded(
+              child: Text(
+                text,
+                style: GoogleFonts.poppins(
+                  color: CustomColors.containerButton,
+                  fontSize: smallText ? 16 : 24,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
           ],

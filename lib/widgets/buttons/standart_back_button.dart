@@ -10,9 +10,17 @@ class StandartBackButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        decoration: const ShapeDecoration(
+        decoration: ShapeDecoration(
           color: CustomColors.primaryColor,
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
+          shadows: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              spreadRadius: 0,
+              blurRadius: 0,
+              offset: const Offset(2, 2), // changes position of shadow
+            ),
+          ],
         ),
         child: IconButton(
           onPressed: () => Get.back(),
