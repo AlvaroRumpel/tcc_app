@@ -5,10 +5,12 @@ import 'package:tcc_app/utils/custom_colors.dart';
 class StandartText extends StatelessWidget {
   String text;
   bool isLabel = false;
+  TextAlign align = TextAlign.left;
   StandartText({
     Key? key,
     required this.text,
     this.isLabel = false,
+    this.align = TextAlign.left,
   }) : super(key: key);
 
   @override
@@ -23,6 +25,7 @@ class StandartText extends StatelessWidget {
           fontSize: isLabel ? 16 : 24,
           color: isLabel ? CustomColors.labelColor : CustomColors.primaryColor,
         ),
+        textAlign: align,
       ),
     );
   }

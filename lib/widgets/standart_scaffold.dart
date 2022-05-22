@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
@@ -38,6 +40,16 @@ class StandartScaffold extends StatelessWidget {
         bottomNavigationBar: bottomNavigationBar,
         appBar: appBar
             ? AppBar(
+                actions: [
+                  IconButton(
+                      padding: const EdgeInsets.all(16),
+                      iconSize: 32,
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        Get.offAndToNamed('/login');
+                      },
+                      icon: Icon(FontAwesome.logout))
+                ],
                 title: Align(
                   alignment: Alignment.center,
                   child: Text(

@@ -14,7 +14,7 @@ class StandartTextfield extends StatelessWidget {
   TextInputType? keyboardType;
   String? hintText;
   bool date = false;
-
+  bool textBox = false;
   StandartTextfield({
     Key? key,
     required this.labelText,
@@ -22,10 +22,11 @@ class StandartTextfield extends StatelessWidget {
     required this.validator,
     required this.errorText,
     required this.controller,
-    this.keyboardType = TextInputType.none,
+    this.keyboardType = TextInputType.name,
     this.spaced = false,
     this.date = false,
     this.hintText,
+    this.textBox = false,
   }) : super(key: key);
 
   @override
@@ -105,6 +106,7 @@ class StandartTextfield extends StatelessWidget {
                 // onSaved: (val) => print(val),
               )
             : TextFormField(
+                maxLines: textBox ? 3 : 1,
                 keyboardType: keyboardType,
                 controller: controller,
                 obscureText: obscure!,

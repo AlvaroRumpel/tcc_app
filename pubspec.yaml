@@ -43,6 +43,10 @@ dependencies:
   dropdown_plus: ^0.0.9
   convex_bottom_bar: ^3.0.0
   avatars: ^3.0.2
+  cloud_firestore: ^3.1.15
+  intl: ^0.17.0
+  shared_preferences: ^2.0.15
+  search_cep: ^4.0.0+1
 
 dev_dependencies:
   flutter_test:

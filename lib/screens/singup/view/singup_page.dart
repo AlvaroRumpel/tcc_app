@@ -59,9 +59,9 @@ class SingupPage extends StatelessWidget {
               ),
               StandartTextButton(
                 text: 'Cadastrar como um personal',
-                function: () => Get.toNamed('/cadastro'),
+                function: () => Get.toNamed('/personal-singup'),
               ),
-              GoogleButton(function: () => Get.toNamed('/client-singup')),
+              GoogleButton(function: () => print('object')),
             ],
           ),
         ),

@@ -217,7 +217,8 @@ class ClientForm2 extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: TextDropdownFormField(
-                options: ct.objectivos,
+                controller: ct.objectiveController,
+                options: ct.objectives,
                 decoration: InputDecoration(
                   fillColor: CustomColors.whiteSecondary,
                   filled: true,

@@ -58,6 +58,22 @@ class Validators {
     return !height || !weight || !bodyFat;
   }
 
+  bool isPhone(value) {
+    return GetUtils.isPhoneNumber(value);
+  }
+
+  bool isCPF(value) {
+    return GetUtils.isCpf(value);
+  }
+
+  bool isCEP(value) {
+    return value.length == 8;
+  }
+
+  bool simpleValidation(value) {
+    return value.length > 0;
+  }
+
   bool isEmpty(String email, String pass, {String? user}) {
     print(email.isEmpty && pass.isEmpty && (user?.isEmpty ?? true));
     return email.isEmpty && pass.isEmpty && (user?.isEmpty ?? true);

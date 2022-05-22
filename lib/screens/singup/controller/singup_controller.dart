@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,19 +19,20 @@ class SingupController extends GetxController {
       return;
     }
     try {
+      SharedPreferences user = await SharedPreferences.getInstance();
       UtilsWidgets.loadingDialog();
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: GetUtils.removeAllWhitespace(passController.text));
-      await FirebaseAuth.instance.currentUser
-          ?.updateDisplayName(userController.text);
+      user.setString('userName', userController.text);
+      user.setString(
+          'password', GetUtils.removeAllWhitespace(passController.text));
+      user.setString('email', emailController.text);
       Get.back();
       UtilsWidgets.sucessSnackbar(
           title: 'Cadastro realizado com sucesso',
           description: 'Obrigado pelo cadastro!');
-    } on FirebaseAuthException catch (e) {
+      Get.toNamed('/client-singup');
+    } catch (e) {
       Get.back();
-      UtilsWidgets.errorSnackbar(description: e.message.toString());
+      UtilsWidgets.errorSnackbar(description: e.toString());
     }
   }
 }

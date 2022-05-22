@@ -8,6 +8,7 @@ import 'package:tcc_app/screens/home/view/home_page.dart';
 import 'package:tcc_app/screens/login/view/login_page.dart';
 import 'package:tcc_app/screens/singup/view/singup_page.dart';
 import 'package:tcc_app/screens/singupForms/client/view/singup_client_form_page.dart';
+import 'package:tcc_app/screens/singupForms/personal/view/singup_personal_form_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
 void main() async {
@@ -47,6 +48,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/client-singup',
           page: () => SingupClientFormPage(),
+        ),
+        GetPage(
+          name: '/personal-singup',
+          page: () => SingupPersonalFormPage(),
         )
       ],
     );
