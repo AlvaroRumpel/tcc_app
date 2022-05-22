@@ -52,7 +52,7 @@ class SingupPersonalFormController extends GetxController {
       );
       await FirebaseAuth.instance.currentUser
           ?.updateDisplayName(user.getString('userName'));
-      db.collection('clients').add({
+      db.collection('treiners').add({
         'personal_id': FirebaseAuth.instance.currentUser?.uid,
         'name': nameController.text,
         'last_name': sobrenomeController.text,

@@ -9,7 +9,6 @@ class Validators {
       number = false,
       phone = false,
       cpf = false,
-      key = false,
       cep = false,
       simple = false;
 
@@ -96,7 +95,7 @@ class Validators {
   }
 
   bool hasErrorPersonalValidation() {
-    return !alphabetic && !number && !phone && !cpf && !key && !cep && !simple;
+    return alphabetic && number && phone && cpf && cep && simple;
   }
 
   bool isEmpty(String email, String pass, {String? user}) {
