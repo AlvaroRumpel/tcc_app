@@ -70,9 +70,7 @@ class SingupPersonalFormPage extends StatelessWidget {
                     steps: [
                       Step(
                         title: const Padding(padding: EdgeInsets.all(0)),
-                        content: PersonalForm1(
-                          ct: ct,
-                        ),
+                        content: PersonalForm1(ct: ct),
                         isActive: ct.currentStep.value == 0,
                         state: ct.currentStep.value == 0
                             ? StepState.editing
@@ -80,9 +78,19 @@ class SingupPersonalFormPage extends StatelessWidget {
                       ),
                       Step(
                         title: const Padding(padding: EdgeInsets.all(0)),
-                        content: PersonalForm2(ct: ct),
+                        content: PersonalForm2(
+                          ct: ct,
+                        ),
                         isActive: ct.currentStep.value == 1,
                         state: ct.currentStep.value == 1
+                            ? StepState.editing
+                            : StepState.complete,
+                      ),
+                      Step(
+                        title: const Padding(padding: EdgeInsets.all(0)),
+                        content: PersonalForm3(ct: ct),
+                        isActive: ct.currentStep.value == 2,
+                        state: ct.currentStep.value == 2
                             ? StepState.editing
                             : StepState.indexed,
                       ),
@@ -101,6 +109,51 @@ class SingupPersonalFormPage extends StatelessWidget {
 class PersonalForm1 extends StatelessWidget {
   SingupPersonalFormController ct;
   PersonalForm1({
+    Key? key,
+    required this.ct,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          StandartText(text: 'Seu nome'),
+          StandartTextfield(
+            spaced: true,
+            labelText: 'Nome',
+            hintText: 'Nome',
+            validator: ct.validator.isAlphabetic,
+            errorText: "Nome inválido",
+            controller: ct.nameController,
+          ),
+          StandartText(text: 'Seu sobrenome'),
+          StandartTextfield(
+            spaced: true,
+            labelText: 'Sobrenome',
+            validator: ct.validator.isAlphabetic,
+            errorText: "Sobrenome",
+            controller: ct.sobrenomeController,
+          ),
+          StandartText(text: 'Seu preço semanal'),
+          StandartTextfield(
+            spaced: true,
+            labelText: 'Preço semanal',
+            hintText: 'Preço referente a 3 dias',
+            validator: ct.validator.isNumber,
+            errorText: "Valor inválido",
+            controller: ct.priceController,
+            keyboardType: TextInputType.number,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PersonalForm2 extends StatelessWidget {
+  SingupPersonalFormController ct;
+  PersonalForm2({
     Key? key,
     required this.ct,
   }) : super(key: key);
@@ -146,9 +199,9 @@ class PersonalForm1 extends StatelessWidget {
   }
 }
 
-class PersonalForm2 extends StatelessWidget {
+class PersonalForm3 extends StatelessWidget {
   SingupPersonalFormController ct;
-  PersonalForm2({
+  PersonalForm3({
     Key? key,
     required this.ct,
   }) : super(key: key);

@@ -11,7 +11,7 @@ class SingupController extends GetxController {
   TextEditingController passController = TextEditingController();
   Validators validator = Validators();
 
-  Future<void> singup() async {
+  Future<void> singup({isPersonal = false}) async {
     if (validator.hasError(withUser: true) ||
         validator.isEmpty(emailController.text, passController.text,
             user: userController.text)) {
@@ -29,7 +29,12 @@ class SingupController extends GetxController {
       UtilsWidgets.sucessSnackbar(
           title: 'Cadastro realizado com sucesso',
           description: 'Obrigado pelo cadastro!');
-      Get.toNamed('/client-singup');
+
+      if (!isPersonal) {
+        Get.toNamed('/client-singup');
+      } else {
+        Get.toNamed('/personal-singup');
+      }
     } catch (e) {
       Get.back();
       UtilsWidgets.errorSnackbar(description: e.toString());

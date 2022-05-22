@@ -5,6 +5,14 @@ class Validators {
 
   bool height = false, weight = false, bodyFat = false;
 
+  bool alphabetic = false,
+      number = false,
+      phone = false,
+      cpf = false,
+      key = false,
+      cep = false,
+      simple = false;
+
   Validators({
     this.user = false,
     this.email = false,
@@ -58,20 +66,37 @@ class Validators {
     return !height || !weight || !bodyFat;
   }
 
+  bool isAlphabetic(value) {
+    return alphabetic = RegExp(
+      r"^[\p{L} ,.'-]*$",
+      caseSensitive: false,
+      unicode: true,
+      dotAll: true,
+    ).hasMatch(value);
+  }
+
+  bool isNumber(value) {
+    return number = RegExp('[0-9]').hasMatch(value);
+  }
+
   bool isPhone(value) {
-    return GetUtils.isPhoneNumber(value);
+    return phone = GetUtils.isPhoneNumber(value);
   }
 
   bool isCPF(value) {
-    return GetUtils.isCpf(value);
+    return cpf = GetUtils.isCpf(value);
   }
 
   bool isCEP(value) {
-    return value.length == 8;
+    return cep = value.length == 8;
   }
 
   bool simpleValidation(value) {
-    return value.length > 0;
+    return simple = value.length > 0;
+  }
+
+  bool hasErrorPersonalValidation() {
+    return !alphabetic && !number && !phone && !cpf && !key && !cep && !simple;
   }
 
   bool isEmpty(String email, String pass, {String? user}) {
