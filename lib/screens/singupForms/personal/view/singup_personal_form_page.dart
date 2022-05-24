@@ -1,9 +1,5 @@
-import 'package:dropdown_plus/dropdown_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'package:tcc_app/screens/singupForms/client/controller/singup_client_form_controller.dart';
 import 'package:tcc_app/screens/singupForms/personal/controller/singup_personal_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
@@ -133,7 +129,7 @@ class PersonalForm1 extends StatelessWidget {
             labelText: 'Sobrenome',
             validator: ct.validator.isAlphabetic,
             errorText: "Sobrenome",
-            controller: ct.sobrenomeController,
+            controller: ct.lastNameController,
           ),
           StandartText(text: 'Seu preço semanal'),
           StandartTextfield(

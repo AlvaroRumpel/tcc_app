@@ -8,7 +8,7 @@ class ProfileController extends GetxController {
   User? user = FirebaseAuth.instance.currentUser;
   FirebaseFirestore db = FirebaseFirestore.instance;
   RxBool isLoading = false.obs;
-  UserModel? profile;
+  ClientModel? profile;
 
   @override
   void onInit() {
@@ -23,7 +23,7 @@ class ProfileController extends GetxController {
           .where('client_id', isEqualTo: user!.uid)
           .get();
       for (var res in response.docs) {
-        profile = UserModel.fromMap(res.data());
+        profile = ClientModel.fromMap(res.data());
       }
       isLoading.toggle();
     } catch (e) {

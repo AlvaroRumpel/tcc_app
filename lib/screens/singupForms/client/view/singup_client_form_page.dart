@@ -1,8 +1,6 @@
 import 'package:dropdown_plus/dropdown_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'package:tcc_app/screens/singupForms/client/controller/singup_client_form_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
@@ -13,7 +11,6 @@ import 'package:tcc_app/widgets/standart_scaffold.dart';
 import 'package:tcc_app/widgets/standart_textfield.dart';
 import 'package:tcc_app/widgets/texts/standart_text.dart';
 import 'package:tcc_app/widgets/texts/title_text.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 
 class SingupClientFormPage extends StatelessWidget {
   SingupClientFormController ct = Get.put(SingupClientFormController());

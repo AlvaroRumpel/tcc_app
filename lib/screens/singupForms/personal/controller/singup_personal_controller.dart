@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:search_cep/search_cep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tcc_app/config/commom_config.dart';
+import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/models/trainer_model.dart';
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
 class SingupPersonalFormController extends GetxController {
   TextEditingController nameController = TextEditingController();
-  TextEditingController sobrenomeController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController cpfController = TextEditingController();
@@ -52,19 +56,23 @@ class SingupPersonalFormController extends GetxController {
       );
       await FirebaseAuth.instance.currentUser
           ?.updateDisplayName(user.getString('userName'));
-      db.collection('treiners').add({
-        'personal_id': FirebaseAuth.instance.currentUser?.uid,
-        'name': nameController.text,
-        'last_name': sobrenomeController.text,
-        'price': priceController.text,
-        'phone': phoneController.text,
-        'cpf': cpfController.text,
-        'cep': cepController.text,
-        'about': aboutController.text,
-        'paymant_key': keyController.text,
-        'rating': 0,
-      });
-      Get.offAndToNamed('/home');
+
+      TrainerModel newTrainer = TrainerModel(
+        personalId: FirebaseAuth.instance.currentUser?.uid ?? '',
+        firstName: nameController.text,
+        lastName: lastNameController.text,
+        price: double.parse(priceController.text),
+        phone: int.parse(phoneController.text),
+        cpf: int.parse(cpfController.text),
+        cep: int.parse(cepController.text),
+        about: aboutController.text,
+        paymentKey: keyController.text,
+        rating: 0.0,
+        numberClients: 0,
+      );
+      db.collection(DB.trainers).add(newTrainer.toMap());
+      user.setBool(CommomConfig.isClient, false);
+      Routes.offToHomePersonal;
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(description: e.message.toString());
       return;

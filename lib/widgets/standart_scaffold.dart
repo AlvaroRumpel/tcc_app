@@ -2,15 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
-import 'package:tcc_app/widgets/texts/title_text.dart';
 
 class StandartScaffold extends StatelessWidget {
   Widget body;
   bool appBar = false;
+  IconData iconAppBar = FontAwesome5.home;
   String? title;
 
   Widget? bottomNavigationBar;
@@ -21,6 +20,7 @@ class StandartScaffold extends StatelessWidget {
     this.appBar = false,
     this.title,
     this.bottomNavigationBar,
+    this.iconAppBar = FontAwesome5.home,
   }) : super(key: key);
 
   @override
@@ -46,9 +46,9 @@ class StandartScaffold extends StatelessWidget {
                       iconSize: 32,
                       onPressed: () async {
                         await FirebaseAuth.instance.signOut();
-                        Get.offAndToNamed('/login');
+                        Routes.toLogin;
                       },
-                      icon: Icon(FontAwesome.logout))
+                      icon: const Icon(FontAwesome.logout))
                 ],
                 title: Align(
                   alignment: Alignment.center,
@@ -64,7 +64,9 @@ class StandartScaffold extends StatelessWidget {
                 toolbarHeight: 80,
                 leadingWidth: 80,
                 leading: GestureDetector(
-                  onTap: () => Get.offAndToNamed('/home'),
+                  onTap: () => bottomNavigationBar != null
+                      ? Routes.offToHomeClient
+                      : Routes.offToHomePersonal,
                   child: Container(
                     height: 80,
                     width: 80,
@@ -72,8 +74,8 @@ class StandartScaffold extends StatelessWidget {
                       color: CustomColors.whiteStandard,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      FontAwesome5.home,
+                    child: Icon(
+                      iconAppBar,
                       color: CustomColors.primaryColor,
                       size: 40,
                     ),

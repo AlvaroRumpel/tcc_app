@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/screens/login/controller/login_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/svg_logo_icon.dart';
 import 'package:tcc_app/widgets/buttons/google_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_text_button.dart';
 import 'package:tcc_app/widgets/standart_scaffold.dart';
@@ -61,7 +59,7 @@ class LoginPage extends StatelessWidget {
               ),
               StandartTextButton(
                 text: 'Não tenho conta',
-                function: () => Get.toNamed('/cadastro'),
+                function: () => Routes.toSingUp,
               ),
             ],
           ),

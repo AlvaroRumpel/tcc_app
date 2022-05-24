@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SingupController extends GetxController {
   TextEditingController userController = TextEditingController();
@@ -31,9 +31,9 @@ class SingupController extends GetxController {
           description: 'Obrigado pelo cadastro!');
 
       if (!isPersonal) {
-        Get.toNamed('/client-singup');
+        Routes.toClientSingUp;
       } else {
-        Get.toNamed('/personal-singup');
+        Routes.toPersonalSingUp;
       }
     } catch (e) {
       Get.back();

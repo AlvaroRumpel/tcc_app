@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/user_model.dart';
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
@@ -30,7 +32,7 @@ class SingupClientFormController extends GetxController {
 
   void getObjectives() async {
     try {
-      var response = await db.collection('goals').get();
+      var response = await db.collection(DB.goals).get();
       for (var res in response.docs) {
         objectives.add(res.data()['goal']);
       }
@@ -59,18 +61,21 @@ class SingupClientFormController extends GetxController {
       );
       await FirebaseAuth.instance.currentUser
           ?.updateDisplayName(user.getString('userName'));
-      db.collection('clients').add({
-        'client_id': FirebaseAuth.instance.currentUser?.uid,
-        'body_fat': bodyFatController.text,
-        'goal': objectiveController.value,
-        'height': heightController.text,
-        'weight': weightController.text,
-        'level': 0,
-        'xp': 0,
-        'sex': radioValue.value,
-        'birth_date': dateController.text,
-      });
-      Get.offAndToNamed('/home');
+
+      ClientModel newUser = ClientModel(
+        clientId: FirebaseAuth.instance.currentUser?.uid ?? '',
+        bodyFat: int.parse(bodyFatController.text),
+        goal: objectiveController.value.toString(),
+        height: int.parse(heightController.text),
+        weight: int.parse(weightController.text),
+        level: 0,
+        xp: 0,
+        sex: radioValue.value,
+        birthDate: dateController.text,
+      );
+      db.collection('clients').add(newUser.toMap());
+      user.setBool('clients', true);
+      Routes.offToHomeClient;
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(description: e.message.toString());
     }

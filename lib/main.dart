@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
           page: () => HomePage(),
         ),
         GetPage(
+          name: '/home-personal',
+          page: () => HomePage(),
+        ),
+        GetPage(
           name: '/login',
           page: () => LoginPage(),
         ),
