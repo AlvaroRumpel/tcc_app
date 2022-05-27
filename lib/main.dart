@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:tcc_app/firebase_options.dart';
 import 'package:tcc_app/screens/home/view/home_page.dart';
 import 'package:tcc_app/screens/login/view/login_page.dart';
+import 'package:tcc_app/screens/profile/view/profile_page.dart';
 import 'package:tcc_app/screens/singup/view/singup_page.dart';
 import 'package:tcc_app/screens/singupForms/client/view/singup_client_form_page.dart';
 import 'package:tcc_app/screens/singupForms/personal/view/singup_personal_form_page.dart';
@@ -56,6 +57,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/personal-singup',
           page: () => SingupPersonalFormPage(),
+        ),
+        GetPage(
+          name: '/profile-client',
+          page: () => ProfilePage(),
         )
       ],
     );

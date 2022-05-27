@@ -33,7 +33,6 @@ class HomePage extends StatelessWidget {
         ),
         items: const [
           TabItem(icon: FontAwesome5.home),
-          TabItem(icon: Icons.person_outline),
           TabItem(icon: Elusive.group),
           TabItem(icon: FontAwesome5.dumbbell),
           TabItem(icon: FontAwesome5.crown),
@@ -47,8 +46,6 @@ class HomePage extends StatelessWidget {
               return StandartContainer(
                 child: Text('aa'),
               );
-            case 1:
-              return ProfilePage();
             default:
               return StandartContainer(
                 child: Text('aa'),

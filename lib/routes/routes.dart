@@ -9,4 +9,5 @@ class Routes {
   static Future? toSingUp = Get.toNamed('/cadastro');
   static Future? toClientSingUp = Get.toNamed('/client-singup');
   static Future? toPersonalSingUp = Get.toNamed('/personal-singup');
+  static Future? toClientProfile = Get.toNamed('/profile-client');
 }

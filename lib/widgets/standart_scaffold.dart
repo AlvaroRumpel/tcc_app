@@ -9,7 +9,7 @@ import 'package:tcc_app/utils/custom_colors.dart';
 class StandartScaffold extends StatelessWidget {
   Widget body;
   bool appBar = false;
-  IconData iconAppBar = FontAwesome5.home;
+  IconData iconAppBar;
   String? title;
 
   Widget? bottomNavigationBar;
@@ -20,7 +20,7 @@ class StandartScaffold extends StatelessWidget {
     this.appBar = false,
     this.title,
     this.bottomNavigationBar,
-    this.iconAppBar = FontAwesome5.home,
+    this.iconAppBar = Icons.person_outline,
   }) : super(key: key);
 
   @override
@@ -65,7 +65,7 @@ class StandartScaffold extends StatelessWidget {
                 leadingWidth: 80,
                 leading: GestureDetector(
                   onTap: () => bottomNavigationBar != null
-                      ? Routes.offToHomeClient
+                      ? Routes.toClientProfile
                       : Routes.offToHomePersonal,
                   child: Container(
                     height: 80,
@@ -83,6 +83,7 @@ class StandartScaffold extends StatelessWidget {
                 ),
                 backgroundColor: const Color(0x00ffffff),
                 shadowColor: const Color(0x00ffffff),
+                elevation: 0,
               )
             : null,
         backgroundColor: Colors.transparent,

@@ -38,7 +38,7 @@ class StandartContainer extends StatelessWidget {
             )
           : Container(
               alignment: alignment,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               height: (MediaQuery.of(context).size.height) * 0.85,
               width: (MediaQuery.of(context).size.width) * 0.85,
               decoration: BoxDecoration(
