@@ -50,7 +50,8 @@ class StandartScaffold extends StatelessWidget {
                         await FirebaseAuth.instance.signOut();
                         Get.toNamed(Routes.toLogin);
                       },
-                      icon: const Icon(FontAwesome.logout))
+                      color: CustomColors.whiteStandard,
+                      icon: const Icon(Icons.logout)),
                 ],
                 title: Align(
                   alignment: Alignment.center,
