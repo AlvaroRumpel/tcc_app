@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:tcc_app/firebase_options.dart';
 import 'package:tcc_app/screens/home/view/home_page.dart';
+import 'package:tcc_app/screens/homePersonal/view/home_personal_page.dart';
 import 'package:tcc_app/screens/login/view/login_page.dart';
 import 'package:tcc_app/screens/profile/view/profile_page.dart';
 import 'package:tcc_app/screens/singup/view/singup_page.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/home-personal',
-          page: () => HomePage(),
+          page: () => HomePersonalPage(),
         ),
         GetPage(
           name: '/login',

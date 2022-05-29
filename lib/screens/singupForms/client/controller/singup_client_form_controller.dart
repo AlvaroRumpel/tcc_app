@@ -62,8 +62,9 @@ class SingupClientFormController extends GetxController {
       await FirebaseAuth.instance.currentUser
           ?.updateDisplayName(user.getString('userName'));
 
-      ClientModel newUser = ClientModel(
+      UserModel newUser = UserModel(
         clientId: FirebaseAuth.instance.currentUser?.uid ?? '',
+        name: FirebaseAuth.instance.currentUser?.displayName ?? '',
         bodyFat: int.parse(bodyFatController.text),
         goal: objectiveController.value.toString(),
         height: int.parse(heightController.text),
@@ -75,7 +76,7 @@ class SingupClientFormController extends GetxController {
       );
       db.collection('clients').add(newUser.toMap());
       user.setBool('clients', true);
-      Routes.offToHomeClient;
+      Get.offAndToNamed(Routes.toHomeClient);
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(description: e.message.toString());
     }

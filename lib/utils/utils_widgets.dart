@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:tcc_app/widgets/buttons/standart_button.dart';
+import 'package:tcc_app/widgets/standart_container.dart';
+import 'package:tcc_app/widgets/standart_scaffold.dart';
+import 'package:tcc_app/widgets/texts/title_text.dart';
 
 class UtilsWidgets {
   UtilsWidgets.loadingDialog({String title = 'Loading...'}) {
@@ -71,6 +77,34 @@ class UtilsWidgets {
       colorText: CustomColors.whiteStandard,
       snackPosition: SnackPosition.TOP,
       backgroundColor: CustomColors.sucessColor,
+    );
+  }
+  UtilsWidgets.errorScreen(
+      {String message = 'Erro na operação',
+      IconData icon = FontAwesome.attention}) {
+    Get.defaultDialog(
+      title: message,
+      titlePadding: const EdgeInsets.symmetric(vertical: 8),
+      titleStyle: GoogleFonts.poppins(
+        color: CustomColors.primaryColor,
+      ),
+      backgroundColor: CustomColors.whiteStandard,
+      radius: 10,
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              size: 32,
+              color: CustomColors.primaryColor,
+            ),
+            StandartButton(
+              text: 'Voltar para a tela inicial',
+              function: () => Get.offAndToNamed(Routes.toHomeClient),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

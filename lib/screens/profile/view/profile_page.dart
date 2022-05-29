@@ -45,18 +45,21 @@ class ProfilePage extends StatelessWidget {
                           StandartContainer(
                             isReactive: true,
                             child: StandartText(
-                              text: (ct.profile!.height
-                                      .toString()
-                                      .substring(0, 1) +
+                              text: ((ct.profile?.height
+                                          .toString()
+                                          .substring(0, 1) ??
+                                      '?') +
                                   '.' +
-                                  ct.profile!.height.toString().substring(1) +
+                                  (ct.profile?.height.toString().substring(1) ??
+                                      '?') +
                                   ' m'),
                             ),
                           ),
                           StandartContainer(
                             isReactive: true,
                             child: StandartText(
-                              text: (ct.profile!.weight.toString() + ' kg'),
+                              text: ((ct.profile?.weight.toString() ?? '?') +
+                                  ' kg'),
                             ),
                           ),
                         ],
@@ -68,7 +71,7 @@ class ProfilePage extends StatelessWidget {
                           children: [
                             SmallText(text: 'Objetivo:'),
                             SmallText(
-                              text: ct.profile!.goal,
+                              text: ct.profile?.goal ?? 'Desconhecido',
                               color: CustomColors.primaryColor,
                               bigger: true,
                             ),

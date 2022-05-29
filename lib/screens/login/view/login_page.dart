@@ -59,7 +59,7 @@ class LoginPage extends StatelessWidget {
               ),
               StandartTextButton(
                 text: 'Não tenho conta',
-                function: () => Routes.toSingUp,
+                function: () => Get.toNamed(Routes.toSingUp),
               ),
             ],
           ),

@@ -10,7 +10,7 @@ class HomeController extends GetxController {
   void onInit() async {
     SharedPreferences user = await SharedPreferences.getInstance();
     if (await user.getBool(CommomConfig.isClient) == false) {
-      Routes.offToHomePersonal;
+      Get.offAndToNamed(Routes.toHomePersonal);
     }
     super.onInit();
   }

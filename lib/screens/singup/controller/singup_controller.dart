@@ -31,9 +31,9 @@ class SingupController extends GetxController {
           description: 'Obrigado pelo cadastro!');
 
       if (!isPersonal) {
-        Routes.toClientSingUp;
+        Get.toNamed(Routes.toClientSingUp);
       } else {
-        Routes.toPersonalSingUp;
+        Get.toNamed(Routes.toPersonalSingUp);
       }
     } catch (e) {
       Get.back();

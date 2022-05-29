@@ -69,10 +69,11 @@ class SingupPersonalFormController extends GetxController {
         paymentKey: keyController.text,
         rating: 0.0,
         numberClients: 0,
+        clients: [],
       );
       db.collection(DB.trainers).add(newTrainer.toMap());
       user.setBool(CommomConfig.isClient, false);
-      Routes.offToHomePersonal;
+      Get.offAndToNamed(Routes.toHomePersonal);
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(description: e.message.toString());
       return;

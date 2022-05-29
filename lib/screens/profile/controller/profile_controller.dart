@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:tcc_app/models/user_model.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 
@@ -8,7 +9,7 @@ class ProfileController extends GetxController {
   User? user = FirebaseAuth.instance.currentUser;
   FirebaseFirestore db = FirebaseFirestore.instance;
   RxBool isLoading = false.obs;
-  ClientModel? profile;
+  UserModel? profile;
 
   @override
   void onInit() {
@@ -23,11 +24,13 @@ class ProfileController extends GetxController {
           .where('client_id', isEqualTo: user!.uid)
           .get();
       for (var res in response.docs) {
-        profile = ClientModel.fromMap(res.data());
+        profile = UserModel.fromMap(res.data());
       }
       isLoading.toggle();
     } catch (e) {
-      print('erro: $e');
+      UtilsWidgets.errorScreen();
+      isLoading.toggle();
+      Logger().d(e);
       UtilsWidgets.errorSnackbar(title: 'Usuario não encontrado');
     }
   }

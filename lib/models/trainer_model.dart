@@ -25,6 +25,7 @@ class TrainerModel {
   String paymentKey;
   double rating;
   int numberClients;
+  List<String> clients;
 
   TrainerModel({
     this.id,
@@ -39,11 +40,11 @@ class TrainerModel {
     required this.paymentKey,
     required this.rating,
     required this.numberClients,
+    required this.clients,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'personal_id': personalId,
       'first_name': firstName,
       'last_name': lastName,
@@ -55,6 +56,7 @@ class TrainerModel {
       'payment_key': paymentKey,
       'rating': rating,
       'number_clients': numberClients,
+      'clients': clients,
     };
   }
 
@@ -72,6 +74,7 @@ class TrainerModel {
       paymentKey: map['payment_key'] ?? '',
       rating: map['rating']?.toDouble() ?? 0.0,
       numberClients: map['number_clients']?.toInt() ?? 0,
+      clients: map['clients'],
     );
   }
 

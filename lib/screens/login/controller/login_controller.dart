@@ -29,9 +29,9 @@ class LoginController extends GetxController {
       UtilsWidgets.sucessSnackbar(title: 'Login realizado');
 
       if (typeOfUser != 'isClient') {
-        Routes.offToHomePersonal;
+        Get.offAndToNamed(Routes.toHomePersonal);
       } else {
-        Routes.offToHomeClient;
+        Get.offAndToNamed(Routes.toHomeClient);
       }
     } on FirebaseAuthException catch (e) {
       Get.back();

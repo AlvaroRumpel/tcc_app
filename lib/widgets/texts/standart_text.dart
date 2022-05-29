@@ -4,17 +4,25 @@ import 'package:tcc_app/utils/custom_colors.dart';
 
 class StandartText extends StatelessWidget {
   String text;
-  bool isLabel = false;
+  bool isLabel;
   TextAlign align = TextAlign.left;
+  Color? color;
+  double? fontSize;
   StandartText({
     Key? key,
     required this.text,
     this.isLabel = false,
     this.align = TextAlign.left,
+    this.color = CustomColors.primaryColor,
+    this.fontSize = 24,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (isLabel) {
+      color = CustomColors.labelColor;
+      fontSize = 16;
+    }
     return Padding(
       padding: isLabel
           ? const EdgeInsets.symmetric(vertical: 0, horizontal: 8)
@@ -22,8 +30,10 @@ class StandartText extends StatelessWidget {
       child: Text(
         text,
         style: GoogleFonts.poppins(
-          fontSize: isLabel ? 16 : 24,
-          color: isLabel ? CustomColors.labelColor : CustomColors.primaryColor,
+          fontSize: fontSize,
+          color: color,
+          fontWeight: FontWeight.normal,
+          decoration: TextDecoration.none,
         ),
         textAlign: align,
       ),

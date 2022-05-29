@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-class ClientModel {
+class UserModel {
   String? id;
   String clientId;
+  String name;
   int bodyFat;
   String goal;
   int height;
@@ -12,9 +13,10 @@ class ClientModel {
   int sex;
   String birthDate;
 
-  ClientModel({
+  UserModel({
     this.id,
     required this.clientId,
+    required this.name,
     required this.bodyFat,
     required this.goal,
     required this.height,
@@ -36,26 +38,28 @@ class ClientModel {
       'xp': xp,
       'sex': sex,
       'birth_date': birthDate,
+      'name': name,
     };
   }
 
-  factory ClientModel.fromMap(Map<String, dynamic> map) {
-    return ClientModel(
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
       id: map['id'] ?? '',
       clientId: map['client_id'] ?? '',
-      bodyFat: int.parse(map['body_fat']),
+      bodyFat: map['body_fat'],
       goal: map['goal'] ?? '',
-      height: int.parse(map['height']),
-      weight: int.parse(map['weight']),
+      height: map['height'],
+      weight: map['weight'],
       level: map['level']?.toInt() ?? 0,
       xp: map['xp']?.toInt() ?? 0,
       sex: map['sex']?.toInt() ?? 0,
       birthDate: map['birth_date'] ?? '',
+      name: map['name'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ClientModel.fromJson(String source) =>
-      ClientModel.fromMap(json.decode(source));
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source));
 }
