@@ -5,16 +5,14 @@ import 'package:tcc_app/utils/svg_logo_icon.dart';
 import 'package:tcc_app/widgets/buttons/google_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_text_button.dart';
+import 'package:tcc_app/widgets/buttons/standart_outlined_button.dart';
 import 'package:tcc_app/widgets/standart_container.dart';
 import 'package:tcc_app/widgets/standart_scaffold.dart';
 import 'package:tcc_app/widgets/standart_textfield.dart';
 import 'package:tcc_app/widgets/texts/title_text.dart';
 
-class SingupPage extends StatelessWidget {
-  SingupPage({Key? key}) : super(key: key);
-
-  SingupController ct = Get.put(SingupController());
+class SingupPage extends GetView<SingupController> {
+  const SingupPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,34 +30,34 @@ class SingupPage extends StatelessWidget {
               const SvgLogoIcon(),
               TitleText(text: 'Cadastro'),
               StandartTextfield(
-                controller: ct.userController,
+                controller: controller.userController,
                 labelText: 'Usuário',
-                validator: ct.validator.userValidator,
+                validator: controller.validator.userValidator,
                 errorText: 'Usuário invalido',
               ),
               StandartTextfield(
-                controller: ct.emailController,
+                controller: controller.emailController,
                 labelText: 'Email',
-                validator: ct.validator.emailValidator,
+                validator: controller.validator.emailValidator,
                 errorText: 'Email invalido',
               ),
               StandartTextfield(
-                controller: ct.passController,
+                controller: controller.passController,
                 labelText: 'Senha',
                 obscure: true,
-                validator: ct.validator.passValidator,
+                validator: controller.validator.passValidator,
                 errorText: 'Senha inválida, no minimo 8 caracteres',
               ),
               StandartButton(
                 text: 'Cadastrar como um cliente',
                 smallText: true,
-                function: () => ct.singup(),
+                function: () => controller.singup(),
               ),
-              StandartTextButton(
+              StandartOutlinedButton(
                 text: 'Cadastrar como um personal',
-                function: () => ct.singup(isPersonal: true),
+                function: () => controller.singup(isPersonal: true),
               ),
-              GoogleButton(function: () => print('object')),
+              // GoogleButton(function: () => print('object')),
             ],
           ),
         ),

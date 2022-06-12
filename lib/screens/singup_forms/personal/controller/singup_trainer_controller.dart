@@ -11,7 +11,7 @@ import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
-class SingupPersonalFormController extends GetxController {
+class SingupTrainerFormController extends GetxController with StateMixin<int> {
   TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -20,19 +20,34 @@ class SingupPersonalFormController extends GetxController {
   TextEditingController cepController = TextEditingController();
   TextEditingController aboutController = TextEditingController();
   TextEditingController keyController = TextEditingController();
-  RxInt currentStep = 0.obs;
+  int currentStep = 0;
   Validators validator = Validators();
   FirebaseFirestore db = FirebaseFirestore.instance;
 
+  @override
+  void onInit() {
+    super.onInit();
+    change(currentStep, status: RxStatus.success());
+  }
+
   void next() async {
-    if (currentStep.value < 2) {
-      currentStep.value++;
-    } else if (currentStep.value == 2 &&
-        validator.hasErrorPersonalValidation()) {
+    if (currentStep < 2) {
+      currentStep++;
+    } else if (currentStep == 2 && validator.hasErrorPersonalValidation()) {
       singUp();
     } else {
       UtilsWidgets.errorSnackbar(title: 'Existe algum erro ainda');
     }
+    change(currentStep, status: RxStatus.success());
+  }
+
+  void back() {
+    if (currentStep > 0) {
+      currentStep--;
+    } else {
+      Get.back();
+    }
+    change(currentStep, status: RxStatus.success());
   }
 
   Future<bool> checkCep() async {
@@ -58,12 +73,12 @@ class SingupPersonalFormController extends GetxController {
           ?.updateDisplayName(user.getString('userName'));
 
       TrainerModel newTrainer = TrainerModel(
-        personalId: FirebaseAuth.instance.currentUser?.uid ?? '',
+        trainerId: FirebaseAuth.instance.currentUser?.uid ?? '',
         firstName: nameController.text,
         lastName: lastNameController.text,
-        price: double.parse(priceController.text),
+        price: priceValue(priceController.text),
         phone: int.parse(phoneController.text),
-        cpf: int.parse(cpfController.text),
+        cpf: cpfController.text,
         cep: int.parse(cepController.text),
         about: aboutController.text,
         paymentKey: keyController.text,
@@ -73,10 +88,18 @@ class SingupPersonalFormController extends GetxController {
       );
       db.collection(DB.trainers).add(newTrainer.toMap());
       user.setBool(CommomConfig.isClient, false);
-      Get.offAndToNamed(Routes.toHomePersonal);
+      Get.offAndToNamed(Routes.toHomeTrainer);
+      Get.deleteAll();
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(description: e.message.toString());
       return;
     }
+  }
+
+  double priceValue(String value) {
+    if (value.contains(',')) {
+      return double.parse('${value.split(',')[0]}.${value.split(',')[1]}');
+    }
+    return double.parse(value);
   }
 }

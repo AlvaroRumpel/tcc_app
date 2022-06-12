@@ -6,6 +6,7 @@ import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
 class SingupController extends GetxController {
+  SingupController({Key? key});
   TextEditingController userController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -13,8 +14,11 @@ class SingupController extends GetxController {
 
   Future<void> singup({isPersonal = false}) async {
     if (validator.hasError(withUser: true) ||
-        validator.isEmpty(emailController.text, passController.text,
-            user: userController.text)) {
+        validator.isEmpty(
+          emailController.text,
+          passController.text,
+          user: userController.text,
+        )) {
       UtilsWidgets.errorSnackbar(title: 'Preencha os dados corretamente');
       return;
     }
@@ -27,13 +31,13 @@ class SingupController extends GetxController {
       user.setString('email', emailController.text);
       Get.back();
       UtilsWidgets.sucessSnackbar(
-          title: 'Cadastro realizado com sucesso',
-          description: 'Obrigado pelo cadastro!');
+          title: 'Obrigado pelo acesso!',
+          description: 'Por favor preencha os campos com suas informações');
 
       if (!isPersonal) {
         Get.toNamed(Routes.toClientSingUp);
       } else {
-        Get.toNamed(Routes.toPersonalSingUp);
+        Get.toNamed(Routes.toTrainerSingUp);
       }
     } catch (e) {
       Get.back();

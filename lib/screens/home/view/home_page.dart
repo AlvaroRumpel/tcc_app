@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
+import 'package:tcc_app/screens/contract_trainer/view/contract_trainer_view.dart';
 import 'package:tcc_app/screens/home/controller/home_controller.dart';
-import 'package:tcc_app/screens/profile/view/profile_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/standart_container.dart';
 import 'package:tcc_app/widgets/standart_scaffold.dart';
 
-class HomePage extends StatelessWidget {
-  HomeController ct = Get.put(HomeController());
-  HomePage({Key? key}) : super(key: key);
+class HomePage extends GetView<HomeController> {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class HomePage extends StatelessWidget {
       appBar: true,
       title: 'Bem-vindo',
       bottomNavigationBar: ConvexAppBar(
-        initialActiveIndex: ct.currentIndex.value,
+        initialActiveIndex: controller.currentIndex,
         curveSize: 80,
         style: TabStyle.react,
         activeColor: CustomColors.whiteStandard,
@@ -37,21 +36,24 @@ class HomePage extends StatelessWidget {
           TabItem(icon: FontAwesome5.dumbbell),
           TabItem(icon: FontAwesome5.crown),
         ],
-        onTap: (value) => ct.currentIndex.value = value,
+        onTap: (value) => controller.nextPage(value),
       ),
-      body: Obx(
-        () {
-          switch (ct.currentIndex.value) {
-            case 0:
-              return StandartContainer(
-                child: Text('aa'),
-              );
-            default:
-              return StandartContainer(
-                child: Text('aa'),
-              );
-          }
-        },
+      body: PageView(
+        pageSnapping: false,
+        physics: const NeverScrollableScrollPhysics(),
+        controller: controller.pageController,
+        children: [
+          StandartContainer(
+            child: Text('aa'),
+          ),
+          ContractTrainerView(),
+          StandartContainer(
+            child: Text('aba'),
+          ),
+          StandartContainer(
+            child: Text('aba'),
+          ),
+        ],
       ),
     );
   }

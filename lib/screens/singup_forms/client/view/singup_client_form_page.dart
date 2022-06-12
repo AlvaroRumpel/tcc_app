@@ -1,8 +1,9 @@
 import 'package:dropdown_plus/dropdown_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/singupForms/client/controller/singup_client_form_controller.dart';
+import 'package:tcc_app/screens/singup_forms/client/controller/singup_client_form_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_text_button.dart';
@@ -12,10 +13,8 @@ import 'package:tcc_app/widgets/standart_textfield.dart';
 import 'package:tcc_app/widgets/texts/standart_text.dart';
 import 'package:tcc_app/widgets/texts/title_text.dart';
 
-class SingupClientFormPage extends StatelessWidget {
-  SingupClientFormController ct = Get.put(SingupClientFormController());
-
-  SingupClientFormPage({Key? key}) : super(key: key);
+class SingupClientFormPage extends GetView<SingupClientFormController> {
+  const SingupClientFormPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,25 +40,21 @@ class SingupClientFormPage extends StatelessWidget {
                 ],
               ),
               Expanded(
-                child: Obx(
-                  () => Stepper(
+                child: controller.obx(
+                  (state) => Stepper(
                     elevation: 0,
                     type: StepperType.horizontal,
-                    currentStep: ct.currentStep.value,
+                    currentStep: state!,
                     controlsBuilder: (context, _) {
                       return Column(
                         children: <Widget>[
                           StandartButton(
-                            function: () => ct.next(),
+                            function: () => controller.next(),
                             text: 'Seguir',
                           ),
                           StandartTextButton(
-                            function: () => ct.currentStep.value > 0
-                                ? ct.currentStep.value--
-                                : Get.back(),
-                            text: ct.currentStep.value > 0
-                                ? 'Voltar'
-                                : 'Cancelar',
+                            function: () => controller.back(),
+                            text: state > 0 ? 'Voltar' : 'Cancelar',
                           ),
                         ],
                       );
@@ -67,23 +62,22 @@ class SingupClientFormPage extends StatelessWidget {
                     steps: [
                       Step(
                         title: const Padding(padding: EdgeInsets.all(0)),
-                        content: ClientForm1(
-                          ct: ct,
-                        ),
-                        isActive: ct.currentStep.value == 0,
-                        state: ct.currentStep.value == 0
-                            ? StepState.editing
-                            : StepState.complete,
+                        content: const ClientForm1(),
+                        isActive: state == 0,
+                        state:
+                            state == 0 ? StepState.editing : StepState.complete,
                       ),
                       Step(
                         title: const Padding(padding: EdgeInsets.all(0)),
-                        content: ClientForm2(ct: ct),
-                        isActive: ct.currentStep.value == 1,
-                        state: ct.currentStep.value == 1
-                            ? StepState.editing
-                            : StepState.indexed,
+                        content: const ClientForm2(),
+                        isActive: state == 1,
+                        state:
+                            state == 1 ? StepState.editing : StepState.indexed,
                       ),
                     ],
+                  ),
+                  onLoading: const Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
               ),
@@ -95,12 +89,8 @@ class SingupClientFormPage extends StatelessWidget {
   }
 }
 
-class ClientForm1 extends StatelessWidget {
-  SingupClientFormController ct;
-  ClientForm1({
-    Key? key,
-    required this.ct,
-  }) : super(key: key);
+class ClientForm1 extends GetView<SingupClientFormController> {
+  const ClientForm1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,18 +102,18 @@ class ClientForm1 extends StatelessWidget {
             spaced: true,
             labelText: 'Altura',
             hintText: '180 cm',
-            validator: ct.validator.isHeight,
+            validator: controller.validator.isHeight,
             errorText: "Altura inválida",
-            controller: ct.heightController,
+            controller: controller.heightController,
             keyboardType: TextInputType.number,
           ),
           StandartText(text: 'Seu peso'),
           StandartTextfield(
             spaced: true,
             labelText: 'Peso',
-            validator: ct.validator.isWeight,
+            validator: controller.validator.isWeight,
             errorText: "Peso inválida",
-            controller: ct.weightController,
+            controller: controller.weightController,
             keyboardType: TextInputType.number,
             hintText: '85 Kg',
           ),
@@ -132,9 +122,9 @@ class ClientForm1 extends StatelessWidget {
             spaced: true,
             labelText: 'Gordura corporal',
             hintText: '20%',
-            validator: ct.validator.isBodyFat,
+            validator: controller.validator.isBodyFat,
             errorText: "Gordura corporal inválida",
-            controller: ct.bodyFatController,
+            controller: controller.bodyFatController,
             keyboardType: TextInputType.number,
           ),
         ],
@@ -143,12 +133,8 @@ class ClientForm1 extends StatelessWidget {
   }
 }
 
-class ClientForm2 extends StatelessWidget {
-  SingupClientFormController ct;
-  ClientForm2({
-    Key? key,
-    required this.ct,
-  }) : super(key: key);
+class ClientForm2 extends GetView<SingupClientFormController> {
+  const ClientForm2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -168,9 +154,9 @@ class ClientForm2 extends StatelessWidget {
                     ),
                     Radio(
                       value: 1,
-                      groupValue: ct.radioValue.value,
+                      groupValue: controller.radioValue.value,
                       onChanged: (value) {
-                        ct.radioValue.value = 1;
+                        controller.radioValue.value = 1;
                       },
                       toggleable: true,
                       activeColor: CustomColors.primaryColor,
@@ -185,9 +171,9 @@ class ClientForm2 extends StatelessWidget {
                     ),
                     Radio(
                       value: 2,
-                      groupValue: ct.radioValue.value,
+                      groupValue: controller.radioValue.value,
                       onChanged: (value) {
-                        ct.radioValue.value = 2;
+                        controller.radioValue.value = 2;
                       },
                       toggleable: true,
                       activeColor: CustomColors.primaryColor,
@@ -214,8 +200,8 @@ class ClientForm2 extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: TextDropdownFormField(
-                controller: ct.objectiveController,
-                options: ct.objectives,
+                controller: controller.objectiveController,
+                options: controller.objectives,
                 decoration: InputDecoration(
                   fillColor: CustomColors.whiteSecondary,
                   filled: true,
@@ -260,7 +246,7 @@ class ClientForm2 extends StatelessWidget {
             hintText: 'dd/mm/yyyy',
             validator: () {},
             errorText: 'Data de nascimento inválida',
-            controller: ct.dateController,
+            controller: controller.dateController,
           ),
         ],
       ),

@@ -4,50 +4,43 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/models/user_model.dart';
+import 'package:tcc_app/models/user_trainer_model.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
-import 'package:tcc_app/widgets/texts/small_text.dart';
 import 'package:tcc_app/widgets/texts/standart_text.dart';
 
-class HomePersonalPageController extends GetxController {
-  List<UserModel> clients = [];
-  RxBool isLoading = true.obs;
+class HomeTrainerController extends GetxController
+    with StateMixin<List<UserTrainerModel>> {
   User? user = FirebaseAuth.instance.currentUser;
   FirebaseFirestore db = FirebaseFirestore.instance;
+  List<UserTrainerModel> clients = [];
 
   @override
   void onInit() {
-    getData();
     super.onInit();
+    getData();
+    change(state, status: RxStatus.loading());
   }
 
   void getData() async {
     try {
-      List clientLists = [];
+      List<TrainerModel> trainer = [];
       var collection = await db
           .collection('trainers')
-          .where('personal_id', isEqualTo: (user?.uid ?? ''))
+          .where('trainer_id', isEqualTo: (user?.uid ?? ''))
           .get();
       for (var item in collection.docs) {
-        clientLists = item.data()['clients'];
+        trainer.add(TrainerModel.fromMap(item.data()));
       }
-      var response = await db
-          .collection('clients')
-          .where('client_id', whereIn: clientLists)
-          .get();
-      for (var item in response.docs) {
-        clients.add(UserModel.fromMap(item.data()));
-      }
-      isLoading.toggle();
+      clients = trainer[0].clients;
+      change(clients, status: RxStatus.success());
     } catch (e) {
-      isLoading.toggle();
+      change(clients, status: RxStatus.empty());
       UtilsWidgets.errorSnackbar(description: e.toString());
     }
   }
@@ -97,19 +90,12 @@ class HomePersonalPageController extends GetxController {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             StandartText(
-                              text: (clients[index]
-                                      .height
-                                      .toString()
-                                      .substring(0, 1) +
-                                  '.' +
-                                  clients[index]
-                                      .height
-                                      .toString()
-                                      .substring(1)),
+                              text:
+                                  ('${clients[index].height.toString().substring(0, 1)}.${clients[index].height.toString().substring(1)}'),
                               color: CustomColors.whiteStandard,
                             ),
                             StandartText(
-                              text: clients[index].weight.toString() + ' Kg',
+                              text: '${clients[index].weight} Kg',
                               color: CustomColors.whiteStandard,
                             ),
                           ],
@@ -119,7 +105,7 @@ class HomePersonalPageController extends GetxController {
                   ],
                 ),
                 StandartText(
-                  text: 'Nivel ' + clients[index].level.toString(),
+                  text: 'Nivel ${clients[index].level}',
                   color: CustomColors.sucessColor,
                 ),
                 LinearPercentIndicator(
@@ -127,7 +113,7 @@ class HomePersonalPageController extends GetxController {
                   backgroundColor: CustomColors.whiteStandard,
                   progressColor: CustomColors.sucessColor,
                   lineHeight: 16,
-                  percent: double.parse('0' + clients[index].xp.toString()),
+                  percent: double.parse('0${clients[index].xp}'),
                 ),
               ],
             ),

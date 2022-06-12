@@ -8,6 +8,9 @@ import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
 class LoginController extends GetxController {
+  UserService userService;
+  LoginController({required this.userService, Key? key});
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   Validators validator = Validators();
@@ -23,13 +26,13 @@ class LoginController extends GetxController {
       UtilsWidgets.loadingDialog();
 
       var typeOfUser =
-          await UserService.login(emailController.text, passController.text);
+          await userService.login(emailController.text, passController.text);
 
       Get.back();
       UtilsWidgets.sucessSnackbar(title: 'Login realizado');
 
       if (typeOfUser != 'isClient') {
-        Get.offAndToNamed(Routes.toHomePersonal);
+        Get.offAndToNamed(Routes.toHomeTrainer);
       } else {
         Get.offAndToNamed(Routes.toHomeClient);
       }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_plus/dropdown_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,8 +11,9 @@ import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
-class SingupClientFormController extends GetxController {
-  RxInt currentStep = 0.obs;
+class SingupClientFormController extends GetxController with StateMixin<int> {
+  SingupClientFormController({Key? key});
+  int currentStep = 0;
   Validators validator = Validators();
   RxInt radioValue = 1.obs;
 
@@ -26,29 +28,42 @@ class SingupClientFormController extends GetxController {
       DropdownEditingController();
   @override
   void onInit() async {
-    getObjectives();
     super.onInit();
+    await getObjectives();
+    change(currentStep, status: RxStatus.success());
   }
 
-  void getObjectives() async {
+  Future<void> getObjectives() async {
     try {
       var response = await db.collection(DB.goals).get();
       for (var res in response.docs) {
         objectives.add(res.data()['goal']);
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
   void next() {
-    if (currentStep.value == 0) {
-      currentStep.value++;
-    } else if (currentStep.value == 1 && !validator.hasErroSecondaryData()) {
+    if (currentStep == 0) {
+      currentStep++;
+    } else if (currentStep == 1 && !validator.hasErroSecondaryData()) {
       singUp();
     } else {
       UtilsWidgets.errorSnackbar(title: 'Existe algum erro ainda');
     }
+    change(currentStep, status: RxStatus.success());
+  }
+
+  void back() {
+    if (currentStep > 0) {
+      currentStep--;
+    } else {
+      Get.back();
+    }
+    change(currentStep, status: RxStatus.success());
   }
 
   void singUp() async {
@@ -73,10 +88,12 @@ class SingupClientFormController extends GetxController {
         xp: 0,
         sex: radioValue.value,
         birthDate: dateController.text,
+        trainers: [],
       );
       db.collection('clients').add(newUser.toMap());
       user.setBool('clients', true);
       Get.offAndToNamed(Routes.toHomeClient);
+      Get.deleteAll();
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(description: e.message.toString());
     }

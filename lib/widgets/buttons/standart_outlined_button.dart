@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:tcc_app/utils/custom_colors.dart';
 
-class StandartButton extends StatelessWidget {
+class StandartOutlinedButton extends StatelessWidget {
   String text;
   Function function;
-  bool smallText = false;
-  IconData? leadingIcon;
-  IconData? finalIcon;
-  StandartButton({
+  StandartOutlinedButton({
     Key? key,
     required this.text,
     required this.function,
-    this.smallText = false,
-    this.leadingIcon,
-    this.finalIcon,
   }) : super(key: key);
 
   @override
@@ -34,9 +27,15 @@ class StandartButton extends StatelessWidget {
           ],
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
-        child: ElevatedButton(
-          // style: ElevatedButton.styleFrom(
+        child: OutlinedButton(
+          onPressed: () => function(),
+          // style: OutlinedButton.styleFrom(
           //   primary: CustomColors.primaryColor,
+          //   backgroundColor: CustomColors.whiteStandard,
+          //   side: const BorderSide(
+          //     color: CustomColors.primaryColor,
+          //     width: 2,
+          //   ),
           //   shape: RoundedRectangleBorder(
           //     borderRadius: BorderRadius.circular(10.0),
           //   ),
@@ -46,20 +45,27 @@ class StandartButton extends StatelessWidget {
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
-              return CustomColors.primaryColor;
+              return CustomColors.containerButton;
             }),
             backgroundColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return CustomColors.primaryColor.withOpacity(0.8);
+                return CustomColors.whiteStandard.withOpacity(0.8);
               }
               if (states.contains(MaterialState.selected)) {
-                return CustomColors.primaryColor.withOpacity(0.6);
+                return CustomColors.whiteStandard.withOpacity(0.6);
               }
               if (states.contains(MaterialState.dragged)) {
-                return CustomColors.primaryColor.withOpacity(0.4);
+                return CustomColors.whiteStandard.withOpacity(0.4);
               }
-              return CustomColors.primaryColor;
+              return CustomColors.whiteStandard;
+            }),
+            side: MaterialStateProperty.resolveWith<BorderSide?>(
+                (Set<MaterialState> states) {
+              return const BorderSide(
+                color: CustomColors.primaryColor,
+                width: 2,
+              );
             }),
             shape: MaterialStateProperty.resolveWith<OutlinedBorder?>(
                 (Set<MaterialState> states) {
@@ -72,31 +78,13 @@ class StandartButton extends StatelessWidget {
               return const Size(double.maxFinite, 48);
             }),
           ),
-          onPressed: () => function(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                leadingIcon,
-                size: smallText ? 16 : 24,
-                color: CustomColors.whiteStandard,
-              ),
-              Expanded(
-                child: Text(
-                  text,
-                  style: GoogleFonts.poppins(
-                    color: CustomColors.containerButton,
-                    fontSize: smallText ? 16 : 24,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Icon(
-                finalIcon,
-                size: smallText ? 16 : 24,
-                color: CustomColors.whiteStandard,
-              ),
-            ],
+          child: Text(
+            text,
+            style: GoogleFonts.poppins(
+              color: CustomColors.primaryColor,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

@@ -1,35 +1,25 @@
 import 'dart:convert';
 
-//         'personal_id': FirebaseAuth.instance.currentUser?.uid, String
-//         'first_name': nameController.text, String
-//         'last_name': lastNameController.text, String
-//         'price': priceController.text, float
-//         'phone': phoneController.text, long
-//         'cpf': cpfController.text, long
-//         'cep': cepController.text, long
-//         'about': aboutController.text, String
-//         'paymant_key': keyController.text, String
-//         'rating': 0, float
-//         'number_clients': 0, int
+import 'package:tcc_app/models/user_trainer_model.dart';
 
 class TrainerModel {
   String? id;
-  String personalId;
+  String trainerId;
   String firstName;
   String lastName;
   double price;
   int phone;
-  int cpf;
+  String cpf;
   int cep;
   String about;
   String paymentKey;
   double rating;
   int numberClients;
-  List<String> clients;
+  List<UserTrainerModel> clients;
 
   TrainerModel({
     this.id,
-    required this.personalId,
+    required this.trainerId,
     required this.firstName,
     required this.lastName,
     required this.price,
@@ -45,7 +35,7 @@ class TrainerModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'personal_id': personalId,
+      'trainer_id': trainerId,
       'first_name': firstName,
       'last_name': lastName,
       'price': price,
@@ -61,20 +51,22 @@ class TrainerModel {
   }
 
   factory TrainerModel.fromMap(Map<String, dynamic> map) {
+    List<UserTrainerModel> users = [];
+    map['clients'].forEach((item) => users.add(UserTrainerModel.fromMap(item)));
     return TrainerModel(
       id: map['id'],
-      personalId: map['personal_id'] ?? '',
+      trainerId: map['trainer_id'] ?? '',
       firstName: map['first_name'] ?? '',
       lastName: map['last_name'] ?? '',
       price: map['price']?.toDouble() ?? 0.0,
       phone: map['phone']?.toInt() ?? 0,
-      cpf: map['cpf']?.toInt() ?? 0,
+      cpf: map['cpf'],
       cep: map['cep']?.toInt() ?? 0,
       about: map['about'] ?? '',
       paymentKey: map['payment_key'] ?? '',
       rating: map['rating']?.toDouble() ?? 0.0,
       numberClients: map['number_clients']?.toInt() ?? 0,
-      clients: map['clients'],
+      clients: users,
     );
   }
 

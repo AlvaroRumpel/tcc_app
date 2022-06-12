@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/screens/login/controller/login_controller.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/svg_logo_icon.dart';
 import 'package:tcc_app/widgets/buttons/google_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
+import 'package:tcc_app/widgets/buttons/standart_outlined_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_text_button.dart';
 import 'package:tcc_app/widgets/standart_scaffold.dart';
 import 'package:tcc_app/widgets/standart_container.dart';
 import 'package:tcc_app/widgets/standart_textfield.dart';
 import 'package:tcc_app/widgets/texts/title_text.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginController ct = Get.put(LoginController());
-  LoginPage({Key? key}) : super(key: key);
+class LoginPage extends GetView<LoginController> {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +27,23 @@ class LoginPage extends StatelessWidget {
             children: [
               const SvgLogoIcon(),
               TitleText(text: 'Login'),
-              GoogleButton(function: () {}),
-              Text(
-                'ou',
-                style: GoogleFonts.poppins(
-                    color: CustomColors.labelColor, fontSize: 24),
-              ),
+              // GoogleButton(function: () {}),
+              // Text(
+              //   'ou',
+              //   style: GoogleFonts.poppins(
+              //       color: CustomColors.labelColor, fontSize: 24),
+              // ),
               StandartTextfield(
-                controller: ct.emailController,
+                controller: controller.emailController,
                 labelText: 'Email',
-                validator: ct.validator.emailValidator,
+                validator: controller.validator.emailValidator,
                 errorText: 'Email inválido',
               ),
               StandartTextfield(
-                controller: ct.passController,
+                controller: controller.passController,
                 labelText: 'Senha',
                 obscure: true,
-                validator: ct.validator.passValidator,
+                validator: controller.validator.passValidator,
                 errorText: 'Senha deve conter no minimo 8 caracteres',
               ),
               StandartTextButton(
@@ -55,10 +53,10 @@ class LoginPage extends StatelessWidget {
               ),
               StandartButton(
                 text: 'Entrar',
-                function: () => ct.login(),
+                function: () => controller.login(),
               ),
-              StandartTextButton(
-                text: 'Não tenho conta',
+              StandartOutlinedButton(
+                text: 'Criar uma conta',
                 function: () => Get.toNamed(Routes.toSingUp),
               ),
             ],

@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:tcc_app/utils/custom_colors.dart';
 
-class StandartButton extends StatelessWidget {
+class SuccessButton extends StatelessWidget {
   String text;
   Function function;
-  bool smallText = false;
-  IconData? leadingIcon;
-  IconData? finalIcon;
-  StandartButton({
+  SuccessButton({
     Key? key,
     required this.text,
     required this.function,
-    this.smallText = false,
-    this.leadingIcon,
-    this.finalIcon,
   }) : super(key: key);
 
   @override
@@ -35,31 +28,24 @@ class StandartButton extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: ElevatedButton(
-          // style: ElevatedButton.styleFrom(
-          //   primary: CustomColors.primaryColor,
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(10.0),
-          //   ),
-          //   elevation: 1,
-          //   minimumSize: const Size(double.maxFinite, 56),
-          // ),
+          onPressed: () => function(),
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
-              return CustomColors.primaryColor;
+              return CustomColors.sucessColor;
             }),
             backgroundColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return CustomColors.primaryColor.withOpacity(0.8);
+                return CustomColors.sucessColor.withOpacity(0.8);
               }
               if (states.contains(MaterialState.selected)) {
-                return CustomColors.primaryColor.withOpacity(0.6);
+                return CustomColors.sucessColor.withOpacity(0.6);
               }
               if (states.contains(MaterialState.dragged)) {
-                return CustomColors.primaryColor.withOpacity(0.4);
+                return CustomColors.sucessColor.withOpacity(0.4);
               }
-              return CustomColors.primaryColor;
+              return CustomColors.sucessColor;
             }),
             shape: MaterialStateProperty.resolveWith<OutlinedBorder?>(
                 (Set<MaterialState> states) {
@@ -72,31 +58,12 @@ class StandartButton extends StatelessWidget {
               return const Size(double.maxFinite, 48);
             }),
           ),
-          onPressed: () => function(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                leadingIcon,
-                size: smallText ? 16 : 24,
-                color: CustomColors.whiteStandard,
-              ),
-              Expanded(
-                child: Text(
-                  text,
-                  style: GoogleFonts.poppins(
-                    color: CustomColors.containerButton,
-                    fontSize: smallText ? 16 : 24,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Icon(
-                finalIcon,
-                size: smallText ? 16 : 24,
-                color: CustomColors.whiteStandard,
-              ),
-            ],
+          child: Text(
+            text,
+            style: GoogleFonts.poppins(
+              color: CustomColors.whiteStandard,
+              fontSize: 24,
+            ),
           ),
         ),
       ),

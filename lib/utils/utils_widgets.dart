@@ -5,13 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
-import 'package:tcc_app/widgets/standart_scaffold.dart';
-import 'package:tcc_app/widgets/texts/title_text.dart';
 
 class UtilsWidgets {
   UtilsWidgets.loadingDialog({String title = 'Loading...'}) {
     Get.defaultDialog(
+      barrierDismissible: false,
       title: title,
       titlePadding: const EdgeInsets.symmetric(vertical: 32),
       titleStyle: GoogleFonts.poppins(

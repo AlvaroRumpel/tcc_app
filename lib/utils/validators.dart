@@ -99,7 +99,6 @@ class Validators {
   }
 
   bool isEmpty(String email, String pass, {String? user}) {
-    print(email.isEmpty && pass.isEmpty && (user?.isEmpty ?? true));
     return email.isEmpty && pass.isEmpty && (user?.isEmpty ?? true);
   }
 

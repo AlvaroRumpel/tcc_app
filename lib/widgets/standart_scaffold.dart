@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
@@ -69,7 +67,7 @@ class StandartScaffold extends StatelessWidget {
                 leading: GestureDetector(
                   onTap: () => bottomNavigationBar != null
                       ? Get.toNamed(Routes.toClientProfile)
-                      : Get.offAndToNamed(Routes.toHomePersonal),
+                      : Get.offAndToNamed(Routes.toHomeTrainer),
                   child: Container(
                     height: 80,
                     width: 80,

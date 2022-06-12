@@ -6,7 +6,7 @@ import 'package:tcc_app/config/commom_config.dart';
 import 'package:tcc_app/config/database_variables.dart';
 
 class UserService {
-  static Future<String> login(String email, String password) async {
+  Future<String> login(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -18,16 +18,20 @@ class UserService {
     }
   }
 
-  static Future<String> checkIsClient() async {
+  Future<String> checkIsClient() async {
     SharedPreferences user = await SharedPreferences.getInstance();
     try {
-      await FirebaseFirestore.instance
+      var response = await FirebaseFirestore.instance
           .collection(DB.clients)
           .where('client_id',
               isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '')
           .get();
-      await user.setBool(CommomConfig.isClient, true);
-      return 'isClient';
+      if (response.docs.isNotEmpty) {
+        await user.setBool(CommomConfig.isClient, true);
+        return 'isClient';
+      }
+      await user.setBool(CommomConfig.isClient, false);
+      return 'isPersonal';
     } catch (e) {
       await user.setBool(CommomConfig.isClient, false);
       return 'isPersonal';

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:tcc_app/models/trainer_user_model.dart';
+
 class UserModel {
   String? id;
   String clientId;
@@ -12,6 +14,7 @@ class UserModel {
   int xp;
   int sex;
   String birthDate;
+  List<TrainerUserModel> trainers;
 
   UserModel({
     this.id,
@@ -25,6 +28,7 @@ class UserModel {
     required this.xp,
     required this.sex,
     required this.birthDate,
+    required this.trainers,
   });
 
   Map<String, dynamic> toMap() {
@@ -39,10 +43,14 @@ class UserModel {
       'sex': sex,
       'birth_date': birthDate,
       'name': name,
+      'trainers': trainers,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
+    List<TrainerUserModel> trainers = [];
+    map['trainers']
+        .forEach((item) => trainers.add(TrainerUserModel.fromMap(item)));
     return UserModel(
       id: map['id'] ?? '',
       clientId: map['client_id'] ?? '',
@@ -55,6 +63,7 @@ class UserModel {
       sex: map['sex']?.toInt() ?? 0,
       birthDate: map['birth_date'] ?? '',
       name: map['name'] ?? '',
+      trainers: trainers,
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/singupForms/personal/controller/singup_personal_controller.dart';
+import 'package:tcc_app/screens/singup_forms/personal/controller/singup_trainer_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
@@ -11,10 +11,8 @@ import 'package:tcc_app/widgets/standart_textfield.dart';
 import 'package:tcc_app/widgets/texts/standart_text.dart';
 import 'package:tcc_app/widgets/texts/title_text.dart';
 
-class SingupPersonalFormPage extends StatelessWidget {
-  SingupPersonalFormController ct = Get.put(SingupPersonalFormController());
-
-  SingupPersonalFormPage({Key? key}) : super(key: key);
+class SingupTrainerFormPage extends GetView<SingupTrainerFormController> {
+  const SingupTrainerFormPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,25 +38,21 @@ class SingupPersonalFormPage extends StatelessWidget {
                 ],
               ),
               Expanded(
-                child: Obx(
-                  () => Stepper(
+                child: controller.obx(
+                  (state) => Stepper(
                     elevation: 0,
                     type: StepperType.horizontal,
-                    currentStep: ct.currentStep.value,
+                    currentStep: state!,
                     controlsBuilder: (context, _) {
                       return Column(
                         children: <Widget>[
                           StandartButton(
-                            function: () => ct.next(),
+                            function: () => controller.next(),
                             text: 'Seguir',
                           ),
                           StandartTextButton(
-                            function: () => ct.currentStep.value > 0
-                                ? ct.currentStep.value--
-                                : Get.back(),
-                            text: ct.currentStep.value > 0
-                                ? 'Voltar'
-                                : 'Cancelar',
+                            function: () => controller.back(),
+                            text: state > 0 ? 'Voltar' : 'Cancelar',
                           ),
                         ],
                       );
@@ -66,29 +60,24 @@ class SingupPersonalFormPage extends StatelessWidget {
                     steps: [
                       Step(
                         title: const Padding(padding: EdgeInsets.all(0)),
-                        content: PersonalForm1(ct: ct),
-                        isActive: ct.currentStep.value == 0,
-                        state: ct.currentStep.value == 0
-                            ? StepState.editing
-                            : StepState.complete,
+                        content: const PersonalForm1(),
+                        isActive: state == 0,
+                        state:
+                            state == 0 ? StepState.editing : StepState.complete,
                       ),
                       Step(
                         title: const Padding(padding: EdgeInsets.all(0)),
-                        content: PersonalForm2(
-                          ct: ct,
-                        ),
-                        isActive: ct.currentStep.value == 1,
-                        state: ct.currentStep.value == 1
-                            ? StepState.editing
-                            : StepState.complete,
+                        content: const PersonalForm2(),
+                        isActive: state == 1,
+                        state:
+                            state == 1 ? StepState.editing : StepState.complete,
                       ),
                       Step(
                         title: const Padding(padding: EdgeInsets.all(0)),
-                        content: PersonalForm3(ct: ct),
-                        isActive: ct.currentStep.value == 2,
-                        state: ct.currentStep.value == 2
-                            ? StepState.editing
-                            : StepState.indexed,
+                        content: const PersonalForm3(),
+                        isActive: state == 2,
+                        state:
+                            state == 2 ? StepState.editing : StepState.indexed,
                       ),
                     ],
                   ),
@@ -102,12 +91,8 @@ class SingupPersonalFormPage extends StatelessWidget {
   }
 }
 
-class PersonalForm1 extends StatelessWidget {
-  SingupPersonalFormController ct;
-  PersonalForm1({
-    Key? key,
-    required this.ct,
-  }) : super(key: key);
+class PersonalForm1 extends GetView<SingupTrainerFormController> {
+  const PersonalForm1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -119,26 +104,26 @@ class PersonalForm1 extends StatelessWidget {
             spaced: true,
             labelText: 'Nome',
             hintText: 'Nome',
-            validator: ct.validator.isAlphabetic,
+            validator: controller.validator.isAlphabetic,
             errorText: "Nome inválido",
-            controller: ct.nameController,
+            controller: controller.nameController,
           ),
           StandartText(text: 'Seu sobrenome'),
           StandartTextfield(
             spaced: true,
             labelText: 'Sobrenome',
-            validator: ct.validator.isAlphabetic,
+            validator: controller.validator.isAlphabetic,
             errorText: "Sobrenome",
-            controller: ct.lastNameController,
+            controller: controller.lastNameController,
           ),
           StandartText(text: 'Seu preço semanal'),
           StandartTextfield(
             spaced: true,
             labelText: 'Preço semanal',
             hintText: 'Preço referente a 3 dias',
-            validator: ct.validator.isNumber,
+            validator: controller.validator.isNumber,
             errorText: "Valor inválido",
-            controller: ct.priceController,
+            controller: controller.priceController,
             keyboardType: TextInputType.number,
           ),
         ],
@@ -147,12 +132,8 @@ class PersonalForm1 extends StatelessWidget {
   }
 }
 
-class PersonalForm2 extends StatelessWidget {
-  SingupPersonalFormController ct;
-  PersonalForm2({
-    Key? key,
-    required this.ct,
-  }) : super(key: key);
+class PersonalForm2 extends GetView<SingupTrainerFormController> {
+  const PersonalForm2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -163,30 +144,30 @@ class PersonalForm2 extends StatelessWidget {
           StandartTextfield(
             spaced: true,
             labelText: 'Celular',
-            hintText: '55999857941',
-            validator: ct.validator.isPhone,
+            hintText: '55999999999',
+            validator: controller.validator.isPhone,
             errorText: "Celular inválido",
-            controller: ct.phoneController,
+            controller: controller.phoneController,
             keyboardType: TextInputType.number,
           ),
           StandartText(text: 'Seu CPF'),
           StandartTextfield(
             spaced: true,
             labelText: 'CPF',
-            validator: ct.validator.isCPF,
+            validator: controller.validator.isCPF,
             errorText: "CPF inválido",
-            controller: ct.cpfController,
+            controller: controller.cpfController,
             keyboardType: TextInputType.number,
             hintText: '333.333.333-33',
           ),
-          StandartText(text: 'Sua CEP'),
+          StandartText(text: 'Seu CEP'),
           StandartTextfield(
             spaced: true,
             labelText: 'CEP',
             hintText: '99999-999',
-            validator: ct.validator.isCEP,
+            validator: controller.validator.isCEP,
             errorText: "CEP inválido",
-            controller: ct.cepController,
+            controller: controller.cepController,
             keyboardType: TextInputType.number,
           ),
         ],
@@ -195,12 +176,8 @@ class PersonalForm2 extends StatelessWidget {
   }
 }
 
-class PersonalForm3 extends StatelessWidget {
-  SingupPersonalFormController ct;
-  PersonalForm3({
-    Key? key,
-    required this.ct,
-  }) : super(key: key);
+class PersonalForm3 extends GetView<SingupTrainerFormController> {
+  const PersonalForm3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -214,16 +191,16 @@ class PersonalForm3 extends StatelessWidget {
           StandartTextfield(
             textBox: true,
             labelText: 'Fale um pouco sobre você, para saberem quem você é',
-            validator: ct.validator.simpleValidation,
+            validator: controller.validator.simpleValidation,
             errorText: 'Texto inválido',
-            controller: ct.aboutController,
+            controller: controller.aboutController,
           ),
           StandartText(text: 'Sua chave de PIX'),
           StandartTextfield(
             labelText: 'Uma chave aleatória de preferência',
             errorText: 'Chave inválida',
-            validator: ct.validator.simpleValidation,
-            controller: ct.keyController,
+            validator: controller.validator.simpleValidation,
+            controller: controller.keyController,
           )
         ],
       ),
