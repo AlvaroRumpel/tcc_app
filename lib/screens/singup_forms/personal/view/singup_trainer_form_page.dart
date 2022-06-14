@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/screens/singup_forms/personal/controller/singup_trainer_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:tcc_app/utils/empty_state.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_text_button.dart';
@@ -81,6 +82,7 @@ class SingupTrainerFormPage extends GetView<SingupTrainerFormController> {
                       ),
                     ],
                   ),
+                  onEmpty: const EmptyState(),
                 ),
               ),
             ],

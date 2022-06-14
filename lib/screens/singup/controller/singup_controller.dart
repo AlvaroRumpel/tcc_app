@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tcc_app/routes/routes.dart';
+import 'package:tcc_app/services/local_storage.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
@@ -23,12 +23,10 @@ class SingupController extends GetxController {
       return;
     }
     try {
-      SharedPreferences user = await SharedPreferences.getInstance();
       UtilsWidgets.loadingDialog();
-      user.setString('userName', userController.text);
-      user.setString(
-          'password', GetUtils.removeAllWhitespace(passController.text));
-      user.setString('email', emailController.text);
+      LocalStorage.setUserName(userController.text);
+      LocalStorage.setPassword(passController.text);
+      LocalStorage.setUserName(emailController.text);
       Get.back();
       UtilsWidgets.sucessSnackbar(
           title: 'Obrigado pelo acesso!',

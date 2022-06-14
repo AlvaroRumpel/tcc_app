@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tcc_app/config/commom_config.dart';
 import 'package:tcc_app/routes/routes.dart';
+import 'package:tcc_app/services/local_storage.dart';
 
 class HomeController extends GetxController {
   int currentIndex = 0;
@@ -23,8 +22,7 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    SharedPreferences user = await SharedPreferences.getInstance();
-    if (user.getBool(CommomConfig.isClient) == false) {
+    if (await LocalStorage.getIsClients() == false) {
       Get.offAndToNamed(Routes.toHomeTrainer);
     }
   }

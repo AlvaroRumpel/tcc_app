@@ -3,11 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:search_cep/search_cep.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tcc_app/config/commom_config.dart';
-import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/routes/routes.dart';
+import 'package:tcc_app/services/user_service.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
@@ -64,30 +62,22 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
     if (!await checkCep()) return;
     try {
       UtilsWidgets.loadingDialog();
-      SharedPreferences user = await SharedPreferences.getInstance();
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: user.getString('email') ?? '',
-        password: user.getString('password') ?? '',
+      UserService.singup(
+        trainerModel: TrainerModel(
+          trainerId: FirebaseAuth.instance.currentUser?.uid ?? '',
+          firstName: nameController.text,
+          lastName: lastNameController.text,
+          price: priceValue(priceController.text),
+          phone: int.parse(phoneController.text),
+          cpf: cpfController.text,
+          cep: int.parse(cepController.text),
+          about: aboutController.text,
+          paymentKey: keyController.text,
+          rating: 0.0,
+          numberClients: 0,
+          clients: [],
+        ),
       );
-      await FirebaseAuth.instance.currentUser
-          ?.updateDisplayName(user.getString('userName'));
-
-      TrainerModel newTrainer = TrainerModel(
-        trainerId: FirebaseAuth.instance.currentUser?.uid ?? '',
-        firstName: nameController.text,
-        lastName: lastNameController.text,
-        price: priceValue(priceController.text),
-        phone: int.parse(phoneController.text),
-        cpf: cpfController.text,
-        cep: int.parse(cepController.text),
-        about: aboutController.text,
-        paymentKey: keyController.text,
-        rating: 0.0,
-        numberClients: 0,
-        clients: [],
-      );
-      db.collection(DB.trainers).add(newTrainer.toMap());
-      user.setBool(CommomConfig.isClient, false);
       Get.offAndToNamed(Routes.toHomeTrainer);
       Get.deleteAll();
     } on FirebaseAuthException catch (e) {

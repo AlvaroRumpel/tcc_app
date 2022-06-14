@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/screens/singup_forms/client/controller/singup_client_form_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
+import 'package:tcc_app/utils/empty_state.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_text_button.dart';
@@ -79,6 +79,7 @@ class SingupClientFormPage extends GetView<SingupClientFormController> {
                   onLoading: const Center(
                     child: CircularProgressIndicator(),
                   ),
+                  onEmpty: const EmptyState(),
                 ),
               ),
             ],

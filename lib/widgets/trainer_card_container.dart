@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
 import 'package:tcc_app/widgets/texts/number_clients_text.dart';
 import 'package:tcc_app/widgets/texts/price_text.dart';
-import 'package:tcc_app/widgets/texts/small_text.dart';
 import 'package:tcc_app/widgets/texts/standart_text.dart';
 
 class TrainerCardContainer extends StatelessWidget {

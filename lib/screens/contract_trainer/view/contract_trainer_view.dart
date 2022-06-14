@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/screens/contract_trainer/controller/contract_trainer_controller.dart';
+import 'package:tcc_app/utils/empty_state.dart';
 import 'package:tcc_app/widgets/trainer_card_container.dart';
 
 class ContractTrainerView extends StatelessWidget {
@@ -29,6 +30,7 @@ class ContractTrainerView extends StatelessWidget {
             onLoading: const Center(
               child: CircularProgressIndicator(),
             ),
+            onEmpty: const EmptyState(),
           ),
         ),
       ],

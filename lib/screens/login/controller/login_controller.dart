@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tcc_app/models/enum/user_type.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/services/user_service.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/utils/validators.dart';
 
 class LoginController extends GetxController {
-  UserService userService;
-  LoginController({required this.userService, Key? key});
+  LoginController({Key? key});
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -25,17 +25,15 @@ class LoginController extends GetxController {
     try {
       UtilsWidgets.loadingDialog();
 
-      var typeOfUser =
-          await userService.login(emailController.text, passController.text);
+      UserType typeOfUser =
+          await UserService.login(emailController.text, passController.text);
 
       Get.back();
       UtilsWidgets.sucessSnackbar(title: 'Login realizado');
 
-      if (typeOfUser != 'isClient') {
-        Get.offAndToNamed(Routes.toHomeTrainer);
-      } else {
-        Get.offAndToNamed(Routes.toHomeClient);
-      }
+      Get.offAndToNamed(typeOfUser == UserType.client
+          ? Routes.toHomeClient
+          : Routes.toHomeTrainer);
     } on FirebaseAuthException catch (e) {
       Get.back();
       UtilsWidgets.errorSnackbar(description: e.message.toString());
