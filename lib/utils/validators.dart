@@ -75,7 +75,7 @@ class Validators {
   }
 
   bool isNumber(value) {
-    return number = RegExp('[0-9]').hasMatch(value);
+    return number = RegExp(r'^[0-9]+$').hasMatch(value);
   }
 
   bool isPhone(value) {

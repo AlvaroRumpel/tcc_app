@@ -5,6 +5,8 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/models/trainer_model.dart';
+import 'package:tcc_app/routes/routes.dart';
+import 'package:tcc_app/services/user_service.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/success_button.dart';
@@ -106,9 +108,14 @@ class TrainerModal {
           StandartButton(
             leadingIcon: FontAwesome.chat_empty,
             text: 'Chat',
-            function: () {},
+            function: () async {
+              await Get.toNamed(Routes.toWhithoutIdChat + trainer.trainerId!);
+            },
           ),
-          SuccessButton(text: 'Contratar', function: () {})
+          SuccessButton(
+            text: 'Contratar',
+            function: () => UserService.contractTrainer(trainer.trainerId!),
+          ),
         ],
       ),
     );

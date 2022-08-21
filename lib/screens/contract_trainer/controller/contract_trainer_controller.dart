@@ -28,7 +28,7 @@ class ContractTrainerController extends GetxController
       change(trainers, status: RxStatus.loading());
       var response = await db.collection(DB.trainers).get();
       for (var item in response.docs) {
-        trainers.add(TrainerModel.fromMap(item.data()));
+        trainers.add(TrainerModel.fromMap(item.data(), item.id));
       }
       change(trainers, status: RxStatus.success());
     } catch (e) {

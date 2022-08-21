@@ -35,14 +35,6 @@ class StandartButton extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: ElevatedButton(
-          // style: ElevatedButton.styleFrom(
-          //   primary: CustomColors.primaryColor,
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(10.0),
-          //   ),
-          //   elevation: 1,
-          //   minimumSize: const Size(double.maxFinite, 56),
-          // ),
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {

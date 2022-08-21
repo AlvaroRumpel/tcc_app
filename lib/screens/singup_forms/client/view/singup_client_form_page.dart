@@ -79,7 +79,7 @@ class SingupClientFormPage extends GetView<SingupClientFormController> {
                   onLoading: const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  onEmpty: const EmptyState(),
+                  onEmpty: EmptyState(),
                 ),
               ),
             ],

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/firebase_options.dart';
 import 'package:tcc_app/routes/routes.dart';
+import 'package:tcc_app/screens/chat/binding/chat_binding.dart';
+import 'package:tcc_app/screens/chat/view/chat_page.dart';
 import 'package:tcc_app/screens/home/binding/home_binding.dart';
 import 'package:tcc_app/screens/home/view/home_page.dart';
 import 'package:tcc_app/screens/home_personal/binding/home_trainer_binding.dart';
@@ -18,6 +20,10 @@ import 'package:tcc_app/screens/singup_forms/client/binding/singup_client_form_b
 import 'package:tcc_app/screens/singup_forms/client/view/singup_client_form_page.dart';
 import 'package:tcc_app/screens/singup_forms/personal/binding/singup_trainer_form_binding.dart';
 import 'package:tcc_app/screens/singup_forms/personal/view/singup_trainer_form_page.dart';
+import 'package:tcc_app/screens/trainings/personal_all_list/binding/training_personal_all_list_binding.dart';
+import 'package:tcc_app/screens/trainings/personal_all_list/view/training_personal_all_list_page.dart';
+import 'package:tcc_app/screens/trainings/personal_one_view/binding/training_personal_one_binding.dart';
+import 'package:tcc_app/screens/trainings/personal_one_view/view/training_personal_one_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
 void main() async {
@@ -78,7 +84,22 @@ class MyApp extends StatelessWidget {
           name: Routes.toClientProfile,
           page: () => const ProfilePage(),
           binding: ProfileBinding(),
-        )
+        ),
+        GetPage(
+          name: Routes.toChat,
+          page: () => const ChatPage(),
+          binding: ChatBinding(),
+        ),
+        GetPage(
+          name: Routes.toTrainingPersonalAllList,
+          page: () => const TrainingPersonalAllListPage(),
+          binding: TrainingPersonalAllListBinding(),
+        ),
+        GetPage(
+          name: Routes.toTrainingPersonalOne,
+          page: () => const TrainingPersonalOnePage(),
+          binding: TrainingPersonalOneBinding(),
+        ),
       ],
     );
   }

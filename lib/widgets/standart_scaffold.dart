@@ -45,7 +45,7 @@ class StandartScaffold extends StatelessWidget {
                       iconSize: 32,
                       onPressed: () async {
                         await FirebaseAuth.instance.signOut();
-                        Get.toNamed(Routes.toLogin);
+                        Get.offAndToNamed(Routes.toLogin);
                       },
                       color: CustomColors.whiteStandard,
                       icon: const Icon(Icons.logout)),
@@ -60,16 +60,17 @@ class StandartScaffold extends StatelessWidget {
                   color: CustomColors.whiteStandard,
                   fontWeight: FontWeight.bold,
                   fontSize: 32,
+                  backgroundColor: Colors.transparent,
                 ),
-                toolbarHeight: 80,
-                leadingWidth: 80,
+                toolbarHeight: 60,
+                leadingWidth: 60,
                 leading: GestureDetector(
                   onTap: () => bottomNavigationBar != null
                       ? Get.toNamed(Routes.toClientProfile)
                       : Get.offAndToNamed(Routes.toHomeTrainer),
                   child: Container(
-                    height: 80,
-                    width: 80,
+                    height: 60,
+                    width: 60,
                     decoration: const BoxDecoration(
                       color: CustomColors.whiteStandard,
                       shape: BoxShape.circle,
@@ -77,12 +78,11 @@ class StandartScaffold extends StatelessWidget {
                     child: Icon(
                       iconAppBar,
                       color: CustomColors.primaryColor,
-                      size: 40,
+                      size: 32,
                     ),
                   ),
                 ),
-                backgroundColor: const Color(0x00ffffff),
-                shadowColor: const Color(0x00ffffff),
+                backgroundColor: Colors.transparent,
                 elevation: 0,
               )
             : null,

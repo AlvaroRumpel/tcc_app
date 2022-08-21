@@ -4,8 +4,8 @@ import 'package:tcc_app/models/trainer_user_model.dart';
 
 class UserModel {
   String? id;
-  String clientId;
-  String name;
+  String? clientId;
+  String? name;
   int bodyFat;
   String goal;
   int height;
@@ -43,16 +43,16 @@ class UserModel {
       'sex': sex,
       'birth_date': birthDate,
       'name': name,
-      'trainers': trainers,
+      'trainers': trainers.map((e) => e.toMap()).toList(),
     };
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
+  factory UserModel.fromMap(Map<String, dynamic> map, String id) {
     List<TrainerUserModel> trainers = [];
     map['trainers']
         .forEach((item) => trainers.add(TrainerUserModel.fromMap(item)));
     return UserModel(
-      id: map['id'] ?? '',
+      id: map['id'] ?? id,
       clientId: map['client_id'] ?? '',
       bodyFat: map['body_fat'],
       goal: map['goal'] ?? '',
@@ -69,6 +69,6 @@ class UserModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source));
+  factory UserModel.fromJson(String source, String id) =>
+      UserModel.fromMap(json.decode(source), id);
 }

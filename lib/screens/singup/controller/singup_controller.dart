@@ -26,7 +26,7 @@ class SingupController extends GetxController {
       UtilsWidgets.loadingDialog();
       LocalStorage.setUserName(userController.text);
       LocalStorage.setPassword(passController.text);
-      LocalStorage.setUserName(emailController.text);
+      LocalStorage.setEmail(emailController.text);
       Get.back();
       UtilsWidgets.sucessSnackbar(
           title: 'Obrigado pelo acesso!',

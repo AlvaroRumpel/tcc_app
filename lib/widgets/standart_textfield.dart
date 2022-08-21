@@ -15,6 +15,7 @@ class StandartTextfield extends StatelessWidget {
   String? hintText;
   bool date = false;
   bool textBox = false;
+  bool fit;
   StandartTextfield({
     Key? key,
     required this.labelText,
@@ -27,15 +28,19 @@ class StandartTextfield extends StatelessWidget {
     this.date = false,
     this.hintText,
     this.textBox = false,
+    this.fit = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: spaced
-          ? const EdgeInsets.only(top: 8, bottom: 24, left: 16, right: 16.0)
-          : const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
-      child: Container(
+      padding: fit
+          ? const EdgeInsets.all(0)
+          : spaced
+              ? const EdgeInsets.only(top: 8, bottom: 24, left: 16, right: 16.0)
+              : const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(

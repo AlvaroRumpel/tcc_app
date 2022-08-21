@@ -26,4 +26,6 @@ class CustomColors {
   static const Color containerButton = Color(0xffECECEC);
   static const Color errorColor = Color(0xFFFF2A08);
   static const Color sucessColor = Color(0xff4DB38A);
+  static const Color sentMessage = Color(0xBBE1462D);
+  static const Color reciviedMessage = Color(0xBBEA9E42);
 }

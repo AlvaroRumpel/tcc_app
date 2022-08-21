@@ -12,6 +12,9 @@ class UserTrainerModel {
   int xp;
   int sex;
   String birthDate;
+  bool active;
+  bool accepted;
+  bool hasResponse;
 
   UserTrainerModel({
     required this.id,
@@ -25,6 +28,9 @@ class UserTrainerModel {
     required this.xp,
     required this.sex,
     required this.birthDate,
+    required this.active,
+    required this.accepted,
+    required this.hasResponse,
   });
 
   Map<String, dynamic> toMap() {
@@ -40,6 +46,9 @@ class UserTrainerModel {
       'xp': xp,
       'sex': sex,
       'birthDate': birthDate,
+      'active': active,
+      'accepted': accepted,
+      'hasResponse': hasResponse,
     };
   }
 
@@ -56,6 +65,9 @@ class UserTrainerModel {
       xp: map['xp']?.toInt() ?? 0,
       sex: map['sex']?.toInt() ?? 0,
       birthDate: map['birthDate'] ?? '',
+      active: map['active'] ?? false,
+      accepted: map['accepted'] ?? false,
+      hasResponse: map['hasResponse'] ?? false,
     );
   }
 

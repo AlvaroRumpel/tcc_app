@@ -69,7 +69,7 @@ class SingupClientFormController extends GetxController with StateMixin<int> {
   void singUp() async {
     try {
       UtilsWidgets.loadingDialog();
-      UserService.singup(
+      await UserService.singup(
         userModel: UserModel(
           clientId: FirebaseAuth.instance.currentUser?.uid ?? '',
           name: FirebaseAuth.instance.currentUser?.displayName ?? '',

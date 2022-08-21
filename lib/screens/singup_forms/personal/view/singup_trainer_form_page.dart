@@ -82,7 +82,7 @@ class SingupTrainerFormPage extends GetView<SingupTrainerFormController> {
                       ),
                     ],
                   ),
-                  onEmpty: const EmptyState(),
+                  onEmpty: EmptyState(),
                 ),
               ),
             ],

@@ -22,13 +22,14 @@ class HomeTrainerPage extends GetView<HomeTrainerController> {
               onTap: () => controller.openClientModal(index),
               name: state![index].name,
               goal: state[index].goal,
+              hasResponse: state[index].hasResponse,
             ),
           ),
         ),
         onLoading: const Center(
           child: CircularProgressIndicator(),
         ),
-        onEmpty: const EmptyState(),
+        onEmpty: EmptyState(),
       ),
     );
   }

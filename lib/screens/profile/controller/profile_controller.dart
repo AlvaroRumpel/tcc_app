@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/user_model.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 
@@ -22,11 +23,11 @@ class ProfileController extends GetxController with StateMixin<UserModel> {
     try {
       UserModel? profile;
       var response = await db
-          .collection('clients')
+          .collection(DB.clients)
           .where('client_id', isEqualTo: user!.uid)
           .get();
       for (var res in response.docs) {
-        profile = UserModel.fromMap(res.data());
+        profile = UserModel.fromMap(res.data(), res.id);
       }
       change(profile, status: RxStatus.success());
     } catch (e) {

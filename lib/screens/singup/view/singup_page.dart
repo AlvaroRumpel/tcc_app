@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/screens/singup/controller/singup_controller.dart';
 import 'package:tcc_app/utils/svg_logo_icon.dart';
-import 'package:tcc_app/widgets/buttons/google_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_outlined_button.dart';

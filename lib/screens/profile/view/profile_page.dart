@@ -75,7 +75,7 @@ class ProfilePage extends GetView<ProfileController> {
             onLoading: const Center(
               child: CircularProgressIndicator(),
             ),
-            onEmpty: const EmptyState(),
+            onEmpty: EmptyState(),
           ),
         ),
       ),

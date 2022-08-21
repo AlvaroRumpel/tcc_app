@@ -1,21 +1,22 @@
 import 'package:avatars/avatars.dart';
 import 'package:flutter/material.dart';
-
 import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
 import 'package:tcc_app/widgets/texts/small_text.dart';
 import 'package:tcc_app/widgets/texts/standart_text.dart';
 
 class ClientCardContainer extends StatelessWidget {
   Alignment? alignment;
   Function onTap;
-  String name, goal;
+  String name;
+  String goal;
+  bool hasResponse;
   ClientCardContainer({
     Key? key,
     this.alignment = Alignment.topCenter,
     required this.onTap,
     required this.goal,
     required this.name,
+    required this.hasResponse,
   }) : super(key: key);
 
   @override
@@ -25,9 +26,8 @@ class ClientCardContainer extends StatelessWidget {
       child: Center(
         child: Container(
           alignment: alignment,
-          padding: const EdgeInsets.all(8),
-          height: (MediaQuery.of(context).size.height) * 0.50,
-          width: (MediaQuery.of(context).size.width) * 0.70,
+          padding: const EdgeInsets.all(16),
+          width: (MediaQuery.of(context).size.width) * 0.85,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -43,6 +43,18 @@ class ClientCardContainer extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              Visibility(
+                visible: !hasResponse,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: SmallText(
+                    color: CustomColors.whiteStandard,
+                    textAlignment: TextAlign.right,
+                    text: 'Aguardando Resposta',
+                    backgroundColor: CustomColors.primaryColor,
+                  ),
+                ),
+              ),
               Avatar(
                 name: name.toUpperCase(),
                 shape: AvatarShape.circle(48),
@@ -53,9 +65,6 @@ class ClientCardContainer extends StatelessWidget {
                 bigger: true,
                 backgroundColor: CustomColors.tertiaryColor,
                 textAlignment: TextAlign.center,
-              ),
-              StandartIconButton(
-                function: () => print('aaa'),
               ),
             ],
           ),

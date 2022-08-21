@@ -4,7 +4,7 @@ import 'package:tcc_app/models/user_trainer_model.dart';
 
 class TrainerModel {
   String? id;
-  String trainerId;
+  String? trainerId;
   String firstName;
   String lastName;
   double price;
@@ -46,15 +46,15 @@ class TrainerModel {
       'payment_key': paymentKey,
       'rating': rating,
       'number_clients': numberClients,
-      'clients': clients,
+      'clients': clients.map((e) => e.toMap()).toList(),
     };
   }
 
-  factory TrainerModel.fromMap(Map<String, dynamic> map) {
+  factory TrainerModel.fromMap(Map<String, dynamic> map, String id) {
     List<UserTrainerModel> users = [];
     map['clients'].forEach((item) => users.add(UserTrainerModel.fromMap(item)));
     return TrainerModel(
-      id: map['id'],
+      id: map['id'] ?? id,
       trainerId: map['trainer_id'] ?? '',
       firstName: map['first_name'] ?? '',
       lastName: map['last_name'] ?? '',
@@ -72,6 +72,6 @@ class TrainerModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TrainerModel.fromJson(String source) =>
-      TrainerModel.fromMap(json.decode(source));
+  factory TrainerModel.fromJson(String source, String id) =>
+      TrainerModel.fromMap(json.decode(source), id);
 }

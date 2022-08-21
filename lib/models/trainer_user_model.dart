@@ -9,6 +9,8 @@ class TrainerUserModel {
   String paymentKey;
   double rating;
   bool active;
+  bool accepted;
+  bool hasResponse;
 
   TrainerUserModel({
     required this.id,
@@ -19,6 +21,8 @@ class TrainerUserModel {
     required this.paymentKey,
     required this.rating,
     required this.active,
+    required this.accepted,
+    required this.hasResponse,
   });
 
   Map<String, dynamic> toMap() {
@@ -31,6 +35,8 @@ class TrainerUserModel {
       'paymentKey': paymentKey,
       'rating': rating,
       'active': active,
+      'accepted': accepted,
+      'hasResponse': hasResponse,
     };
   }
 
@@ -43,7 +49,9 @@ class TrainerUserModel {
       price: map['price']?.toDouble() ?? 0.0,
       paymentKey: map['paymentKey'] ?? '',
       rating: map['rating']?.toDouble() ?? 0.0,
-      active: map['active'],
+      active: map['active'] ?? false,
+      accepted: map['accepted'] ?? false,
+      hasResponse: map['hasResponse'] ?? false,
     );
   }
 

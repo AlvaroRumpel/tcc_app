@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/enum/user_type.dart';
 import 'package:tcc_app/models/trainer_model.dart';
+import 'package:tcc_app/models/trainer_user_model.dart';
 import 'package:tcc_app/models/user_model.dart';
+import 'package:tcc_app/models/user_trainer_model.dart';
 import 'package:tcc_app/services/local_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class UserService {
   static Future<UserType> login(String email, String password) async {
@@ -54,21 +58,203 @@ class UserService {
       await FirebaseAuth.instance.currentUser
           ?.updateDisplayName(await LocalStorage.getUserName());
       if (trainerModel != null) {
+        trainerModel.trainerId = FirebaseAuth.instance.currentUser?.uid;
         await FirebaseFirestore.instance
             .collection(DB.trainers)
             .add(trainerModel.toMap());
         LocalStorage.setIsClients(false);
       } else if (userModel != null) {
+        userModel.clientId = FirebaseAuth.instance.currentUser?.uid;
+        userModel.name = await LocalStorage.getUserName();
         await FirebaseFirestore.instance
             .collection(DB.clients)
             .add(userModel.toMap());
-        LocalStorage.setIsClients(true);
+        await LocalStorage.setIsClients(true);
       }
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(
         message: e.message,
         code: e.code,
       );
+    }
+  }
+
+  static Future<void> contractTrainer(
+    String trainerId,
+  ) async {
+    UserModel? userModel;
+    TrainerModel? trainerModel;
+    var uuid = const Uuid();
+    try {
+      var users = await FirebaseFirestore.instance
+          .collection(DB.clients)
+          .where(
+            'client_id',
+            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
+          )
+          .get();
+      for (var item in users.docs) {
+        userModel = UserModel.fromMap(item.data(), item.id);
+      }
+
+      var trainers = await FirebaseFirestore.instance
+          .collection(DB.trainers)
+          .where(
+            'trainer_id',
+            isEqualTo: trainerId,
+          )
+          .get();
+      for (var item in trainers.docs) {
+        trainerModel = TrainerModel.fromMap(item.data(), item.id);
+      }
+
+      TrainerUserModel trainerUserModel = TrainerUserModel(
+        id: trainerModel!.id ?? uuid.v4(),
+        trainerId: trainerModel.trainerId!,
+        firstName: trainerModel.firstName,
+        lastName: trainerModel.lastName,
+        price: trainerModel.price,
+        paymentKey: trainerModel.paymentKey,
+        rating: trainerModel.rating,
+        active: false,
+        accepted: false,
+        hasResponse: false,
+      );
+
+      if (!userModel!.trainers.every(
+        (element) => element.trainerId != trainerUserModel.trainerId,
+      )) {
+        return;
+      }
+      userModel.trainers.add(trainerUserModel);
+
+      UserTrainerModel userTrainerModel = UserTrainerModel(
+        id: userModel.id ?? uuid.v4(),
+        clientId: userModel.clientId!,
+        name: userModel.name!,
+        bodyFat: userModel.bodyFat,
+        goal: userModel.goal,
+        height: userModel.height,
+        weight: userModel.weight,
+        level: userModel.level,
+        xp: userModel.xp,
+        sex: userModel.sex,
+        birthDate: userModel.birthDate,
+        active: false,
+        accepted: false,
+        hasResponse: false,
+      );
+
+      trainerModel.clients.add(userTrainerModel);
+
+      await FirebaseFirestore.instance
+          .collection(DB.clients)
+          .doc(userModel.id)
+          .set(
+            userModel.toMap(),
+            SetOptions(merge: true),
+          );
+      await FirebaseFirestore.instance
+          .collection(DB.trainers)
+          .doc(trainerModel.id)
+          .set(
+            trainerModel.toMap(),
+            SetOptions(merge: true),
+          );
+      Get.back();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  static Future<void> responseClient(String idClient, bool accepted,
+      {Function? callback}) async {
+    UserModel? userModel;
+    TrainerModel? trainerModel;
+    var uuid = const Uuid();
+    try {
+      var users = await FirebaseFirestore.instance
+          .collection(DB.clients)
+          .where(
+            'client_id',
+            isEqualTo: idClient,
+          )
+          .get();
+      for (var item in users.docs) {
+        userModel = UserModel.fromMap(item.data(), item.id);
+      }
+
+      var trainers = await FirebaseFirestore.instance
+          .collection(DB.trainers)
+          .where(
+            'trainer_id',
+            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
+          )
+          .get();
+      for (var item in trainers.docs) {
+        trainerModel = TrainerModel.fromMap(item.data(), item.id);
+      }
+
+      TrainerUserModel trainerUserModel = TrainerUserModel(
+        id: trainerModel!.id ?? uuid.v4(),
+        trainerId: trainerModel.trainerId!,
+        firstName: trainerModel.firstName,
+        lastName: trainerModel.lastName,
+        price: trainerModel.price,
+        paymentKey: trainerModel.paymentKey,
+        rating: trainerModel.rating,
+        active: accepted,
+        accepted: accepted,
+        hasResponse: true,
+      );
+
+      userModel!.trainers[userModel.trainers.indexWhere(
+              (element) => element.trainerId == trainerUserModel.trainerId)] =
+          trainerUserModel;
+
+      UserTrainerModel userTrainerModel = UserTrainerModel(
+        id: userModel.id ?? uuid.v4(),
+        clientId: userModel.clientId!,
+        name: userModel.name!,
+        bodyFat: userModel.bodyFat,
+        goal: userModel.goal,
+        height: userModel.height,
+        weight: userModel.weight,
+        level: userModel.level,
+        xp: userModel.xp,
+        sex: userModel.sex,
+        birthDate: userModel.birthDate,
+        active: accepted,
+        accepted: accepted,
+        hasResponse: true,
+      );
+
+      trainerModel.clients[trainerModel.clients.indexWhere(
+              (element) => element.clientId == userTrainerModel.clientId)] =
+          userTrainerModel;
+      trainerModel.numberClients += 1;
+      await FirebaseFirestore.instance
+          .collection(DB.clients)
+          .doc(userModel.id)
+          .set(
+            userModel.toMap(),
+            SetOptions(merge: true),
+          );
+      await FirebaseFirestore.instance
+          .collection(DB.trainers)
+          .doc(trainerModel.id)
+          .set(
+            trainerModel.toMap(),
+            SetOptions(merge: true),
+          );
+      Get.back();
+      callback != null ? callback() : null;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }

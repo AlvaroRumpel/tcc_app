@@ -2,7 +2,10 @@ import 'package:avatars/avatars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/texts/number_clients_text.dart';
@@ -16,6 +19,8 @@ class TrainerCardContainer extends StatelessWidget {
   int numberClients;
   double price;
   double rating;
+  String id;
+
   TrainerCardContainer({
     Key? key,
     required this.onTap,
@@ -24,6 +29,7 @@ class TrainerCardContainer extends StatelessWidget {
     required this.numberClients,
     required this.price,
     required this.rating,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -101,7 +107,7 @@ class TrainerCardContainer extends StatelessWidget {
                     ),
                     StandartButton(
                       text: 'Chat',
-                      function: () {},
+                      function: () => Get.toNamed(Routes.toWhithoutIdChat + id),
                       leadingIcon: FontAwesome.chat_empty,
                     )
                   ],
