@@ -20,6 +20,8 @@ import 'package:tcc_app/screens/singup_forms/client/binding/singup_client_form_b
 import 'package:tcc_app/screens/singup_forms/client/view/singup_client_form_page.dart';
 import 'package:tcc_app/screens/singup_forms/personal/binding/singup_trainer_form_binding.dart';
 import 'package:tcc_app/screens/singup_forms/personal/view/singup_trainer_form_page.dart';
+import 'package:tcc_app/screens/trainings/client_one_view/binding/training_client_one_binding.dart';
+import 'package:tcc_app/screens/trainings/client_one_view/view/training_client_one_page.dart';
 import 'package:tcc_app/screens/trainings/personal_all_list/binding/training_personal_all_list_binding.dart';
 import 'package:tcc_app/screens/trainings/personal_all_list/view/training_personal_all_list_page.dart';
 import 'package:tcc_app/screens/trainings/personal_one_view/binding/training_personal_one_binding.dart';
@@ -99,6 +101,11 @@ class MyApp extends StatelessWidget {
           name: Routes.toTrainingPersonalOne,
           page: () => const TrainingPersonalOnePage(),
           binding: TrainingPersonalOneBinding(),
+        ),
+        GetPage(
+          name: Routes.toTrainingClientOne,
+          page: () => TrainingClientOnePage(),
+          binding: TrainingClientOneBinding(),
         ),
       ],
     );

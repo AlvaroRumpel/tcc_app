@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:tcc_app/models/training_model.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/validators.dart';
+import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
 import 'package:tcc_app/widgets/standart_textfield.dart';
+import 'package:tcc_app/widgets/texts/standart_text.dart';
 
 class TrainingExerciseCard extends StatelessWidget {
   TrainingModel training;
@@ -14,8 +17,10 @@ class TrainingExerciseCard extends StatelessWidget {
   TextEditingController? repsController;
   TextEditingController? weightController;
   TextEditingController? seriesController;
-  Function deleteFunction;
-  Function infoFunction;
+  Function? deleteFunction;
+  bool isClient;
+  Function? concludeFunction;
+  Function? cancelFunction;
 
   TrainingExerciseCard({
     Key? key,
@@ -25,8 +30,10 @@ class TrainingExerciseCard extends StatelessWidget {
     this.repsController,
     this.weightController,
     this.seriesController,
-    required this.deleteFunction,
-    required this.infoFunction,
+    this.deleteFunction,
+    this.isClient = false,
+    this.concludeFunction,
+    this.cancelFunction,
   }) : super(key: key);
 
   Validators validators = Validators();
@@ -197,7 +204,7 @@ class TrainingExerciseCard extends StatelessWidget {
                         ? StandartTextfield(
                             labelText: 'Séries',
                             validator: validators.isNumber,
-                            errorText: 'Numero',
+                            errorText: 'Número',
                             controller: seriesController!,
                             fit: true,
                             keyboardType: TextInputType.number,
@@ -234,19 +241,66 @@ class TrainingExerciseCard extends StatelessWidget {
                   child: editing
                       ? StandartIconButton(
                           icon: Icons.delete,
-                          function: deleteFunction,
+                          function: deleteFunction ?? () {},
                           backgroundColor: CustomColors.errorColor,
                         )
                       : StandartIconButton(
                           icon: Icons.info_rounded,
-                          function: infoFunction,
+                          function: openInfo,
                         ),
                 )
               ],
             ),
+            if (isClient && training.active)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      flex: 16,
+                      child: StandartButton(
+                        dense: true,
+                        text: 'Concluido',
+                        function: concludeFunction!,
+                        color: CustomColors.sucessColor,
+                      ),
+                    ),
+                    const Expanded(
+                      flex: 1,
+                      child: Divider(),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: StandartIconButton(
+                        size: 64,
+                        function: cancelFunction!,
+                        backgroundColor: CustomColors.errorColor,
+                        icon: Icons.cancel_outlined,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),
+    );
+  }
+
+  void openInfo() {
+    Get.defaultDialog(
+      title: training.training,
+      titleStyle: GoogleFonts.poppins(
+        color: CustomColors.primaryColor,
+      ),
+      middleText:
+          'Faça ${training.repetitions} repetições durante ${training.series} series com ${training.weight} Kg',
+      middleTextStyle: GoogleFonts.poppins(
+        color: CustomColors.primaryColor,
+        fontSize: 16,
+      ),
+      radius: 10,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/screens/contract_trainer/view/contract_trainer_view.dart';
 import 'package:tcc_app/screens/home/controller/home_controller.dart';
+import 'package:tcc_app/screens/trainings/client_all_list/view/training_client_all_list_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/standart_container.dart';
 import 'package:tcc_app/widgets/standart_scaffold.dart';
@@ -47,9 +48,7 @@ class HomePage extends GetView<HomeController> {
             child: Text('aa'),
           ),
           ContractTrainerView(),
-          StandartContainer(
-            child: Text('aba'),
-          ),
+          TrainingClientAllListPage(),
           StandartContainer(
             child: Text('aba'),
           ),

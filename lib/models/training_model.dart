@@ -6,6 +6,7 @@ class TrainingModel {
   int weight;
   int series;
   int repetitions;
+  bool active;
 
   TrainingModel({
     required this.name,
@@ -13,6 +14,7 @@ class TrainingModel {
     required this.weight,
     required this.series,
     required this.repetitions,
+    this.active = true,
   });
 
   Map<String, dynamic> toMap() {

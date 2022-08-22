@@ -9,6 +9,9 @@ class StandartButton extends StatelessWidget {
   bool smallText = false;
   IconData? leadingIcon;
   IconData? finalIcon;
+  Color color;
+  bool dense;
+
   StandartButton({
     Key? key,
     required this.text,
@@ -16,12 +19,16 @@ class StandartButton extends StatelessWidget {
     this.smallText = false,
     this.leadingIcon,
     this.finalIcon,
+    this.color = CustomColors.primaryColor,
+    this.dense = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: dense
+          ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
+          : const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
@@ -38,20 +45,20 @@ class StandartButton extends StatelessWidget {
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
-              return CustomColors.primaryColor;
+              return color;
             }),
             backgroundColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return CustomColors.primaryColor.withOpacity(0.8);
+                return color.withOpacity(0.8);
               }
               if (states.contains(MaterialState.selected)) {
-                return CustomColors.primaryColor.withOpacity(0.6);
+                return color.withOpacity(0.6);
               }
               if (states.contains(MaterialState.dragged)) {
-                return CustomColors.primaryColor.withOpacity(0.4);
+                return color.withOpacity(0.4);
               }
-              return CustomColors.primaryColor;
+              return color;
             }),
             shape: MaterialStateProperty.resolveWith<OutlinedBorder?>(
                 (Set<MaterialState> states) {

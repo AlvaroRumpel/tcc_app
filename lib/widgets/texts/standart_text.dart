@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:tcc_app/utils/custom_colors.dart';
 
 class StandartText extends StatelessWidget {
@@ -8,6 +9,8 @@ class StandartText extends StatelessWidget {
   TextAlign align = TextAlign.left;
   Color? color;
   double? fontSize;
+  FontWeight fontWeight;
+
   StandartText({
     Key? key,
     required this.text,
@@ -15,6 +18,7 @@ class StandartText extends StatelessWidget {
     this.align = TextAlign.left,
     this.color = CustomColors.primaryColor,
     this.fontSize = 24,
+    this.fontWeight = FontWeight.normal,
   }) : super(key: key);
 
   @override
@@ -32,7 +36,7 @@ class StandartText extends StatelessWidget {
         style: GoogleFonts.poppins(
           fontSize: fontSize,
           color: color,
-          fontWeight: FontWeight.normal,
+          fontWeight: fontWeight,
           decoration: TextDecoration.none,
         ),
         textAlign: align,

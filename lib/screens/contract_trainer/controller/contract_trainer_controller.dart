@@ -12,6 +12,8 @@ class ContractTrainerController extends GetxController
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<TrainerModel> trainers = [];
 
+  static ContractTrainerController get i => Get.find();
+
   @override
   void onInit() {
     super.onInit();
@@ -25,7 +27,6 @@ class ContractTrainerController extends GetxController
 
   void getData() async {
     try {
-      change(trainers, status: RxStatus.loading());
       var response = await db.collection(DB.trainers).get();
       for (var item in response.docs) {
         trainers.add(TrainerModel.fromMap(item.data(), item.id));

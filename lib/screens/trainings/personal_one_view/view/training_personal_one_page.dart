@@ -113,7 +113,6 @@ class TrainingPersonalOnePage extends GetView<TrainingPersonalOneController> {
                                   controller.seriesController[index],
                               deleteFunction: () =>
                                   controller.removeExercise(index),
-                              infoFunction: () => print('info'),
                             ),
                             if (controller.edit.value == true &&
                                 state.length == index + 1)

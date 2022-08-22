@@ -4,8 +4,7 @@ import 'package:tcc_app/screens/contract_trainer/controller/contract_trainer_con
 import 'package:tcc_app/utils/empty_state.dart';
 import 'package:tcc_app/widgets/trainer_card_container.dart';
 
-class ContractTrainerView extends StatelessWidget {
-  var controller = Get.put(ContractTrainerController());
+class ContractTrainerView extends GetView<ContractTrainerController> {
   ContractTrainerView({Key? key}) : super(key: key);
 
   @override
