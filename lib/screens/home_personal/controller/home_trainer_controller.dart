@@ -23,6 +23,8 @@ class HomeTrainerController extends GetxController
   var db = FirebaseFirestore.instance.collection(DB.trainers);
   List<UserTrainerModel> clients = [];
 
+  static HomeTrainerController get i => Get.find();
+
   @override
   void onInit() async {
     super.onInit();
@@ -173,7 +175,10 @@ class HomeTrainerController extends GetxController
           StandartButton(text: 'Progresso', function: () {}),
           StandartButton(
             text: 'Treinos',
-            function: () => Get.toNamed(Routes.toTrainingPersonalAllList),
+            function: () => Get.toNamed(
+              Routes.toTrainingPersonalAllList,
+              arguments: clients[index].clientId,
+            ),
           ),
           StandartButton(
             text: 'Chat',

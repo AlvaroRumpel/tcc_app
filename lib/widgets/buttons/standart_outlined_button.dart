@@ -5,16 +5,31 @@ import 'package:tcc_app/utils/custom_colors.dart';
 class StandartOutlinedButton extends StatelessWidget {
   String text;
   Function function;
+  double width;
+  double height;
+  bool smallText;
+  IconData? leadingIcon;
+  IconData? finalIcon;
+  bool dense;
+
   StandartOutlinedButton({
     Key? key,
     required this.text,
     required this.function,
+    this.width = 0,
+    this.height = 48,
+    this.smallText = false,
+    this.leadingIcon,
+    this.finalIcon,
+    this.dense = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: dense
+          ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
+          : const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
@@ -29,19 +44,6 @@ class StandartOutlinedButton extends StatelessWidget {
         ),
         child: OutlinedButton(
           onPressed: () => function(),
-          // style: OutlinedButton.styleFrom(
-          //   primary: CustomColors.primaryColor,
-          //   backgroundColor: CustomColors.whiteStandard,
-          //   side: const BorderSide(
-          //     color: CustomColors.primaryColor,
-          //     width: 2,
-          //   ),
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(10.0),
-          //   ),
-          //   elevation: 1,
-          //   minimumSize: const Size(double.maxFinite, 56),
-          // ),
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
@@ -75,16 +77,32 @@ class StandartOutlinedButton extends StatelessWidget {
             }),
             minimumSize: MaterialStateProperty.resolveWith<Size?>(
                 (Set<MaterialState> states) {
-              return const Size(double.maxFinite, 48);
+              return Size(width, height);
             }),
           ),
-          child: Text(
-            text,
-            style: GoogleFonts.poppins(
-              color: CustomColors.primaryColor,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
+          child: Row(
+            children: [
+              Icon(
+                leadingIcon,
+                size: smallText ? 16 : 24,
+                color: CustomColors.whiteStandard,
+              ),
+              Expanded(
+                child: Text(
+                  text,
+                  style: GoogleFonts.poppins(
+                    color: CustomColors.primaryColor,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Icon(
+                finalIcon,
+                size: smallText ? 16 : 24,
+                color: CustomColors.whiteStandard,
+              ),
+            ],
           ),
         ),
       ),

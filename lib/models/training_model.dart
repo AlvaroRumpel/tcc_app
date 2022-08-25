@@ -9,11 +9,11 @@ class TrainingModel {
   bool active;
 
   TrainingModel({
-    required this.name,
-    required this.training,
-    required this.weight,
-    required this.series,
-    required this.repetitions,
+    this.name = 'Novo Treino',
+    this.training = 'Novo Treino',
+    this.weight = 0,
+    this.series = 0,
+    this.repetitions = 0,
     this.active = true,
   });
 

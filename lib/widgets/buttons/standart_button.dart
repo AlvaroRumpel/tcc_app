@@ -11,6 +11,8 @@ class StandartButton extends StatelessWidget {
   IconData? finalIcon;
   Color color;
   bool dense;
+  double height;
+  double width;
 
   StandartButton({
     Key? key,
@@ -21,6 +23,8 @@ class StandartButton extends StatelessWidget {
     this.finalIcon,
     this.color = CustomColors.primaryColor,
     this.dense = false,
+    this.height = 48,
+    this.width = 0,
   }) : super(key: key);
 
   @override
@@ -68,7 +72,7 @@ class StandartButton extends StatelessWidget {
             }),
             minimumSize: MaterialStateProperty.resolveWith<Size?>(
                 (Set<MaterialState> states) {
-              return const Size(double.maxFinite, 48);
+              return Size(width, height);
             }),
           ),
           onPressed: () => function(),

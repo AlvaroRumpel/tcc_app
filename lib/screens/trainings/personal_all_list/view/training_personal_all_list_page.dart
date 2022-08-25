@@ -17,15 +17,13 @@ class TrainingPersonalAllListPage
       appBar: true,
       title: 'Treinos',
       body: StandartContainer(
-        child: Obx(
-          () => ListView.builder(
-            itemCount: controller.trainings.length >= 5
-                ? controller.trainings.length
-                : controller.trainings.length + 1,
+        child: controller.obx(
+          (state) => ListView.builder(
+            itemCount: state!.length >= 5 ? state.length : state.length + 1,
             itemBuilder: (_, index) => GestureDetector(
               onTap: () {
-                if (index == controller.trainings.length) {
-                  controller.trainings.add('Novo Treino');
+                if (index == state.length) {
+                  controller.addTraining();
                 }
               },
               child: Stack(
@@ -46,7 +44,7 @@ class TrainingPersonalAllListPage
                           ],
                         ),
                       ),
-                      child: index == controller.trainings.length
+                      child: index == state.length
                           ? const Icon(
                               Icons.add,
                               color: CustomColors.whiteStandard,
@@ -55,28 +53,30 @@ class TrainingPersonalAllListPage
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text(
-                                  controller.trainings[index],
-                                  style: GoogleFonts.poppins(
-                                    color: CustomColors.whiteStandard,
-                                    fontSize: 32,
+                                Expanded(
+                                  child: Text(
+                                    state[index].trainings.first.name,
+                                    style: GoogleFonts.poppins(
+                                      color: CustomColors.whiteStandard,
+                                      fontSize: 32,
+                                    ),
                                   ),
                                 ),
                                 StandartIconButton(
-                                  function: () => controller.goingToTraining(
-                                      controller.trainings[index]),
+                                  function: () =>
+                                      controller.goingToTraining(index),
                                   circle: true,
                                 ),
                               ],
                             ),
                     ),
                   ),
-                  if (index != controller.trainings.length)
+                  if (index != state.length)
                     Positioned(
                       top: -8,
                       right: 0,
                       child: StandartIconButton(
-                        function: () => controller.trainings.removeAt(index),
+                        function: () => controller.removeTraining(index),
                         circle: true,
                         backgroundColor: CustomColors.errorColor,
                         icon: Icons.remove,
@@ -84,6 +84,30 @@ class TrainingPersonalAllListPage
                       ),
                     ),
                 ],
+              ),
+            ),
+          ),
+          onEmpty: GestureDetector(
+            onTap: () {
+              controller.addTraining();
+            },
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xff364151),
+                    Color(0xff4D6382),
+                  ],
+                ),
+              ),
+              child: const Icon(
+                Icons.add,
+                color: CustomColors.whiteStandard,
+                size: 40,
               ),
             ),
           ),

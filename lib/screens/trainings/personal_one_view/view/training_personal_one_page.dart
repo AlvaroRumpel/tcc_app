@@ -17,7 +17,7 @@ class TrainingPersonalOnePage extends GetView<TrainingPersonalOneController> {
   Widget build(BuildContext context) {
     return StandartScaffold(
       appBar: true,
-      title: controller.trainingArguments.first.name,
+      title: controller.trainingArguments.trainings.first.name,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -79,8 +79,8 @@ class TrainingPersonalOnePage extends GetView<TrainingPersonalOneController> {
                             ),
                             child: StandartTextfield(
                               fit: true,
-                              labelText:
-                                  controller.trainingArguments.first.name,
+                              labelText: controller
+                                  .trainingArguments.trainings.first.name,
                               validator: Validators().isAlphabetic,
                               errorText: 'Nome inválido',
                               controller: controller.trainingNameController,
@@ -94,7 +94,7 @@ class TrainingPersonalOnePage extends GetView<TrainingPersonalOneController> {
           Expanded(
             child: controller.obx(
               (state) => ListView.builder(
-                itemCount: state!.length,
+                itemCount: state!.trainings.length,
                 itemBuilder: (_, index) {
                   return Column(
                     children: [
@@ -102,7 +102,7 @@ class TrainingPersonalOnePage extends GetView<TrainingPersonalOneController> {
                         () => Column(
                           children: [
                             TrainingExerciseCard(
-                              training: state[index],
+                              training: state.trainings[index],
                               editing: controller.edit.value,
                               exerciseController:
                                   controller.exerciseController[index],
@@ -115,7 +115,7 @@ class TrainingPersonalOnePage extends GetView<TrainingPersonalOneController> {
                                   controller.removeExercise(index),
                             ),
                             if (controller.edit.value == true &&
-                                state.length == index + 1)
+                                state.trainings.length == index + 1)
                               GestureDetector(
                                 onTap: controller.addExercise,
                                 child: Container(
