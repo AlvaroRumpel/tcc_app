@@ -106,7 +106,7 @@ class TrainingPersonalOneController extends GetxController
     for (var element in trainingArguments.trainings) {
       trainingSaved.add(
         TrainingModel(
-          active: element.active,
+          conclude: element.conclude,
           name: element.name,
           repetitions: element.repetitions,
           series: element.series,

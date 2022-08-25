@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/enum/timer_type.dart';
 import 'package:tcc_app/models/training_finished_model.dart';
 import 'package:tcc_app/models/training_model.dart';
@@ -12,6 +15,7 @@ class TrainingClientOneController extends GetxController
   Rx<TimerType> timerIsRunning = TimerType.stop.obs;
   String? time;
   int xpEarned = 0;
+  var db = FirebaseFirestore.instance.collection(DB.historic);
 
   @override
   void onInit() {
@@ -31,7 +35,7 @@ class TrainingClientOneController extends GetxController
       );
       return;
     }
-    trainingArguments[index].active = false;
+    trainingArguments[index].conclude = conclude;
     if (conclude) {
       xpEarned += 50;
     }
@@ -71,11 +75,37 @@ class TrainingClientOneController extends GetxController
   }
 
   Future<void> finishTraining() async {
+    if (time == null || xpEarned == 0) {
+      UtilsWidgets.errorSnackbar(
+        title: 'Você não iniciou seu treino ou não concluiu um exercicio ainda',
+        description:
+            'Ainda não começou a treinar, você pode apenas voltar para a pagina anterior',
+      );
+      return;
+    }
+
     TrainingFinishedModel trainingFinished = TrainingFinishedModel(
-      training: trainingArguments,
+      clientId: FirebaseAuth.instance.currentUser?.uid ?? '',
+      training: trainingArguments
+          .where((element) => element.conclude == true)
+          .toList(),
       xpEarned: xpEarned,
       time: time!,
+      date: DateTime.now(),
     );
-    print(trainingFinished);
+
+    try {
+      await db.add(trainingFinished.toMap());
+      for (var i = 0; i < trainingArguments.length; i++) {
+        trainingArguments[i].conclude = false;
+      }
+      Get.back();
+      UtilsWidgets.sucessSnackbar(
+        title: 'Treino finalizado com sucesso',
+        description: 'Você acabou seu treino e ganhou $xpEarned xp',
+      );
+    } catch (e) {
+      UtilsWidgets.errorSnackbar();
+    }
   }
 }

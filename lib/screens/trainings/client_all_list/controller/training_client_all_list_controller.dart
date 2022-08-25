@@ -3,54 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/models/training_model.dart';
+import 'package:tcc_app/models/workouts_model.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/screens/contract_trainer/controller/contract_trainer_controller.dart';
 
 class TrainingClientAllListController extends GetxController
-    with StateMixin<TrainerModel> {
+    with StateMixin<List<WorkoutsModel>> {
   TrainingClientAllListController({Key? key});
   FirebaseFirestore db = FirebaseFirestore.instance;
-  RxList<String> trainings = ['a', 'b', 'c', 'd'].obs;
-  TrainerModel? trainer;
-  List<TrainingModel> training = [
-    TrainingModel(
-      name: 'name',
-      training: 'Novo exercício',
-      weight: 0,
-      series: 0,
-      repetitions: 0,
-    ),
-    TrainingModel(
-      name: 'name',
-      training: 'Novo exercício',
-      weight: 0,
-      series: 0,
-      repetitions: 0,
-    ),
-    TrainingModel(
-      name: 'name',
-      training: 'Novo exercício',
-      weight: 0,
-      series: 0,
-      repetitions: 0,
-    ),
-    TrainingModel(
-      name: 'name',
-      training: 'Novo exercício',
-      weight: 0,
-      series: 0,
-      repetitions: 0,
-    ),
-    TrainingModel(
-      name: 'name',
-      training: 'Novo exercício',
-      weight: 0,
-      series: 0,
-      repetitions: 0,
-    ),
-  ];
+  List<WorkoutsModel> workouts = [];
 
   static TrainingClientAllListController get i => Get.find();
 
@@ -66,23 +30,33 @@ class TrainingClientAllListController extends GetxController
       while (ContractTrainerController.i.trainers.isEmpty) {
         await Future.delayed(const Duration(seconds: 2));
       }
-      trainer = ContractTrainerController.i.trainers.firstWhere(
-        (element) => element.clients.every(
-          (element) =>
-              element.clientId == FirebaseAuth.instance.currentUser?.uid,
-        ),
-      );
-      change(trainer, status: RxStatus.success());
+      var response = await db
+          .collection(DB.workouts)
+          .where(
+            'client_id',
+            isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+          )
+          .get();
+
+      if (response.docs.isEmpty) {
+        change(workouts, status: RxStatus.empty());
+        return;
+      }
+
+      for (var item in response.docs) {
+        workouts.add(WorkoutsModel.fromMap(item.data(), item.id, true));
+      }
+      change(workouts, status: RxStatus.success());
     } catch (e) {
       Logger().d(e);
-      change(trainer, status: RxStatus.empty());
+      change(workouts, status: RxStatus.empty());
     }
   }
 
   void goToTraining(int index) {
     Get.toNamed(
       Routes.toTrainingClientOne,
-      arguments: training,
+      arguments: workouts[index].trainings,
     );
   }
 }

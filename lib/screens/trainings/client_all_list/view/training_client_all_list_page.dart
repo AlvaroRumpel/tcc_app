@@ -27,54 +27,52 @@ class TrainingClientAllListPage
                 text: 'Chat',
                 function: () async {
                   await Get.toNamed(
-                      Routes.toWhithoutIdChat + state!.trainerId!);
+                      Routes.toWhithoutIdChat + state!.first.trainerId);
                 },
               ),
             ),
             StandartContainer(
-              child: Obx(
-                () => GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 250,
-                    mainAxisExtent: 250,
-                    childAspectRatio: 1,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                  ),
-                  itemCount: controller.trainings.length,
-                  itemBuilder: (_, index) => GestureDetector(
-                    onTap: () => controller.goToTraining(index),
-                    child: Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: const LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xff364151),
-                            Color(0xff4D6382),
-                          ],
-                        ),
+              child: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 250,
+                  mainAxisExtent: 250,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                ),
+                itemCount: state!.length,
+                itemBuilder: (_, index) => GestureDetector(
+                  onTap: () => controller.goToTraining(index),
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xff364151),
+                          Color(0xff4D6382),
+                        ],
                       ),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              controller.trainings[index],
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                color: CustomColors.whiteStandard,
-                                fontSize: 32,
-                              ),
-                            ),
-                            StandartIconButton(
-                              function: () => controller.goToTraining(index),
-                              circle: true,
-                            ),
-                          ]),
                     ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            state[index].trainings.first.name,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: CustomColors.whiteStandard,
+                              fontSize: 32,
+                            ),
+                          ),
+                          StandartIconButton(
+                            function: () => controller.goToTraining(index),
+                            circle: true,
+                          ),
+                        ]),
                   ),
                 ),
               ),

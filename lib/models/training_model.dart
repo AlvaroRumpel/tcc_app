@@ -6,7 +6,7 @@ class TrainingModel {
   int weight;
   int series;
   int repetitions;
-  bool active;
+  bool conclude;
 
   TrainingModel({
     this.name = 'Novo Treino',
@@ -14,7 +14,7 @@ class TrainingModel {
     this.weight = 0,
     this.series = 0,
     this.repetitions = 0,
-    this.active = true,
+    this.conclude = false,
   });
 
   Map<String, dynamic> toMap() {

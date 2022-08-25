@@ -251,7 +251,7 @@ class TrainingExerciseCard extends StatelessWidget {
                 )
               ],
             ),
-            if (isClient && training.active)
+            if (isClient && !training.conclude)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
