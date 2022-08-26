@@ -112,12 +112,15 @@ class UtilsWidgets {
     Function? button1,
     String? textButton1,
     bool button1IsOutline = false,
+    Color? button1Color,
     Function? button2,
     String? textButton2,
     bool button2IsOutline = false,
+    Color? button2Color,
     Function? button3,
     String? textButton3,
     bool button3IsOutline = false,
+    Color? button3Color,
   }) {
     Get.defaultDialog(
       barrierDismissible: false,
@@ -128,82 +131,91 @@ class UtilsWidgets {
       ),
       backgroundColor: CustomColors.whiteStandard,
       radius: 10,
-      content: Column(
-        children: [
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
-              color: CustomColors.primaryColor,
-              fontSize: 16,
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                description,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(
+                  color: CustomColors.primaryColor,
+                  fontSize: 16,
+                ),
+              ),
             ),
-          ),
-          Row(
-            children: [
-              if (button1 != null && textButton1 != null)
-                Expanded(
-                  flex: 3,
-                  child: button1IsOutline
-                      ? StandartOutlinedButton(
-                          text: textButton1,
-                          function: button1,
-                          smallText: true,
-                          dense: true,
-                        )
-                      : StandartButton(
-                          text: textButton1,
-                          dense: true,
-                          function: button1,
-                          smallText: true,
-                        ),
-                ),
-              if (button1 != null && textButton1 != null)
-                const Expanded(
-                  flex: 1,
-                  child: Divider(),
-                ),
-              if (button2 != null && textButton2 != null)
-                Expanded(
-                  flex: 3,
-                  child: button2IsOutline
-                      ? StandartOutlinedButton(
-                          text: textButton2,
-                          dense: true,
-                          function: button2,
-                          smallText: true,
-                        )
-                      : StandartButton(
-                          text: textButton2,
-                          dense: true,
-                          function: button2,
-                          smallText: true,
-                        ),
-                ),
-              if (button3 != null && textButton2 != null)
-                const Expanded(
-                  flex: 1,
-                  child: Divider(),
-                ),
-              if (button3 != null && textButton3 != null)
-                Expanded(
-                  flex: 3,
-                  child: button3IsOutline
-                      ? StandartOutlinedButton(
-                          text: textButton3,
-                          dense: true,
-                          function: button3,
-                          smallText: true,
-                        )
-                      : StandartButton(
-                          text: textButton3,
-                          dense: true,
-                          function: button3,
-                          smallText: true,
-                        ),
-                ),
-            ],
-          ),
-        ],
+            Row(
+              children: [
+                if (button1 != null && textButton1 != null)
+                  Expanded(
+                    flex: 3,
+                    child: button1IsOutline
+                        ? StandartOutlinedButton(
+                            text: textButton1,
+                            function: button1,
+                            smallText: true,
+                            dense: true,
+                          )
+                        : StandartButton(
+                            text: textButton1,
+                            dense: true,
+                            function: button1,
+                            smallText: true,
+                            color: button1Color ?? CustomColors.primaryColor,
+                          ),
+                  ),
+                if (button1 != null && textButton1 != null)
+                  const Expanded(
+                    flex: 1,
+                    child: Divider(),
+                  ),
+                if (button2 != null && textButton2 != null)
+                  Expanded(
+                    flex: 3,
+                    child: button2IsOutline
+                        ? StandartOutlinedButton(
+                            text: textButton2,
+                            dense: true,
+                            function: button2,
+                            smallText: true,
+                          )
+                        : StandartButton(
+                            text: textButton2,
+                            dense: true,
+                            function: button2,
+                            smallText: true,
+                            color: button2Color ?? CustomColors.primaryColor,
+                          ),
+                  ),
+                if (button3 != null && textButton2 != null)
+                  const Expanded(
+                    flex: 1,
+                    child: Divider(),
+                  ),
+                if (button3 != null && textButton3 != null)
+                  Expanded(
+                    flex: 3,
+                    child: button3IsOutline
+                        ? StandartOutlinedButton(
+                            text: textButton3,
+                            dense: true,
+                            function: button3,
+                            smallText: true,
+                          )
+                        : StandartButton(
+                            text: textButton3,
+                            dense: true,
+                            function: button3,
+                            smallText: true,
+                            color: button3Color ?? CustomColors.primaryColor,
+                          ),
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

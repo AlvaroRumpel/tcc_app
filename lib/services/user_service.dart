@@ -9,6 +9,7 @@ import 'package:tcc_app/models/trainer_user_model.dart';
 import 'package:tcc_app/models/user_model.dart';
 import 'package:tcc_app/models/user_trainer_model.dart';
 import 'package:tcc_app/services/local_storage.dart';
+import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:uuid/uuid.dart';
 
 class UserService {
@@ -162,6 +163,74 @@ class UserService {
             SetOptions(merge: true),
           );
       Get.back();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  static Future<void> dismissTrainer(
+    String trainerId, {
+    int timesBack = 1,
+  }) async {
+    UserModel? userModel;
+    TrainerModel? trainerModel;
+    try {
+      var users = await FirebaseFirestore.instance
+          .collection(DB.clients)
+          .where(
+            'client_id',
+            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
+          )
+          .get();
+      for (var item in users.docs) {
+        userModel = UserModel.fromMap(item.data(), item.id);
+      }
+
+      var trainers = await FirebaseFirestore.instance
+          .collection(DB.trainers)
+          .where(
+            'trainer_id',
+            isEqualTo: trainerId,
+          )
+          .get();
+      for (var item in trainers.docs) {
+        trainerModel = TrainerModel.fromMap(item.data(), item.id);
+      }
+
+      for (var element in userModel!.trainers) {
+        if (element.trainerId == trainerModel!.trainerId &&
+            element.active &&
+            element.accepted &&
+            element.hasResponse) {
+          element.active = false;
+        }
+      }
+      for (var element in trainerModel!.clients) {
+        if (element.clientId == userModel.clientId &&
+            element.active &&
+            element.accepted &&
+            element.hasResponse) {
+          element.active = false;
+        }
+      }
+
+      await FirebaseFirestore.instance
+          .collection(DB.clients)
+          .doc(userModel.id)
+          .set(
+            userModel.toMap(),
+          );
+      await FirebaseFirestore.instance
+          .collection(DB.trainers)
+          .doc(trainerModel.id)
+          .set(
+            trainerModel.toMap(),
+          );
+      for (var i = 0; i < timesBack; i++) {
+        Get.back();
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e);

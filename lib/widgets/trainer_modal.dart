@@ -8,13 +8,17 @@ import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/services/user_service.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/success_button.dart';
 import 'package:tcc_app/widgets/texts/number_clients_text.dart';
 import 'package:tcc_app/widgets/texts/price_text.dart';
 
 class TrainerModal {
-  TrainerModal.defaultTrainerModal(TrainerModel trainer) {
+  TrainerModal.defaultTrainerModal(
+    TrainerModel trainer, {
+    bool dismissTrainer = false,
+  }) {
     Get.defaultDialog(
       contentPadding: const EdgeInsets.only(
         top: 0,
@@ -112,12 +116,35 @@ class TrainerModal {
               await Get.toNamed(Routes.toWhithoutIdChat + trainer.trainerId!);
             },
           ),
-          SuccessButton(
-            text: 'Contratar',
-            function: () => UserService.contractTrainer(trainer.trainerId!),
-          ),
+          dismissTrainer
+              ? StandartButton(
+                  function: () => dismissTrainerConfirm(trainer.trainerId!),
+                  text: 'Demitir',
+                  color: CustomColors.errorColor,
+                )
+              : SuccessButton(
+                  text: 'Contratar',
+                  function: () =>
+                      UserService.contractTrainer(trainer.trainerId!),
+                ),
         ],
       ),
+    );
+  }
+  void dismissTrainerConfirm(String trainerId) {
+    UtilsWidgets.buttonsDialog(
+      title: 'Deseja demitir o profissional?',
+      description:
+          'Confirmar a demissão deste profissional, você pode recontrata-lo, mas irá perder os treinos.',
+      button1: () => UserService.dismissTrainer(trainerId, timesBack: 2),
+      textButton1: 'Demitir',
+      button1IsOutline: true,
+      button2: () {
+        Get.back();
+        Get.back();
+      },
+      textButton2: 'Voltar',
+      button2Color: CustomColors.sucessColor,
     );
   }
 }
