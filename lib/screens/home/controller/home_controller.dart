@@ -18,12 +18,4 @@ class HomeController extends GetxController {
       curve: Curves.ease,
     );
   }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    if (await LocalStorage.getIsClients() == false) {
-      Get.offAndToNamed(Routes.toHomeTrainer);
-    }
-  }
 }

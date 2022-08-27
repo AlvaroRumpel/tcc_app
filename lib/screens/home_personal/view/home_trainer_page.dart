@@ -19,7 +19,7 @@ class HomeTrainerPage extends GetView<HomeTrainerController> {
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ClientCardContainer(
-              onTap: () => controller.openClientModal(index),
+              onTap: () => controller.openClientModal(state![index]),
               name: state![index].name,
               goal: state[index].goal,
               hasResponse: state[index].hasResponse,

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/screens/profile/controller/profile_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/empty_state.dart';
+import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/standart_container.dart';
 import 'package:tcc_app/widgets/standart_scaffold.dart';
 import 'package:tcc_app/widgets/texts/small_text.dart';
@@ -110,7 +111,11 @@ class ProfilePage extends GetView<ProfileController> {
                           rating: controller.trainerComplete?.rating ?? 0,
                           id: controller.trainerComplete?.trainerId ?? '',
                         ),
-                      )
+                      ),
+                    StandartButton(
+                      text: 'Atualizar página',
+                      function: () => controller.getData(isRefresh: true),
+                    ),
                   ],
                 )),
             onLoading: const Center(

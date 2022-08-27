@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/global/global_controller.dart';
 import 'package:tcc_app/models/enum/timer_type.dart';
 import 'package:tcc_app/models/training_finished_model.dart';
 import 'package:tcc_app/models/training_model.dart';
@@ -15,7 +16,8 @@ class TrainingClientOneController extends GetxController
   Rx<TimerType> timerIsRunning = TimerType.stop.obs;
   String? time;
   int xpEarned = 0;
-  var db = FirebaseFirestore.instance.collection(DB.historic);
+  var db = FirebaseFirestore.instance;
+  GlobalController globalController = GlobalController.i;
 
   @override
   void onInit() {
@@ -94,8 +96,12 @@ class TrainingClientOneController extends GetxController
       date: DateTime.now(),
     );
 
+    globalController.client!.xp += xpEarned;
     try {
-      await db.add(trainingFinished.toMap());
+      await db.collection(DB.historic).add(trainingFinished.toMap());
+      await db.collection(DB.clients).doc(globalController.client!.id).set(
+            globalController.client!.toMap(),
+          );
       for (var i = 0; i < trainingArguments.length; i++) {
         trainingArguments[i].conclude = false;
       }

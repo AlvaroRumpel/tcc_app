@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/global/global_controller.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/models/trainer_user_model.dart';
 import 'package:tcc_app/models/user_model.dart';
@@ -15,47 +16,29 @@ class ProfileController extends GetxController with StateMixin<UserModel> {
   User? user = FirebaseAuth.instance.currentUser;
   FirebaseFirestore db = FirebaseFirestore.instance;
   TrainerModel? trainerComplete;
+  UserModel? profile;
+  GlobalController globalController = GlobalController.i;
 
   @override
   void onInit() {
     super.onInit();
-    change(state, status: RxStatus.loading());
     getData();
   }
 
-  void getData() async {
-    try {
-      TrainerUserModel? trainer;
-      UserModel? profile;
-      var response = await db
-          .collection(DB.clients)
-          .where('client_id', isEqualTo: user!.uid)
-          .get();
-
-      if (response.docs.isEmpty) {
-        change(state, status: RxStatus.empty());
-      }
-      for (var res in response.docs) {
-        profile = UserModel.fromMap(res.data(), res.id);
-      }
-      trainer =
-          profile!.trainers.firstWhereOrNull((e) => e.active && e.accepted);
-      if (trainer != null) {
-        var trainerResponse = await db
-            .collection(DB.trainers)
-            .where('trainer_id', isEqualTo: trainer.trainerId)
-            .get();
-        for (var item in trainerResponse.docs) {
-          trainerComplete = TrainerModel.fromMap(item.data(), item.id);
-        }
-      }
-      change(profile, status: RxStatus.success());
-    } catch (e) {
-      UtilsWidgets.errorScreen();
-      Logger().d(e);
-      change(state, status: RxStatus.empty());
-      UtilsWidgets.errorSnackbar(title: 'Usuario não encontrado');
+  Future<void> getData({bool isRefresh = false}) async {
+    change(state, status: RxStatus.loading());
+    if (isRefresh) {
+      await globalController.getClient();
     }
+    profile = globalController.client;
+    trainerComplete = globalController.trainer;
+
+    change(profile ?? state,
+        status: profile != null ? RxStatus.success() : RxStatus.empty());
+
+    if (profile != null) return;
+    UtilsWidgets.errorScreen();
+    UtilsWidgets.errorSnackbar(title: 'Usuario não encontrado');
   }
 
   void openTrainerModal() {

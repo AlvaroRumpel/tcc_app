@@ -47,7 +47,7 @@ class UserModel {
     };
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map, String id) {
+  factory UserModel.fromMap(Map<String, dynamic> map, String? id) {
     List<TrainerUserModel> trainers = [];
     map['trainers']
         .forEach((item) => trainers.add(TrainerUserModel.fromMap(item)));
@@ -69,6 +69,6 @@ class UserModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source, String id) =>
+  factory UserModel.fromJson(String source, String? id) =>
       UserModel.fromMap(json.decode(source), id);
 }

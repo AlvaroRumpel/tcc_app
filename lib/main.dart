@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/firebase_options.dart';
+import 'package:tcc_app/global/global_binding.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/screens/chat/binding/chat_binding.dart';
 import 'package:tcc_app/screens/chat/view/chat_page.dart';
@@ -20,6 +21,8 @@ import 'package:tcc_app/screens/singup_forms/client/binding/singup_client_form_b
 import 'package:tcc_app/screens/singup_forms/client/view/singup_client_form_page.dart';
 import 'package:tcc_app/screens/singup_forms/personal/binding/singup_trainer_form_binding.dart';
 import 'package:tcc_app/screens/singup_forms/personal/view/singup_trainer_form_page.dart';
+import 'package:tcc_app/screens/splash/binding/splash_binding.dart';
+import 'package:tcc_app/screens/splash/view/splash_page.dart';
 import 'package:tcc_app/screens/trainings/client_one_view/binding/training_client_one_binding.dart';
 import 'package:tcc_app/screens/trainings/client_one_view/view/training_client_one_page.dart';
 import 'package:tcc_app/screens/trainings/personal_all_list/binding/training_personal_all_list_binding.dart';
@@ -48,64 +51,71 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: CustomColors.primaryColor,
       ),
-      initialRoute: FirebaseAuth.instance.currentUser == null
-          ? Routes.toLogin
-          : Routes.toHomeClient,
+      initialRoute: Routes.toSplash,
+      initialBinding: GlobalBinding(),
       getPages: [
         GetPage(
-          name: Routes.toHomeClient,
-          page: () => const HomePage(),
-          binding: HomeBinding(),
-        ),
-        GetPage(
-          name: Routes.toHomeTrainer,
-          page: () => const HomeTrainerPage(),
-          binding: HomeTrainerBinding(),
-        ),
-        GetPage(
-          name: Routes.toLogin,
-          page: () => const LoginPage(),
-          binding: LoginBinding(),
-        ),
-        GetPage(
-          name: Routes.toSingUp,
-          page: () => const SingupPage(),
-          binding: SingupBinding(),
-        ),
-        GetPage(
-          name: Routes.toClientSingUp,
-          page: () => const SingupClientFormPage(),
-          binding: SingupClientFormBinding(),
-        ),
-        GetPage(
-          name: Routes.toTrainerSingUp,
-          page: () => const SingupTrainerFormPage(),
-          binding: SingupTrainerFormBinding(),
-        ),
-        GetPage(
-          name: Routes.toClientProfile,
-          page: () => const ProfilePage(),
-          binding: ProfileBinding(),
-        ),
-        GetPage(
-          name: Routes.toChat,
-          page: () => const ChatPage(),
-          binding: ChatBinding(),
-        ),
-        GetPage(
-          name: Routes.toTrainingPersonalAllList,
-          page: () => const TrainingPersonalAllListPage(),
-          binding: TrainingPersonalAllListBinding(),
-        ),
-        GetPage(
-          name: Routes.toTrainingPersonalOne,
-          page: () => const TrainingPersonalOnePage(),
-          binding: TrainingPersonalOneBinding(),
-        ),
-        GetPage(
-          name: Routes.toTrainingClientOne,
-          page: () => TrainingClientOnePage(),
-          binding: TrainingClientOneBinding(),
+          name: Routes.toSplash,
+          page: () => const SplashPage(),
+          binding: SplashBinding(),
+          preventDuplicates: true,
+          children: [
+            GetPage(
+              name: Routes.toHomeClient,
+              page: () => const HomePage(),
+              binding: HomeBinding(),
+            ),
+            GetPage(
+              name: Routes.toHomeTrainer,
+              page: () => const HomeTrainerPage(),
+              binding: HomeTrainerBinding(),
+            ),
+            GetPage(
+              name: Routes.toLogin,
+              page: () => const LoginPage(),
+              binding: LoginBinding(),
+            ),
+            GetPage(
+              name: Routes.toSingUp,
+              page: () => const SingupPage(),
+              binding: SingupBinding(),
+            ),
+            GetPage(
+              name: Routes.toClientSingUp,
+              page: () => const SingupClientFormPage(),
+              binding: SingupClientFormBinding(),
+            ),
+            GetPage(
+              name: Routes.toTrainerSingUp,
+              page: () => const SingupTrainerFormPage(),
+              binding: SingupTrainerFormBinding(),
+            ),
+            GetPage(
+              name: Routes.toClientProfile,
+              page: () => const ProfilePage(),
+              binding: ProfileBinding(),
+            ),
+            GetPage(
+              name: Routes.toChat,
+              page: () => const ChatPage(),
+              binding: ChatBinding(),
+            ),
+            GetPage(
+              name: Routes.toTrainingPersonalAllList,
+              page: () => const TrainingPersonalAllListPage(),
+              binding: TrainingPersonalAllListBinding(),
+            ),
+            GetPage(
+              name: Routes.toTrainingPersonalOne,
+              page: () => const TrainingPersonalOnePage(),
+              binding: TrainingPersonalOneBinding(),
+            ),
+            GetPage(
+              name: Routes.toTrainingClientOne,
+              page: () => TrainingClientOnePage(),
+              binding: TrainingClientOneBinding(),
+            ),
+          ],
         ),
       ],
     );

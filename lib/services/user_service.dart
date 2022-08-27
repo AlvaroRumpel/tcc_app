@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/global/global_controller.dart';
 import 'package:tcc_app/models/enum/user_type.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/models/trainer_user_model.dart';
@@ -13,6 +14,8 @@ import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:uuid/uuid.dart';
 
 class UserService {
+  static GlobalController globalController = GlobalController.i;
+
   static Future<UserType> login(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -36,6 +39,9 @@ class UserService {
               isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '')
           .get();
       if (response.docs.isNotEmpty) {
+        globalController.client = UserModel.fromMap(
+            response.docs.first.data(), response.docs.first.id);
+        globalController.getTrainer();
         await LocalStorage.setIsClients(true);
         return UserType.client;
       }
@@ -87,16 +93,7 @@ class UserService {
     TrainerModel? trainerModel;
     var uuid = const Uuid();
     try {
-      var users = await FirebaseFirestore.instance
-          .collection(DB.clients)
-          .where(
-            'client_id',
-            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
-          )
-          .get();
-      for (var item in users.docs) {
-        userModel = UserModel.fromMap(item.data(), item.id);
-      }
+      userModel = globalController.client;
 
       var trainers = await FirebaseFirestore.instance
           .collection(DB.trainers)
@@ -162,6 +159,9 @@ class UserService {
             trainerModel.toMap(),
             SetOptions(merge: true),
           );
+
+      globalController.client = userModel;
+      globalController.trainer = trainerModel;
       Get.back();
     } catch (e) {
       if (kDebugMode) {
@@ -177,16 +177,7 @@ class UserService {
     UserModel? userModel;
     TrainerModel? trainerModel;
     try {
-      var users = await FirebaseFirestore.instance
-          .collection(DB.clients)
-          .where(
-            'client_id',
-            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
-          )
-          .get();
-      for (var item in users.docs) {
-        userModel = UserModel.fromMap(item.data(), item.id);
-      }
+      userModel = globalController.client;
 
       var trainers = await FirebaseFirestore.instance
           .collection(DB.trainers)
@@ -228,6 +219,9 @@ class UserService {
           .set(
             trainerModel.toMap(),
           );
+
+      globalController.client = userModel;
+      globalController.trainer = trainerModel;
       for (var i = 0; i < timesBack; i++) {
         Get.back();
       }
@@ -238,8 +232,11 @@ class UserService {
     }
   }
 
-  static Future<void> responseClient(String idClient, bool accepted,
-      {Function? callback}) async {
+  static Future<void> responseClient(
+    String idClient,
+    bool accepted, {
+    Function? callback,
+  }) async {
     UserModel? userModel;
     TrainerModel? trainerModel;
     var uuid = const Uuid();
@@ -255,16 +252,7 @@ class UserService {
         userModel = UserModel.fromMap(item.data(), item.id);
       }
 
-      var trainers = await FirebaseFirestore.instance
-          .collection(DB.trainers)
-          .where(
-            'trainer_id',
-            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
-          )
-          .get();
-      for (var item in trainers.docs) {
-        trainerModel = TrainerModel.fromMap(item.data(), item.id);
-      }
+      trainerModel = globalController.trainer;
 
       TrainerUserModel trainerUserModel = TrainerUserModel(
         id: trainerModel!.id ?? uuid.v4(),
@@ -318,6 +306,8 @@ class UserService {
             trainerModel.toMap(),
             SetOptions(merge: true),
           );
+
+      globalController.trainer = trainerModel;
       Get.back();
       callback != null ? callback() : null;
     } catch (e) {

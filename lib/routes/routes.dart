@@ -11,4 +11,5 @@ class Routes {
   static String toTrainingPersonalAllList = '/training-personal-list';
   static String toTrainingPersonalOne = '/training-personal-one';
   static String toTrainingClientOne = '/training-client-one';
+  static String toSplash = '/';
 }

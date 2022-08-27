@@ -50,7 +50,7 @@ class TrainerModel {
     };
   }
 
-  factory TrainerModel.fromMap(Map<String, dynamic> map, String id) {
+  factory TrainerModel.fromMap(Map<String, dynamic> map, String? id) {
     List<UserTrainerModel> users = [];
     map['clients'].forEach((item) => users.add(UserTrainerModel.fromMap(item)));
     return TrainerModel(
@@ -72,6 +72,6 @@ class TrainerModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TrainerModel.fromJson(String source, String id) =>
+  factory TrainerModel.fromJson(String source, String? id) =>
       TrainerModel.fromMap(json.decode(source), id);
 }

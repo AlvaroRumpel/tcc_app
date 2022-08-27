@@ -6,6 +6,7 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/global/global_controller.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/models/user_trainer_model.dart';
 import 'package:tcc_app/routes/routes.dart';
@@ -21,7 +22,7 @@ class HomeTrainerController extends GetxController
     with StateMixin<List<UserTrainerModel>> {
   User? user = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance.collection(DB.trainers);
-  List<UserTrainerModel> clients = [];
+  GlobalController globalController = GlobalController.i;
 
   static HomeTrainerController get i => Get.find();
 
@@ -34,26 +35,22 @@ class HomeTrainerController extends GetxController
   Future<void> getData() async {
     try {
       change(state, status: RxStatus.loading());
-      List<TrainerModel> trainer = [];
-      var collection = await db
-          .where(
-            'trainer_id',
-            isEqualTo: (user?.uid ?? ''),
-          )
-          .get();
-      for (var item in collection.docs) {
-        trainer.add(TrainerModel.fromMap(item.data(), item.id));
-      }
-      clients = trainer[0].clients;
-      change(clients,
-          status: clients.isEmpty ? RxStatus.empty() : RxStatus.success());
+      TrainerModel? trainer = globalController.trainer;
+      change(
+        trainer != null ? trainer.clients : state,
+        status: trainer != null
+            ? trainer.clients.isEmpty
+                ? RxStatus.empty()
+                : RxStatus.success()
+            : RxStatus.empty(),
+      );
     } catch (e) {
-      change(clients, status: RxStatus.empty());
+      change(state, status: RxStatus.empty());
       UtilsWidgets.errorSnackbar(description: e.toString());
     }
   }
 
-  void openClientModal(int index) {
+  void openClientModal(UserTrainerModel client) {
     Get.defaultDialog(
       title: "",
       titlePadding: const EdgeInsets.all(0),
@@ -81,7 +78,7 @@ class HomeTrainerController extends GetxController
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Visibility(
-                  visible: !clients[index].hasResponse,
+                  visible: !client.hasResponse,
                   child: SmallText(
                     color: CustomColors.whiteStandard,
                     textAlignment: TextAlign.right,
@@ -93,14 +90,14 @@ class HomeTrainerController extends GetxController
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Avatar(
-                      name: clients[index].name.toUpperCase(),
+                      name: client.name.toUpperCase(),
                       shape: AvatarShape.circle(36),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         StandartText(
-                          text: clients[index].name,
+                          text: client.name,
                           color: CustomColors.whiteStandard,
                         ),
                         Row(
@@ -108,11 +105,11 @@ class HomeTrainerController extends GetxController
                           children: [
                             StandartText(
                               text:
-                                  ('${clients[index].height.toString().substring(0, 1)}.${clients[index].height.toString().substring(1)}'),
+                                  ('${client.height.toString().substring(0, 1)}.${client.height.toString().substring(1)}'),
                               color: CustomColors.whiteStandard,
                             ),
                             StandartText(
-                              text: '${clients[index].weight} Kg',
+                              text: '${client.weight} Kg',
                               color: CustomColors.whiteStandard,
                             ),
                           ],
@@ -122,7 +119,7 @@ class HomeTrainerController extends GetxController
                   ],
                 ),
                 StandartText(
-                  text: 'Nivel ${clients[index].level}',
+                  text: 'Nivel ${client.level}',
                   color: CustomColors.sucessColor,
                 ),
                 LinearPercentIndicator(
@@ -130,7 +127,7 @@ class HomeTrainerController extends GetxController
                   backgroundColor: CustomColors.whiteStandard,
                   progressColor: CustomColors.sucessColor,
                   lineHeight: 16,
-                  percent: double.parse('0${clients[index].xp}'),
+                  percent: double.parse('0${client.xp}'),
                 ),
               ],
             ),
@@ -138,7 +135,7 @@ class HomeTrainerController extends GetxController
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
             child: Visibility(
-              visible: !clients[index].hasResponse,
+              visible: !client.hasResponse,
               child: Row(
                 children: [
                   Expanded(
@@ -149,7 +146,7 @@ class HomeTrainerController extends GetxController
                         icon: Icons.check,
                         backgroundColor: CustomColors.sucessColor,
                         function: () => UserService.responseClient(
-                          clients[index].clientId,
+                          client.clientId,
                           true,
                           callback: getData,
                         ),
@@ -162,7 +159,7 @@ class HomeTrainerController extends GetxController
                       icon: Icons.cancel_outlined,
                       isOutlined: true,
                       function: () => UserService.responseClient(
-                        clients[index].clientId,
+                        client.clientId,
                         false,
                         callback: getData,
                       ),
@@ -177,13 +174,13 @@ class HomeTrainerController extends GetxController
             text: 'Treinos',
             function: () => Get.toNamed(
               Routes.toTrainingPersonalAllList,
-              arguments: clients[index].clientId,
+              arguments: client.clientId,
             ),
           ),
           StandartButton(
             text: 'Chat',
             function: () =>
-                Get.toNamed(Routes.toWhithoutIdChat + clients[index].clientId),
+                Get.toNamed(Routes.toWhithoutIdChat + client.clientId),
             leadingIcon: FontAwesome.chat_empty,
           ),
         ],

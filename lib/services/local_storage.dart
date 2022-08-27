@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tcc_app/models/trainer_model.dart';
+import 'package:tcc_app/models/user_model.dart';
 
 String emailKey = 'email';
 String passwordKey = 'password';
 String userNameKey = 'userName';
 String clientKey = 'clients';
+String clientModel = 'clientModel';
+String trainerModel = 'trainerModel';
 
 class LocalStorage {
   static Future<String> getEmail() async {
@@ -27,6 +31,20 @@ class LocalStorage {
     return storage.getBool(clientKey) ?? false;
   }
 
+  static Future<UserModel?> getClient() async {
+    var storage = await SharedPreferences.getInstance();
+    String? client = storage.getString(clientModel);
+    if (client == null) return null;
+    return UserModel.fromJson(client, null);
+  }
+
+  static Future<TrainerModel?> getTrainer() async {
+    var storage = await SharedPreferences.getInstance();
+    String? trainer = storage.getString(trainerModel);
+    if (trainer == null) return null;
+    return TrainerModel.fromJson(trainer, null);
+  }
+
   static Future<void> setEmail(String email) async {
     var storage = await SharedPreferences.getInstance();
     storage.setString(emailKey, email);
@@ -45,5 +63,15 @@ class LocalStorage {
   static Future<void> setIsClients(bool isClient) async {
     var storage = await SharedPreferences.getInstance();
     storage.setBool(clientKey, isClient);
+  }
+
+  static Future<void> setClient(UserModel client) async {
+    var storage = await SharedPreferences.getInstance();
+    storage.setString(clientModel, client.toJson());
+  }
+
+  static Future<void> setTrainer(TrainerModel trainer) async {
+    var storage = await SharedPreferences.getInstance();
+    storage.setString(trainerModel, trainer.toJson());
   }
 }
