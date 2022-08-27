@@ -26,6 +26,7 @@ class TrainingClientAllListController extends GetxController
   }
 
   Future<void> getData() async {
+    workouts.clear();
     try {
       while (ContractTrainerController.i.trainers.isEmpty) {
         await Future.delayed(const Duration(seconds: 2));

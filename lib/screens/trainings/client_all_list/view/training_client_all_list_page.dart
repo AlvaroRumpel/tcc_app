@@ -1,3 +1,4 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
@@ -31,48 +32,72 @@ class TrainingClientAllListPage
                 },
               ),
             ),
-            StandartContainer(
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 250,
-                  mainAxisExtent: 250,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
+            EasyRefresh(
+              header: ClassicHeader(
+                dragText: 'Puxe para atualizar',
+                armedText: 'Atualizar',
+                processedText: 'Atualizado',
+                processingText: 'Atualizando',
+                readyText: 'Atualizando',
+                textStyle: GoogleFonts.poppins(
+                  color: CustomColors.primaryColor,
+                  fontSize: 16,
                 ),
-                itemCount: state!.length,
-                itemBuilder: (_, index) => GestureDetector(
-                  onTap: () => controller.goToTraining(index),
-                  child: Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff364151),
-                          Color(0xff4D6382),
-                        ],
+                messageStyle: GoogleFonts.poppins(
+                  color: CustomColors.primaryColor,
+                  fontSize: 16,
+                ),
+                messageText: 'Ultima atualização as %T',
+                iconTheme: const IconThemeData(
+                  color: CustomColors.primaryColor,
+                ),
+                safeArea: true,
+              ),
+              onRefresh: () async {
+                await controller.getData();
+              },
+              child: StandartContainer(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 250,
+                    mainAxisExtent: 250,
+                    childAspectRatio: 1,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  ),
+                  itemCount: state!.length,
+                  itemBuilder: (_, index) => GestureDetector(
+                    onTap: () => controller.goToTraining(index),
+                    child: Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xff364151),
+                            Color(0xff4D6382),
+                          ],
+                        ),
                       ),
-                    ),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            state[index].trainings.first.name,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                              color: CustomColors.whiteStandard,
-                              fontSize: 32,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              state[index].trainings.first.name,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                color: CustomColors.whiteStandard,
+                                fontSize: 32,
+                              ),
                             ),
-                          ),
-                          StandartIconButton(
-                            function: () => controller.goToTraining(index),
-                            circle: true,
-                          ),
-                        ]),
+                            StandartIconButton(
+                              function: () => controller.goToTraining(index),
+                              circle: true,
+                            ),
+                          ]),
+                    ),
                   ),
                 ),
               ),

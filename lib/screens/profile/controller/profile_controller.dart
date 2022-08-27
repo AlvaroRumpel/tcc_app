@@ -35,6 +35,7 @@ class ProfileController extends GetxController with StateMixin<UserModel> {
 
     change(profile ?? state,
         status: profile != null ? RxStatus.success() : RxStatus.empty());
+    UtilsWidgets.sucessSnackbar();
 
     if (profile != null) return;
     UtilsWidgets.errorScreen();

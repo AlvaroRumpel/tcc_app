@@ -19,7 +19,7 @@ class TrainingPersonalAllListPage
       body: StandartContainer(
         child: controller.obx(
           (state) => ListView.builder(
-            itemCount: state!.length >= 5 ? state.length : state.length + 1,
+            itemCount: state!.length >= 6 ? state.length : state.length + 1,
             itemBuilder: (_, index) => GestureDetector(
               onTap: () {
                 if (index == state.length) {
