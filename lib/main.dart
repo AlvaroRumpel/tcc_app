@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +14,8 @@ import 'package:tcc_app/screens/login/binding/login_binding.dart';
 import 'package:tcc_app/screens/login/view/login_page.dart';
 import 'package:tcc_app/screens/profile/binding/profile_binding.dart';
 import 'package:tcc_app/screens/profile/view/profile_page.dart';
+import 'package:tcc_app/screens/progress/binding/progress_binding.dart';
+import 'package:tcc_app/screens/progress/view/progress_page.dart';
 import 'package:tcc_app/screens/singup/binding/singup_binding.dart';
 import 'package:tcc_app/screens/singup/view/singup_page.dart';
 import 'package:tcc_app/screens/singup_forms/client/binding/singup_client_form_binding.dart';
@@ -114,6 +115,11 @@ class MyApp extends StatelessWidget {
               name: Routes.toTrainingClientOne,
               page: () => TrainingClientOnePage(),
               binding: TrainingClientOneBinding(),
+            ),
+            GetPage(
+              name: Routes.toProgressClient,
+              page: () => const ProgressPage(),
+              binding: ProgressBinding(),
             ),
           ],
         ),

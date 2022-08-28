@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/trainer_model.dart';
+import 'package:tcc_app/models/training_finished_model.dart';
 import 'package:tcc_app/models/user_model.dart';
 
 class GlobalService {
@@ -36,5 +38,31 @@ class GlobalService {
       return null;
     }
     return null;
+  }
+
+  Future<List<TrainingFinishedModel>?> getHistory() async {
+    List<TrainingFinishedModel> historic = [];
+    try {
+      var response = await db
+          .collection(DB.historic)
+          .where(
+            'client_id',
+            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
+          )
+          .orderBy('date', descending: false)
+          .get();
+      if (response.docs.isEmpty) {
+        return null;
+      }
+      for (var item in response.docs) {
+        historic.add(TrainingFinishedModel.fromMap(item.data(), item.id));
+      }
+      return historic;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
   }
 }

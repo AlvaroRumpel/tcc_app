@@ -219,4 +219,23 @@ class UtilsWidgets {
       ),
     );
   }
+  UtilsWidgets.levelUpModal(int nivel, Function onWillPop) {
+    Get.defaultDialog(
+      onWillPop: onWillPop(),
+      barrierDismissible: true,
+      title: 'Parabéns você subiu de nível',
+      titlePadding: const EdgeInsets.symmetric(vertical: 32),
+      titleStyle: GoogleFonts.poppins(
+        color: CustomColors.primaryColor,
+        fontSize: 24,
+      ),
+      backgroundColor: CustomColors.whiteStandard,
+      radius: 10,
+      middleText: 'Você evoluiu, agora está no nível $nivel',
+      middleTextStyle: GoogleFonts.poppins(
+        color: CustomColors.primaryColor,
+        fontSize: 16,
+      ),
+    );
+  }
 }

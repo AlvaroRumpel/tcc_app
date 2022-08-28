@@ -10,6 +10,7 @@ class StandartText extends StatelessWidget {
   Color? color;
   double? fontSize;
   FontWeight fontWeight;
+  EdgeInsetsGeometry padding;
 
   StandartText({
     Key? key,
@@ -19,6 +20,7 @@ class StandartText extends StatelessWidget {
     this.color = CustomColors.primaryColor,
     this.fontSize = 24,
     this.fontWeight = FontWeight.normal,
+    this.padding = const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
   }) : super(key: key);
 
   @override
@@ -26,11 +28,10 @@ class StandartText extends StatelessWidget {
     if (isLabel) {
       color = CustomColors.labelColor;
       fontSize = 16;
+      padding = const EdgeInsets.symmetric(vertical: 0, horizontal: 8);
     }
     return Padding(
-      padding: isLabel
-          ? const EdgeInsets.symmetric(vertical: 0, horizontal: 8)
-          : const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      padding: padding,
       child: Text(
         text,
         style: GoogleFonts.poppins(

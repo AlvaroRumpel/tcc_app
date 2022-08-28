@@ -96,7 +96,7 @@ class TrainingClientOneController extends GetxController
       date: DateTime.now(),
     );
 
-    globalController.client!.xp += xpEarned;
+    var hasLevelUp = globalController.checkLevel(xpEarned);
     try {
       await db.collection(DB.historic).add(trainingFinished.toMap());
       await db.collection(DB.clients).doc(globalController.client!.id).set(
@@ -105,7 +105,11 @@ class TrainingClientOneController extends GetxController
       for (var i = 0; i < trainingArguments.length; i++) {
         trainingArguments[i].conclude = false;
       }
-      Get.back();
+      if (hasLevelUp) {
+        UtilsWidgets.levelUpModal(globalController.client!.level, Get.back);
+      } else {
+        Get.back();
+      }
       UtilsWidgets.sucessSnackbar(
         title: 'Treino finalizado com sucesso',
         description: 'Você acabou seu treino e ganhou $xpEarned xp',
