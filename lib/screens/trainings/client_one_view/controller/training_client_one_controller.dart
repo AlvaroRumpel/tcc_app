@@ -105,6 +105,7 @@ class TrainingClientOneController extends GetxController
       for (var i = 0; i < trainingArguments.length; i++) {
         trainingArguments[i].conclude = false;
       }
+      globalController.progress.add(trainingFinished);
       if (hasLevelUp) {
         UtilsWidgets.levelUpModal(globalController.client!.level, Get.back);
       } else {
