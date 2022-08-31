@@ -28,4 +28,5 @@ class CustomColors {
   static const Color sucessColor = Color(0xff4DB38A);
   static const Color sentMessage = Color(0xBBE1462D);
   static const Color reciviedMessage = Color(0xBBEA9E42);
+  static const Color whiteTertiary = Color(0xFFe0e0e0);
 }

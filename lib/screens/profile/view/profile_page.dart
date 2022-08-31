@@ -10,6 +10,7 @@ import 'package:tcc_app/screens/profile/controller/profile_controller.dart';
 import 'package:tcc_app/screens/progress/view/progress_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/empty_state.dart';
+import 'package:tcc_app/widgets/avatar_level.dart';
 import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
 import 'package:tcc_app/widgets/standart_container.dart';
 import 'package:tcc_app/widgets/standart_scaffold.dart';
@@ -65,41 +66,12 @@ class ProfilePage extends GetView<ProfileController> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Avatar(
-                              name: controller.user?.displayName ?? '#',
-                              border: Border.all(
-                                color: CustomColors.sucessColor,
-                                width: 4,
-                              ),
-                              shape: AvatarShape.circle(100),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: state!.level.toString().length < 4
-                                    ? 32.0
-                                    : 16.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: CustomColors.sucessColor,
-                            ),
-                            child: Text(
-                              state.level.toString(),
-                              style: GoogleFonts.poppins(
-                                color: CustomColors.whiteStandard,
-                                fontSize: 24,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: AvatarLevel(
+                          name: controller.user?.displayName ?? '#',
+                          level: state!.level,
+                          size: 100,
+                        )),
                     StandartContainer(
                       isReactive: true,
                       child: StandartText(

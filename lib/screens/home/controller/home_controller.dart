@@ -24,6 +24,7 @@ class HomeController extends GetxController with StateMixin<UserModel> {
   Future<void> getData() async {
     xpPercent =
         (globalController.client!.xp / globalController.xpNeededForNextLevel());
+    xpPercent = xpPercent.isNaN ? 0 : xpPercent;
     change(globalController.client, status: RxStatus.success());
   }
 
