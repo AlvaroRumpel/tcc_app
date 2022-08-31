@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tcc_app/routes/routes.dart';
+import 'package:tcc_app/services/user_service.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 
 class StandartScaffold extends StatelessWidget {
@@ -43,10 +44,7 @@ class StandartScaffold extends StatelessWidget {
                   IconButton(
                       padding: const EdgeInsets.all(16),
                       iconSize: 32,
-                      onPressed: () async {
-                        await FirebaseAuth.instance.signOut();
-                        Get.offAndToNamed(Routes.toLogin);
-                      },
+                      onPressed: () => UserService.logout(),
                       color: CustomColors.whiteStandard,
                       icon: const Icon(Icons.logout)),
                 ],

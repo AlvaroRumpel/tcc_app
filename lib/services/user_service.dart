@@ -9,6 +9,7 @@ import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/models/trainer_user_model.dart';
 import 'package:tcc_app/models/user_model.dart';
 import 'package:tcc_app/models/user_trainer_model.dart';
+import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/services/local_storage.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:uuid/uuid.dart';
@@ -84,6 +85,15 @@ class UserService {
         code: e.code,
       );
     }
+  }
+
+  static Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+    globalController.client = null;
+    globalController.trainer = null;
+    globalController.progress = [];
+    await LocalStorage.clearAllData();
+    Get.offAndToNamed(Routes.toLogin);
   }
 
   static Future<void> contractTrainer(

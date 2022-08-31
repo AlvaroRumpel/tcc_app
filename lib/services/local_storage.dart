@@ -74,4 +74,9 @@ class LocalStorage {
     var storage = await SharedPreferences.getInstance();
     storage.setString(trainerModel, trainer.toJson());
   }
+
+  static Future<void> clearAllData() async {
+    var storage = await SharedPreferences.getInstance();
+    await storage.clear();
+  }
 }
