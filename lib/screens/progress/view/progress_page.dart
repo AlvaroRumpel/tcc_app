@@ -38,7 +38,6 @@ class ProgressPage extends GetView<ProgressController> {
             color: CustomColors.whiteStandard,
           ),
           safeArea: true,
-          clamping: true,
         ),
         onRefresh: () async {
           await controller.getData(isRefresh: true);
@@ -143,7 +142,18 @@ class ProgressPage extends GetView<ProgressController> {
                             text: 'Dias treinados',
                           ),
                           TableCalendar(
-                            headerVisible: false,
+                            headerVisible: true,
+                            headerStyle: HeaderStyle(
+                              headerPadding: const EdgeInsets.only(bottom: 16),
+                              headerMargin: const EdgeInsets.all(0),
+                              rightChevronVisible: false,
+                              leftChevronVisible: false,
+                              titleCentered: true,
+                              titleTextStyle: GoogleFonts.poppins(
+                                color: CustomColors.primaryColor,
+                                fontSize: 16,
+                              ),
+                            ),
                             eventLoader: (day) {
                               return controller.eventLoader(day);
                             },

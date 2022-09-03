@@ -40,14 +40,14 @@ class GlobalService {
     return null;
   }
 
-  Future<List<TrainingFinishedModel>?> getHistory() async {
+  Future<List<TrainingFinishedModel>?> getHistory({String? idClient}) async {
     List<TrainingFinishedModel> historic = [];
     try {
       var response = await db
           .collection(DB.historic)
           .where(
             'client_id',
-            isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '',
+            isEqualTo: idClient ?? FirebaseAuth.instance.currentUser?.uid ?? '',
           )
           .orderBy('date', descending: false)
           .get();

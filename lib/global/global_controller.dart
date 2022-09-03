@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import 'package:tcc_app/global/global_service.dart';
@@ -9,7 +10,6 @@ import 'package:tcc_app/models/training_finished_model.dart';
 import 'package:tcc_app/models/user_model.dart';
 import 'package:tcc_app/models/user_trainer_model.dart';
 import 'package:tcc_app/services/local_storage.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
 
 class GlobalController extends GetxController {
   GlobalController({
@@ -52,8 +52,8 @@ class GlobalController extends GetxController {
     await LocalStorage.setTrainer(trainer!);
   }
 
-  Future<void> getHistory() async {
-    progress = await service.getHistory() ?? [];
+  Future<void> getHistory({String? idClient}) async {
+    progress = await service.getHistory(idClient: idClient) ?? [];
   }
 
   bool checkLevel(int xpEarned) {
@@ -72,5 +72,32 @@ class GlobalController extends GetxController {
     const exponent = 1.5;
     const baseXp = 250;
     return (baseXp * pow(client!.level, exponent)).floor();
+  }
+
+  void updateTrainer() {
+    if (trainer == null) {
+      return;
+    }
+    UserTrainerModel? old = trainer!.clients.firstWhereOrNull((element) =>
+        element.clientId == FirebaseAuth.instance.currentUser!.uid);
+    UserTrainerModel newModel = UserTrainerModel(
+      id: old!.id,
+      name: client?.name ?? old.name,
+      accepted: old.accepted,
+      active: old.active,
+      birthDate: client!.birthDate,
+      bodyFat: client!.bodyFat,
+      clientId: client?.clientId ?? old.clientId,
+      goal: client?.goal ?? old.goal,
+      hasResponse: old.hasResponse,
+      height: client?.height ?? old.height,
+      level: client!.level,
+      sex: old.sex,
+      weight: client?.weight ?? old.weight,
+      xp: client!.xp,
+    );
+
+    trainer!.clients[trainer!.clients
+        .indexWhere((element) => element.id == newModel.id)] = newModel;
   }
 }

@@ -14,6 +14,8 @@ import 'package:tcc_app/screens/login/binding/login_binding.dart';
 import 'package:tcc_app/screens/login/view/login_page.dart';
 import 'package:tcc_app/screens/profile/binding/profile_binding.dart';
 import 'package:tcc_app/screens/profile/view/profile_page.dart';
+import 'package:tcc_app/screens/profile_personal/binding/profile_personal_binding.dart';
+import 'package:tcc_app/screens/profile_personal/view/profile_personal_page.dart';
 import 'package:tcc_app/screens/progress/binding/progress_binding.dart';
 import 'package:tcc_app/screens/progress/view/progress_page.dart';
 import 'package:tcc_app/screens/singup/binding/singup_binding.dart';
@@ -121,6 +123,10 @@ class MyApp extends StatelessWidget {
               page: () => const ProgressPage(),
               binding: ProgressBinding(),
             ),
+            GetPage(
+                name: Routes.toPersonalProfile,
+                page: () => ProfilePersonalPage(),
+                binding: ProfilePersonalBinding()),
           ],
         ),
       ],

@@ -35,6 +35,9 @@ class HomeTrainerController extends GetxController
   Future<void> getData() async {
     try {
       change(state, status: RxStatus.loading());
+      if (globalController.trainer == null) {
+        await globalController.getTrainer();
+      }
       TrainerModel? trainer = globalController.trainer;
       change(
         trainer != null ? trainer.clients : state,
@@ -169,7 +172,13 @@ class HomeTrainerController extends GetxController
               ),
             ),
           ),
-          StandartButton(text: 'Progresso', function: () {}),
+          StandartButton(
+            text: 'Progresso',
+            function: () => Get.toNamed(
+              Routes.toProgressClient,
+              arguments: client.clientId,
+            ),
+          ),
           StandartButton(
             text: 'Treinos',
             function: () => Get.toNamed(

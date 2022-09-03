@@ -65,7 +65,7 @@ class StandartScaffold extends StatelessWidget {
                 leading: GestureDetector(
                   onTap: () => bottomNavigationBar != null
                       ? Get.toNamed(Routes.toClientProfile)
-                      : Get.offAndToNamed(Routes.toHomeTrainer),
+                      : Get.toNamed(Routes.toPersonalProfile),
                   child: Container(
                     height: 60,
                     width: 60,

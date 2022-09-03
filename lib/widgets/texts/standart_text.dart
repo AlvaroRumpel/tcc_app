@@ -11,6 +11,7 @@ class StandartText extends StatelessWidget {
   double? fontSize;
   FontWeight fontWeight;
   EdgeInsetsGeometry padding;
+  bool isSelectable;
 
   StandartText({
     Key? key,
@@ -21,27 +22,40 @@ class StandartText extends StatelessWidget {
     this.fontSize = 24,
     this.fontWeight = FontWeight.normal,
     this.padding = const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+    this.isSelectable = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (isLabel) {
-      color = CustomColors.labelColor;
+      color =
+          color != CustomColors.primaryColor ? color : CustomColors.labelColor;
       fontSize = 16;
       padding = const EdgeInsets.symmetric(vertical: 0, horizontal: 8);
     }
     return Padding(
       padding: padding,
-      child: Text(
-        text,
-        style: GoogleFonts.poppins(
-          fontSize: fontSize,
-          color: color,
-          fontWeight: fontWeight,
-          decoration: TextDecoration.none,
-        ),
-        textAlign: align,
-      ),
+      child: isSelectable
+          ? SelectableText(
+              text,
+              style: GoogleFonts.poppins(
+                fontSize: fontSize,
+                color: color,
+                fontWeight: fontWeight,
+                decoration: TextDecoration.none,
+              ),
+              textAlign: align,
+            )
+          : Text(
+              text,
+              style: GoogleFonts.poppins(
+                fontSize: fontSize,
+                color: color,
+                fontWeight: fontWeight,
+                decoration: TextDecoration.none,
+              ),
+              textAlign: align,
+            ),
     );
   }
 }

@@ -5,10 +5,12 @@ import 'package:tcc_app/utils/custom_colors.dart';
 class PriceText extends StatelessWidget {
   String text;
   Color color;
+  double fontSize;
   PriceText({
     Key? key,
     required this.text,
     this.color = CustomColors.primaryColor,
+    this.fontSize = 24,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class PriceText extends StatelessWidget {
         Text(
           'R\$ $text',
           style: GoogleFonts.poppins(
-            fontSize: 24,
+            fontSize: fontSize,
             color: color,
             fontWeight: FontWeight.normal,
             decoration: TextDecoration.none,

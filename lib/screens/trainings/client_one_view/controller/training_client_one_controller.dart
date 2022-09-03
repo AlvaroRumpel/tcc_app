@@ -97,10 +97,16 @@ class TrainingClientOneController extends GetxController
     );
 
     var hasLevelUp = globalController.checkLevel(xpEarned);
+    globalController.updateTrainer();
     try {
-      await db.collection(DB.historic).add(trainingFinished.toMap());
+      await db.collection(DB.historic).add(
+            trainingFinished.toMap(),
+          );
       await db.collection(DB.clients).doc(globalController.client!.id).set(
             globalController.client!.toMap(),
+          );
+      await db.collection(DB.trainers).doc(globalController.trainer!.id).set(
+            globalController.trainer!.toMap(),
           );
       for (var i = 0; i < trainingArguments.length; i++) {
         trainingArguments[i].conclude = false;

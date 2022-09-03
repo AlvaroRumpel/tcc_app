@@ -28,8 +28,15 @@ class ProgressController extends GetxController with StateMixin<UserModel> {
 
   Future<void> getData({isRefresh = false}) async {
     if (isRefresh) {
-      await globalController.getClient();
-      await globalController.getHistory();
+      await globalController.getClient(idClient: client?.clientId);
+      await globalController.getHistory(idClient: client?.clientId);
+    }
+    if ((globalController.client == null ||
+                globalController.progress.isEmpty) &&
+            Get.arguments != null ||
+        globalController.client!.clientId != Get.arguments) {
+      await globalController.getClient(idClient: Get.arguments);
+      await globalController.getHistory(idClient: Get.arguments);
     }
     client = globalController.client;
     xpPercent = (client!.xp / globalController.xpNeededForNextLevel());
