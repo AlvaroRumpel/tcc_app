@@ -25,6 +25,7 @@ class GlobalService {
   }
 
   Future<TrainerModel?> getTrainer({String? idTrainer}) async {
+    TrainerModel? model;
     try {
       var response = await db
           .collection(DB.trainers)
@@ -32,12 +33,12 @@ class GlobalService {
               isEqualTo: idTrainer ?? FirebaseAuth.instance.currentUser?.uid)
           .get();
       for (var res in response.docs) {
-        return TrainerModel.fromMap(res.data(), res.id);
+        model = TrainerModel.fromMap(res.data(), res.id);
       }
+      return model;
     } catch (e) {
       return null;
     }
-    return null;
   }
 
   Future<List<TrainingFinishedModel>?> getHistory({String? idClient}) async {

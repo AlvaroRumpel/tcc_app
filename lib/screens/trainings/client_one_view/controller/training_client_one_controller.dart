@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_background/flutter_background.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:tcc_app/config/database_variables.dart';
@@ -44,7 +45,7 @@ class TrainingClientOneController extends GetxController
     change(trainingArguments, status: RxStatus.success());
   }
 
-  void controlTimer({bool? stop}) {
+  Future<void> controlTimer({bool? stop}) async {
     if (stop != null && stop) {
       timerIsRunning.value = TimerType.stop;
       time = StopWatchTimer.getDisplayTime(
@@ -52,13 +53,14 @@ class TrainingClientOneController extends GetxController
         milliSecond: false,
       );
       timerController.onExecute.add(StopWatchExecute.stop);
+      await FlutterBackground.disableBackgroundExecution();
       return;
     }
-
     if (timerIsRunning.value == TimerType.stop) {
       timerController.onExecute.add(StopWatchExecute.reset);
       timerIsRunning.value = TimerType.running;
       timerController.onExecute.add(StopWatchExecute.start);
+      await FlutterBackground.enableBackgroundExecution();
       return;
     }
 
@@ -97,7 +99,7 @@ class TrainingClientOneController extends GetxController
     );
 
     var hasLevelUp = globalController.checkLevel(xpEarned);
-    globalController.updateTrainer();
+    await globalController.updateTrainer();
     try {
       await db.collection(DB.historic).add(
             trainingFinished.toMap(),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_background/flutter_background.dart';
 import 'package:get/get.dart';
 
 import 'package:tcc_app/global/global_service.dart';
@@ -23,6 +24,18 @@ class GlobalController extends GetxController {
   UserModel? client;
   TrainerModel? trainer;
   List<TrainingFinishedModel> progress = [];
+  var androidConfig = const FlutterBackgroundAndroidConfig(
+    notificationTitle: "Training App",
+    notificationText: "O aplicativo está rodando em segundo plano",
+    notificationImportance: AndroidNotificationImportance.Default,
+    notificationIcon:
+        AndroidResource(name: 'ic_launcher', defType: 'mipmap-hdpi'),
+  );
+  @override
+  void onInit() async {
+    super.onInit();
+    await FlutterBackground.initialize(androidConfig: androidConfig);
+  }
 
   Future<void> getClient({String? idClient}) async {
     client = await service.getClient(idClient: idClient);
@@ -74,8 +87,12 @@ class GlobalController extends GetxController {
     return (baseXp * pow(client!.level, exponent)).floor();
   }
 
-  void updateTrainer() {
+  Future<void> updateTrainer() async {
     if (trainer == null) {
+      var trainerId = client!.trainers
+          .firstWhereOrNull((element) => element.accepted && element.active)
+          ?.trainerId;
+      trainer = await service.getTrainer(idTrainer: trainerId);
       return;
     }
     UserTrainerModel? old = trainer!.clients.firstWhereOrNull((element) =>
