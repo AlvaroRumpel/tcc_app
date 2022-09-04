@@ -130,7 +130,9 @@ class HomeTrainerController extends GetxController
                   backgroundColor: CustomColors.whiteStandard,
                   progressColor: CustomColors.sucessColor,
                   lineHeight: 16,
-                  percent: double.parse('0${client.xp}'),
+                  percent: client.xp /
+                      globalController.xpNeededForNextLevel(
+                          userTrainerModel: client),
                 ),
               ],
             ),

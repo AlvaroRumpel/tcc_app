@@ -8,7 +8,6 @@ import 'package:tcc_app/utils/validators.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
 import 'package:tcc_app/widgets/standart_textfield.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
 
 class TrainingExerciseCard extends StatelessWidget {
   TrainingModel training;

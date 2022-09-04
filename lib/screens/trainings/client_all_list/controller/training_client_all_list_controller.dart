@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/models/training_model.dart';
 import 'package:tcc_app/models/workouts_model.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/screens/contract_trainer/controller/contract_trainer_controller.dart';

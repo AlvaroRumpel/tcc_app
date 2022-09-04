@@ -11,7 +11,6 @@ import 'package:tcc_app/models/user_model.dart';
 import 'package:tcc_app/models/user_trainer_model.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/services/local_storage.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:uuid/uuid.dart';
 
 class UserService {

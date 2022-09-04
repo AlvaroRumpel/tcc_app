@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/user_model.dart';
@@ -27,7 +28,9 @@ class RankingController extends GetxController
       );
       change(users, status: RxStatus.success());
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }

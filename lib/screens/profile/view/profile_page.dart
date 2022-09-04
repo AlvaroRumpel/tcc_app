@@ -1,13 +1,11 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:avatars/avatars.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/screens/profile/controller/profile_controller.dart';
-import 'package:tcc_app/screens/progress/view/progress_page.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/empty_state.dart';
 import 'package:tcc_app/widgets/avatar_level.dart';

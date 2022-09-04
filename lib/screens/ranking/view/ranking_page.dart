@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:tcc_app/screens/ranking/controller/ranking_controller.dart';
 import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/widgets/avatar_level.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
 import 'package:tcc_app/widgets/texts/standart_text.dart';
 
 class RankingPage extends GetView<RankingController> {

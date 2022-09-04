@@ -81,9 +81,12 @@ class GlobalController extends GetxController {
     return false;
   }
 
-  int xpNeededForNextLevel() {
+  int xpNeededForNextLevel({UserTrainerModel? userTrainerModel}) {
     const exponent = 1.5;
     const baseXp = 250;
+    if (userTrainerModel != null) {
+      return (baseXp * pow(userTrainerModel.level, exponent)).floor();
+    }
     return (baseXp * pow(client!.level, exponent)).floor();
   }
 

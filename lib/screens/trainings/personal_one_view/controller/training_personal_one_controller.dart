@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/training_model.dart';
 import 'package:tcc_app/models/workouts_model.dart';
-import 'package:tcc_app/screens/trainings/client_all_list/controller/training_client_all_list_controller.dart';
 import 'package:tcc_app/screens/trainings/personal_all_list/controller/training_personal_all_list_controller.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 
