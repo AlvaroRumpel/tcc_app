@@ -23,7 +23,7 @@ class HomeTrainerController extends GetxController
   User? user = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance.collection(DB.trainers);
   GlobalController globalController = GlobalController.i;
-
+  TrainerModel? trainer;
   static HomeTrainerController get i => Get.find();
 
   @override
@@ -36,13 +36,13 @@ class HomeTrainerController extends GetxController
     try {
       change(state, status: RxStatus.loading());
       if (globalController.trainer == null) {
-        await globalController.getTrainer();
+        await globalController.getTrainer(idTrainer: trainer?.trainerId);
       }
-      TrainerModel? trainer = globalController.trainer;
+      trainer = globalController.trainer;
       change(
-        trainer != null ? trainer.clients : state,
+        trainer != null ? trainer!.clients : state,
         status: trainer != null
-            ? trainer.clients.isEmpty
+            ? trainer!.clients.isEmpty
                 ? RxStatus.empty()
                 : RxStatus.success()
             : RxStatus.empty(),

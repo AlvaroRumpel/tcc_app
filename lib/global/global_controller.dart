@@ -59,7 +59,7 @@ class GlobalController extends GetxController {
   }
 
   Future<void> getTrainer({String? idTrainer}) async {
-    trainer = await service.getTrainer();
+    trainer = await service.getTrainer(idTrainer: idTrainer);
     if (trainer == null) return;
 
     await LocalStorage.setTrainer(trainer!);
