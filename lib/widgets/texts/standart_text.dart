@@ -8,7 +8,7 @@ class StandartText extends StatelessWidget {
   bool isLabel;
   TextAlign align = TextAlign.left;
   Color? color;
-  double? fontSize;
+  double fontSize;
   FontWeight fontWeight;
   EdgeInsetsGeometry padding;
   bool isSelectable;
@@ -30,7 +30,7 @@ class StandartText extends StatelessWidget {
     if (isLabel) {
       color =
           color != CustomColors.primaryColor ? color : CustomColors.labelColor;
-      fontSize = 16;
+      fontSize = fontSize != 24 ? fontSize : 16;
       padding = const EdgeInsets.symmetric(vertical: 0, horizontal: 8);
     }
     return Padding(

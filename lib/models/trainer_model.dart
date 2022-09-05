@@ -17,6 +17,8 @@ class TrainerModel {
   int numberClients;
   List<UserTrainerModel> clients;
   String? fcmToken;
+  int? numberOfRatings;
+  double? totalOfRatings;
 
   TrainerModel({
     this.id,
@@ -33,6 +35,8 @@ class TrainerModel {
     required this.numberClients,
     required this.clients,
     this.fcmToken,
+    this.numberOfRatings,
+    this.totalOfRatings,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,6 +54,8 @@ class TrainerModel {
       'number_clients': numberClients,
       'clients': clients.map((e) => e.toMap()).toList(),
       'fcm_token': fcmToken,
+      'number_of_ratings': numberOfRatings,
+      'total_of_ratings': totalOfRatings,
     };
   }
 
@@ -75,6 +81,8 @@ class TrainerModel {
       numberClients: map['number_clients']?.toInt() ?? 0,
       clients: users,
       fcmToken: fcmToken ?? map['fcm_token'] ?? '',
+      numberOfRatings: map['number_of_ratings'] ?? 0,
+      totalOfRatings: map['total_of_ratings']?.toDouble() ?? 0.0,
     );
   }
 

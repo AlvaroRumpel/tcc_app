@@ -26,8 +26,13 @@ class ContractTrainerController extends GetxController
     getData();
   }
 
-  void openTrainerModal(int index, {TrainerModel? model}) {
-    TrainerModal.defaultTrainerModal(model ?? trainers[index]);
+  void openTrainerModal(
+    int index, {
+    TrainerModel? model,
+    bool actualTrainer = false,
+  }) {
+    TrainerModal.defaultTrainerModal(model ?? trainers[index],
+        actualTrainer: actualTrainer);
   }
 
   Future<void> getData() async {

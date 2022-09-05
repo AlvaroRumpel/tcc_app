@@ -11,6 +11,7 @@ import 'package:tcc_app/utils/custom_colors.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/widgets/buttons/standart_button.dart';
 import 'package:tcc_app/widgets/buttons/success_button.dart';
+import 'package:tcc_app/widgets/rating_modal.dart';
 import 'package:tcc_app/widgets/texts/number_clients_text.dart';
 import 'package:tcc_app/widgets/texts/price_text.dart';
 
@@ -18,6 +19,7 @@ class TrainerModal {
   TrainerModal.defaultTrainerModal(
     TrainerModel trainer, {
     bool dismissTrainer = false,
+    bool actualTrainer = false,
   }) {
     Get.defaultDialog(
       contentPadding: const EdgeInsets.only(
@@ -119,7 +121,12 @@ class TrainerModal {
               );
             },
           ),
-          dismissTrainer
+          StandartButton(
+            text: 'Faça uma avaliação',
+            color: CustomColors.sucessColor,
+            function: () => RatingModal.defaultRatingModal(trainer: trainer),
+          ),
+          dismissTrainer || actualTrainer
               ? StandartButton(
                   function: () => dismissTrainerConfirm(trainer.trainerId!),
                   text: 'Demitir',

@@ -92,7 +92,7 @@ class TrainerCardContainer extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  trainer.rating.toString().substring(0, 1),
+                                  '${trainer.rating.toString().substring(0, 1)}${trainer.rating.toString().substring(2, 3) != '0' ? ',${trainer.rating.toString().substring(2, 3)}' : ''}',
                                   style: GoogleFonts.poppins(
                                     fontSize: 24,
                                     color: CustomColors.tertiaryColor,

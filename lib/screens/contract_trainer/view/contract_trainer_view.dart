@@ -78,10 +78,15 @@ class ContractTrainerView extends GetView<ContractTrainerController> {
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: TrainerCardContainer(
-                      onTap: () => controller.openTrainerModal(index),
-                      trainer: state![index],
-                      actualTrainer: state[index].trainerId ==
-                          controller.actualTrainer?.trainerId),
+                    onTap: () => controller.openTrainerModal(
+                      index,
+                      actualTrainer: state![index].trainerId ==
+                          controller.actualTrainer?.trainerId,
+                    ),
+                    trainer: state![index],
+                    actualTrainer: state[index].trainerId ==
+                        controller.actualTrainer?.trainerId,
+                  ),
                 ),
               ),
               onLoading: const Center(

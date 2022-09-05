@@ -73,6 +73,7 @@ class ProfileController extends GetxController with StateMixin<UserModel> {
     TrainerModal.defaultTrainerModal(
       trainerComplete!,
       dismissTrainer: true,
+      actualTrainer: true,
     );
   }
 }

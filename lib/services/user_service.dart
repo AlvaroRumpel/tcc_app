@@ -361,4 +361,24 @@ class UserService {
       }
     }
   }
+
+  static Future<void> sendRating({
+    required double rating,
+    required TrainerModel trainer,
+  }) async {
+    try {
+      trainer.numberOfRatings = (trainer.numberOfRatings! + 1);
+      trainer.totalOfRatings = (trainer.totalOfRatings! + rating);
+      trainer.rating = trainer.totalOfRatings! / trainer.numberOfRatings!;
+      await FirebaseFirestore.instance
+          .collection(DB.trainers)
+          .doc(trainer.id!)
+          .set(trainer.toMap());
+      Get.back();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 }
