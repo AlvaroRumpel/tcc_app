@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/config/notifications/custom_firebase_messaging.dart';
 import 'package:tcc_app/global/global_controller.dart';
 import 'package:tcc_app/models/enum/user_type.dart';
 import 'package:tcc_app/models/trainer_model.dart';
@@ -11,6 +12,7 @@ import 'package:tcc_app/models/user_model.dart';
 import 'package:tcc_app/models/user_trainer_model.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/services/local_storage.dart';
+import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:uuid/uuid.dart';
 
 class UserService {
@@ -33,6 +35,7 @@ class UserService {
 
   static Future<UserType> checkIsClient() async {
     try {
+      await CustomFirebaseMessaging().getTokenFirebase();
       var response = await FirebaseFirestore.instance
           .collection(DB.clients)
           .where('client_id',
@@ -40,8 +43,15 @@ class UserService {
           .get();
       if (response.docs.isNotEmpty) {
         globalController.client = UserModel.fromMap(
-            response.docs.first.data(), response.docs.first.id);
-        globalController.getTrainer();
+          response.docs.first.data(),
+          response.docs.first.id,
+          fcmToken: await LocalStorage.getFirebaseToken(),
+        );
+        TrainerUserModel? trainerModel = globalController.client?.trainers
+            .firstWhereOrNull((element) => element.accepted && element.active);
+        if (trainerModel != null) {
+          globalController.getTrainer(idTrainer: trainerModel.trainerId);
+        }
         await LocalStorage.setIsClients(true);
         return UserType.client;
       }
@@ -66,6 +76,7 @@ class UserService {
           ?.updateDisplayName(await LocalStorage.getUserName());
       if (trainerModel != null) {
         trainerModel.trainerId = FirebaseAuth.instance.currentUser?.uid;
+        trainerModel.fcmToken = await LocalStorage.getFirebaseToken();
         await FirebaseFirestore.instance
             .collection(DB.trainers)
             .add(trainerModel.toMap());
@@ -73,6 +84,7 @@ class UserService {
       } else if (userModel != null) {
         userModel.clientId = FirebaseAuth.instance.currentUser?.uid;
         userModel.name = await LocalStorage.getUserName();
+        userModel.fcmToken = await LocalStorage.getFirebaseToken();
         await FirebaseFirestore.instance
             .collection(DB.clients)
             .add(userModel.toMap());
@@ -103,7 +115,14 @@ class UserService {
     var uuid = const Uuid();
     try {
       userModel = globalController.client;
-
+      if (userModel!.trainers.any((element) => element.active)) {
+        UtilsWidgets.errorSnackbar(
+          title: 'Não pode contratar',
+          description:
+              'Você já possui um personal ativo, não pode ter mais de um',
+        );
+        return;
+      }
       var trainers = await FirebaseFirestore.instance
           .collection(DB.trainers)
           .where(
@@ -126,11 +145,16 @@ class UserService {
         active: false,
         accepted: false,
         hasResponse: false,
+        fcmToken: trainerModel.fcmToken,
       );
 
-      if (!userModel!.trainers.every(
+      if (!userModel.trainers.every(
         (element) => element.trainerId != trainerUserModel.trainerId,
       )) {
+        UtilsWidgets.errorSnackbar(
+          title: 'Não é possivel contratar esse personal',
+          description: 'Ele já respondeu sua contratação',
+        );
         return;
       }
       userModel.trainers.add(trainerUserModel);
@@ -150,6 +174,7 @@ class UserService {
         active: false,
         accepted: false,
         hasResponse: false,
+        fcmToken: userModel.fcmToken,
       );
 
       trainerModel.clients.add(userTrainerModel);
@@ -171,6 +196,15 @@ class UserService {
 
       globalController.client = userModel;
       globalController.trainer = trainerModel;
+
+      if (trainerModel.fcmToken != null) {
+        await CustomFirebaseMessaging().sendNotification(
+          trainerModel.fcmToken!,
+          'Novo cliente!!',
+          'Alguém quer que você o treine, responda o quanto antes',
+        );
+      }
+
       Get.back();
     } catch (e) {
       if (kDebugMode) {
@@ -274,6 +308,7 @@ class UserService {
         active: accepted,
         accepted: accepted,
         hasResponse: true,
+        fcmToken: trainerModel.fcmToken,
       );
 
       userModel!.trainers[userModel.trainers.indexWhere(
@@ -295,6 +330,7 @@ class UserService {
         active: accepted,
         accepted: accepted,
         hasResponse: true,
+        fcmToken: userModel.fcmToken,
       );
 
       trainerModel.clients[trainerModel.clients.indexWhere(

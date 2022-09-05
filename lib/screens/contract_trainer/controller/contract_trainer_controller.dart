@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/global/global_controller.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/utils/utils_widgets.dart';
 import 'package:tcc_app/widgets/trainer_modal.dart';
@@ -13,6 +14,8 @@ class ContractTrainerController extends GetxController
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<TrainerModel> trainers = [];
   Rx<TextEditingController> searchController = TextEditingController().obs;
+  TrainerModel? actualTrainer;
+  GlobalController globalController = GlobalController.i;
 
   static ContractTrainerController get i => Get.find();
 
@@ -23,15 +26,23 @@ class ContractTrainerController extends GetxController
     getData();
   }
 
-  void openTrainerModal(int index) {
-    TrainerModal.defaultTrainerModal(trainers[index]);
+  void openTrainerModal(int index, {TrainerModel? model}) {
+    TrainerModal.defaultTrainerModal(model ?? trainers[index]);
   }
 
-  void getData() async {
+  Future<void> getData() async {
     try {
+      trainers.clear();
       var response = await db.collection(DB.trainers).get();
       for (var item in response.docs) {
         trainers.add(TrainerModel.fromMap(item.data(), item.id));
+      }
+      var trainerTemp = globalController.client?.trainers
+          .firstWhereOrNull((element) => element.active);
+      if (trainerTemp != null) {
+        actualTrainer = trainers.firstWhereOrNull(
+          (element) => element.trainerId == trainerTemp.trainerId,
+        );
       }
       change(trainers, status: RxStatus.success());
     } catch (e) {

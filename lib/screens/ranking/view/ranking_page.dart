@@ -16,6 +16,7 @@ class RankingPage extends GetView<RankingController> {
       (state) => Column(
         children: [
           Expanded(
+            flex: 4,
             child: Stack(
               fit: StackFit.expand,
               alignment: Alignment.topCenter,
@@ -56,57 +57,60 @@ class RankingPage extends GetView<RankingController> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: CustomColors.whiteTertiary,
-              ),
-              child: ListView.separated(
-                padding: const EdgeInsets.all(16),
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: state.length,
-                itemBuilder: (_, index) => Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: state[index].clientId ==
-                            FirebaseAuth.instance.currentUser!.uid
-                        ? CustomColors.tertiaryColor
-                        : CustomColors.whiteSecondary,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        spreadRadius: 0,
-                        blurRadius: 0,
-                        offset:
-                            const Offset(2, 2), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Avatar(
-                            name: state[index].name ?? '#',
-                            shape: AvatarShape.circle(40),
-                          ),
-                          StandartText(text: state[index].name ?? '#'),
-                        ],
-                      ),
-                      StandartText(text: state[index].level.toString()),
-                    ],
-                  ),
+          Expanded(
+            flex: 8,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: CustomColors.whiteTertiary,
                 ),
-                separatorBuilder: (_, index) => const Divider(
-                  color: Colors.transparent,
-                  height: 8,
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(16),
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: state.length,
+                  itemBuilder: (_, index) => Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: state[index].clientId ==
+                              FirebaseAuth.instance.currentUser!.uid
+                          ? CustomColors.tertiaryColor
+                          : CustomColors.whiteSecondary,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          spreadRadius: 0,
+                          blurRadius: 0,
+                          offset:
+                              const Offset(2, 2), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Avatar(
+                              name: state[index].name ?? '#',
+                              shape: AvatarShape.circle(40),
+                            ),
+                            StandartText(text: state[index].name ?? '#'),
+                          ],
+                        ),
+                        StandartText(text: state[index].level.toString()),
+                      ],
+                    ),
+                  ),
+                  separatorBuilder: (_, index) => const Divider(
+                    color: Colors.transparent,
+                    height: 8,
+                  ),
                 ),
               ),
             ),

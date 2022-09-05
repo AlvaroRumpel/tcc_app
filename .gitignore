@@ -45,3 +45,4 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /lib/config/database_variables.dart
+/lib/config/notifications/firebase_variables.dart

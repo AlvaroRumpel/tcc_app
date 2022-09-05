@@ -15,6 +15,7 @@ class UserModel {
   int sex;
   String birthDate;
   List<TrainerUserModel> trainers;
+  String? fcmToken;
 
   UserModel({
     this.id,
@@ -29,6 +30,7 @@ class UserModel {
     required this.sex,
     required this.birthDate,
     required this.trainers,
+    this.fcmToken,
   });
 
   Map<String, dynamic> toMap() {
@@ -44,10 +46,12 @@ class UserModel {
       'birth_date': birthDate,
       'name': name,
       'trainers': trainers.map((e) => e.toMap()).toList(),
+      'fcm_token': fcmToken,
     };
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map, String? id) {
+  factory UserModel.fromMap(Map<String, dynamic> map, String? id,
+      {String? fcmToken}) {
     List<TrainerUserModel> trainers = [];
     map['trainers']
         .forEach((item) => trainers.add(TrainerUserModel.fromMap(item)));
@@ -64,11 +68,12 @@ class UserModel {
       birthDate: map['birth_date'] ?? '',
       name: map['name'] ?? '',
       trainers: trainers,
+      fcmToken: fcmToken ?? map['fcm_token'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source, String? id) =>
-      UserModel.fromMap(json.decode(source), id);
+  factory UserModel.fromJson(String source, String? id, {String? fcmToken}) =>
+      UserModel.fromMap(json.decode(source), id, fcmToken: fcmToken);
 }

@@ -15,6 +15,7 @@ class UserTrainerModel {
   bool active;
   bool accepted;
   bool hasResponse;
+  String? fcmToken;
 
   UserTrainerModel({
     required this.id,
@@ -31,6 +32,7 @@ class UserTrainerModel {
     required this.active,
     required this.accepted,
     required this.hasResponse,
+    this.fcmToken,
   });
 
   Map<String, dynamic> toMap() {
@@ -49,6 +51,7 @@ class UserTrainerModel {
       'active': active,
       'accepted': accepted,
       'hasResponse': hasResponse,
+      'fcm_token': fcmToken,
     };
   }
 
@@ -68,6 +71,7 @@ class UserTrainerModel {
       active: map['active'] ?? false,
       accepted: map['accepted'] ?? false,
       hasResponse: map['hasResponse'] ?? false,
+      fcmToken: map['fcmToken'] ?? '',
     );
   }
 

@@ -5,6 +5,7 @@ import 'package:tcc_app/config/database_variables.dart';
 import 'package:tcc_app/models/trainer_model.dart';
 import 'package:tcc_app/models/training_finished_model.dart';
 import 'package:tcc_app/models/user_model.dart';
+import 'package:tcc_app/services/local_storage.dart';
 
 class GlobalService {
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -15,8 +16,18 @@ class GlobalService {
           .where('client_id',
               isEqualTo: idClient ?? FirebaseAuth.instance.currentUser?.uid)
           .get();
+
+      String? fcmToken =
+          idClient == null || idClient == FirebaseAuth.instance.currentUser?.uid
+              ? await LocalStorage.getFirebaseToken()
+              : null;
+
       for (var res in response.docs) {
-        return UserModel.fromMap(res.data(), res.id);
+        return UserModel.fromMap(
+          res.data(),
+          res.id,
+          fcmToken: fcmToken,
+        );
       }
     } catch (e) {
       return null;
@@ -32,8 +43,18 @@ class GlobalService {
           .where('trainer_id',
               isEqualTo: idTrainer ?? FirebaseAuth.instance.currentUser?.uid)
           .get();
+
+      String? fcmToken = idTrainer == null ||
+              idTrainer == FirebaseAuth.instance.currentUser?.uid
+          ? await LocalStorage.getFirebaseToken()
+          : null;
+
       for (var res in response.docs) {
-        model = TrainerModel.fromMap(res.data(), res.id);
+        model = TrainerModel.fromMap(
+          res.data(),
+          res.id,
+          fcmToken: fcmToken,
+        );
       }
       return model;
     } catch (e) {

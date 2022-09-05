@@ -1,3 +1,4 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,25 +48,47 @@ class ContractTrainerView extends GetView<ContractTrainerController> {
           ),
         ),
         Expanded(
-          child: controller.obx(
-            (state) => ListView.builder(
-              itemCount: state?.length,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: TrainerCardContainer(
-                  onTap: () => controller.openTrainerModal(index),
-                  name: state![index].firstName,
-                  price: state[index].price,
-                  rating: state[index].rating,
-                  numberClients: state[index].numberClients,
-                  id: state[index].trainerId!,
+          child: EasyRefresh(
+            header: ClassicHeader(
+              dragText: 'Puxe para atualizar',
+              armedText: 'Atualizar',
+              processedText: 'Atualizado',
+              processingText: 'Atualizando',
+              readyText: 'Atualizando',
+              textStyle: GoogleFonts.poppins(
+                color: CustomColors.whiteStandard,
+                fontSize: 16,
+              ),
+              messageStyle: GoogleFonts.poppins(
+                color: CustomColors.whiteStandard,
+                fontSize: 16,
+              ),
+              messageText: 'Ultima atualização as %T',
+              iconTheme: const IconThemeData(
+                color: CustomColors.whiteStandard,
+              ),
+              safeArea: true,
+            ),
+            onRefresh: () async {
+              await controller.getData();
+            },
+            child: controller.obx(
+              (state) => ListView.builder(
+                itemCount: state?.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: TrainerCardContainer(
+                      onTap: () => controller.openTrainerModal(index),
+                      trainer: state![index],
+                      actualTrainer: state[index].trainerId ==
+                          controller.actualTrainer?.trainerId),
                 ),
               ),
+              onLoading: const Center(
+                child: CircularProgressIndicator(),
+              ),
+              onEmpty: EmptyState(),
             ),
-            onLoading: const Center(
-              child: CircularProgressIndicator(),
-            ),
-            onEmpty: EmptyState(),
           ),
         ),
       ],

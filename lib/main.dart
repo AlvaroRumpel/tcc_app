@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tcc_app/config/notifications/custom_firebase_messaging.dart';
 import 'package:tcc_app/firebase_options.dart';
 import 'package:tcc_app/global/global_binding.dart';
 import 'package:tcc_app/routes/routes.dart';
@@ -39,6 +40,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await CustomFirebaseMessaging().initialize();
+  await CustomFirebaseMessaging().getTokenFirebase();
+
   runApp(const MyApp());
 }
 

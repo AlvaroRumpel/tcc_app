@@ -35,6 +35,10 @@ class TrainingPersonalAllListController extends GetxController
             'deleted',
             isEqualTo: false,
           )
+          .where(
+            'trainer_id',
+            isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+          )
           .get();
 
       if (response.docs.isEmpty) {

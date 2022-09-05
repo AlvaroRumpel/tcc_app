@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:tcc_app/config/database_variables.dart';
+import 'package:tcc_app/global/global_controller.dart';
 import 'package:tcc_app/models/workouts_model.dart';
 import 'package:tcc_app/routes/routes.dart';
 import 'package:tcc_app/screens/contract_trainer/controller/contract_trainer_controller.dart';
@@ -13,6 +14,7 @@ class TrainingClientAllListController extends GetxController
   TrainingClientAllListController({Key? key});
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<WorkoutsModel> workouts = [];
+  GlobalController globalController = GlobalController.i;
 
   static TrainingClientAllListController get i => Get.find();
 
@@ -34,6 +36,10 @@ class TrainingClientAllListController extends GetxController
           .where(
             'client_id',
             isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+          )
+          .where(
+            'trainer_id',
+            isEqualTo: globalController.trainer?.trainerId,
           )
           .get();
 

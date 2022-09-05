@@ -115,6 +115,7 @@ class GlobalController extends GetxController {
       sex: old.sex,
       weight: client?.weight ?? old.weight,
       xp: client!.xp,
+      fcmToken: client!.fcmToken,
     );
 
     trainer!.clients[trainer!.clients

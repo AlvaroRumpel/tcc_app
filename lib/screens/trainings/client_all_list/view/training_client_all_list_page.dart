@@ -28,7 +28,9 @@ class TrainingClientAllListPage
                 text: 'Chat',
                 function: () async {
                   await Get.toNamed(
-                      Routes.toWhithoutIdChat + state!.first.trainerId);
+                    Routes.toChat,
+                    arguments: state!.first,
+                  );
                 },
               ),
             ),
@@ -82,21 +84,22 @@ class TrainingClientAllListPage
                         ),
                       ),
                       child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              state[index].trainings.first.name,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                color: CustomColors.whiteStandard,
-                                fontSize: 32,
-                              ),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            state[index].trainings.first.name,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: CustomColors.whiteStandard,
+                              fontSize: 32,
                             ),
-                            StandartIconButton(
-                              function: () => controller.goToTraining(index),
-                              circle: true,
-                            ),
-                          ]),
+                          ),
+                          StandartIconButton(
+                            function: () => controller.goToTraining(index),
+                            circle: true,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

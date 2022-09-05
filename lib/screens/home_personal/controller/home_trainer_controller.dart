@@ -181,17 +181,22 @@ class HomeTrainerController extends GetxController
               arguments: client.clientId,
             ),
           ),
-          StandartButton(
-            text: 'Treinos',
-            function: () => Get.toNamed(
-              Routes.toTrainingPersonalAllList,
-              arguments: client.clientId,
+          Visibility(
+            visible: client.accepted,
+            child: StandartButton(
+              text: 'Treinos',
+              function: () => Get.toNamed(
+                Routes.toTrainingPersonalAllList,
+                arguments: client.clientId,
+              ),
             ),
           ),
           StandartButton(
             text: 'Chat',
-            function: () =>
-                Get.toNamed(Routes.toWhithoutIdChat + client.clientId),
+            function: () => Get.toNamed(
+              Routes.toChat,
+              arguments: client,
+            ),
             leadingIcon: FontAwesome.chat_empty,
           ),
         ],

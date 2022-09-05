@@ -113,13 +113,7 @@ class ProfilePage extends GetView<ProfileController> {
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TrainerCardContainer(
                           onTap: controller.openTrainerModal,
-                          name: controller.trainerComplete?.firstName ??
-                              'Desconhecido',
-                          numberClients:
-                              controller.trainerComplete?.numberClients ?? 0,
-                          price: controller.trainerComplete?.price ?? 0,
-                          rating: controller.trainerComplete?.rating ?? 0,
-                          id: controller.trainerComplete?.trainerId ?? '',
+                          trainer: controller.trainerComplete!,
                         ),
                       ),
                     Padding(

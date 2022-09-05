@@ -113,7 +113,10 @@ class TrainerModal {
             leadingIcon: FontAwesome.chat_empty,
             text: 'Chat',
             function: () async {
-              await Get.toNamed(Routes.toWhithoutIdChat + trainer.trainerId!);
+              await Get.toNamed(
+                Routes.toChat,
+                arguments: trainer,
+              );
             },
           ),
           dismissTrainer

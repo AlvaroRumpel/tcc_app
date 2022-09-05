@@ -6,12 +6,16 @@ class ChatConversationModel {
   List<MessageModel>? messages;
   String trainer;
   String client;
+  String? clientFcmToken;
+  String? trainerFcmToken;
 
   ChatConversationModel({
     this.id,
     this.messages,
     required this.trainer,
     required this.client,
+    this.clientFcmToken,
+    this.trainerFcmToken,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +24,8 @@ class ChatConversationModel {
       'messages': messages?.map((x) => x.toMap()).toList(),
       'trainer': trainer,
       'client': client,
+      'client_fcm_token': clientFcmToken,
+      'trainer_fcm_token': trainerFcmToken,
     };
   }
 
@@ -32,6 +38,8 @@ class ChatConversationModel {
           : null,
       trainer: map['trainer'],
       client: map['client'],
+      clientFcmToken: map['client_fcm_token'],
+      trainerFcmToken: map['trainer_fcm_token'],
     );
   }
 

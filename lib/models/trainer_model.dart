@@ -16,6 +16,7 @@ class TrainerModel {
   double rating;
   int numberClients;
   List<UserTrainerModel> clients;
+  String? fcmToken;
 
   TrainerModel({
     this.id,
@@ -31,6 +32,7 @@ class TrainerModel {
     required this.rating,
     required this.numberClients,
     required this.clients,
+    this.fcmToken,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,10 +49,15 @@ class TrainerModel {
       'rating': rating,
       'number_clients': numberClients,
       'clients': clients.map((e) => e.toMap()).toList(),
+      'fcm_token': fcmToken,
     };
   }
 
-  factory TrainerModel.fromMap(Map<String, dynamic> map, String? id) {
+  factory TrainerModel.fromMap(
+    Map<String, dynamic> map,
+    String? id, {
+    String? fcmToken,
+  }) {
     List<UserTrainerModel> users = [];
     map['clients'].forEach((item) => users.add(UserTrainerModel.fromMap(item)));
     return TrainerModel(
@@ -67,11 +74,20 @@ class TrainerModel {
       rating: map['rating']?.toDouble() ?? 0.0,
       numberClients: map['number_clients']?.toInt() ?? 0,
       clients: users,
+      fcmToken: fcmToken ?? map['fcm_token'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory TrainerModel.fromJson(String source, String? id) =>
-      TrainerModel.fromMap(json.decode(source), id);
+  factory TrainerModel.fromJson(
+    String source,
+    String? id, {
+    String? fcmToken,
+  }) =>
+      TrainerModel.fromMap(
+        json.decode(source),
+        id,
+        fcmToken: fcmToken,
+      );
 }
