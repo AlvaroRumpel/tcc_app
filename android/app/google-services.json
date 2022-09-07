@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "861066208446",
-    "project_id": "tcc-app-acr",
-    "storage_bucket": "tcc-app-acr.appspot.com"
+    "project_number": "160626613561",
+    "project_id": "play-workout",
+    "storage_bucket": "play-workout.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:861066208446:android:6f324b27d25505a89daaef",
+        "mobilesdk_app_id": "1:160626613561:android:dc7e5433c4208b5a2d1ce8",
         "android_client_info": {
-          "package_name": "com.acr.tcc_app"
+          "package_name": "com.acr.play_workout"
         }
       },
       "oauth_client": [
         {
-          "client_id": "861066208446-lvnqi7io1boj0s9cj4m3i8tq66hv0bda.apps.googleusercontent.com",
+          "client_id": "160626613561-82u9higplv8gs7dv4v9mph1m048u34a1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDvaV_AireuXQwSeEXwgVbezKbiXLfGhPM"
+          "current_key": "AIzaSyBzWfywIs4afGH6TFnZRVRLJJMpsYyzW8c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "861066208446-lvnqi7io1boj0s9cj4m3i8tq66hv0bda.apps.googleusercontent.com",
+              "client_id": "160626613561-82u9higplv8gs7dv4v9mph1m048u34a1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

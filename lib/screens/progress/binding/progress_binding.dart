@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/progress/controller/progress_controller.dart';
+import 'package:play_workout/screens/progress/controller/progress_controller.dart';
 
 class ProgressBinding implements Bindings {
   @override

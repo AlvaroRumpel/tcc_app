@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/splash/controller/splash_controller.dart';
+import 'package:play_workout/screens/splash/controller/splash_controller.dart';
 
 class SplashBinding implements Bindings {
   @override

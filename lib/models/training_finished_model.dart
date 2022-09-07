@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:tcc_app/models/training_model.dart';
+import 'package:play_workout/models/training_model.dart';
 
 class TrainingFinishedModel {
   String? id;

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/services/local_storage.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/local_storage.dart';
 
 class SplashController extends GetxController {
   @override

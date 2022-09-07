@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/models/user_model.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/models/user_model.dart';
 
 class RankingController extends GetxController
     with StateMixin<List<UserModel>> {

@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/models/user_trainer_model.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/services/user_service.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
-import 'package:tcc_app/widgets/texts/small_text.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/models/user_trainer_model.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/user_service.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_icon_button.dart';
+import 'package:play_workout/widgets/texts/small_text.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class HomeTrainerController extends GetxController
     with StateMixin<List<UserTrainerModel>> {
@@ -54,6 +54,8 @@ class HomeTrainerController extends GetxController
   }
 
   void openClientModal(UserTrainerModel client) {
+    double xpPercent = client.xp /
+        globalController.xpNeededForNextLevel(userTrainerModel: client);
     Get.defaultDialog(
       title: "",
       titlePadding: const EdgeInsets.all(0),
@@ -130,9 +132,7 @@ class HomeTrainerController extends GetxController
                   backgroundColor: CustomColors.whiteStandard,
                   progressColor: CustomColors.sucessColor,
                   lineHeight: 16,
-                  percent: client.xp /
-                      globalController.xpNeededForNextLevel(
-                          userTrainerModel: client),
+                  percent: xpPercent.isNaN ? 0 : xpPercent,
                 ),
               ],
             ),

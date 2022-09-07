@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class SvgLogoIcon extends StatelessWidget {
   const SvgLogoIcon({Key? key}) : super(key: key);

@@ -2,10 +2,11 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tcc_app/screens/contract_trainer/controller/contract_trainer_controller.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/empty_state.dart';
-import 'package:tcc_app/widgets/trainer_card_container.dart';
+import 'package:play_workout/screens/contract_trainer/controller/contract_trainer_controller.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/utils/empty_state.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/trainer_card_container.dart';
 
 class ContractTrainerView extends GetView<ContractTrainerController> {
   ContractTrainerView({Key? key}) : super(key: key);
@@ -92,7 +93,16 @@ class ContractTrainerView extends GetView<ContractTrainerController> {
               onLoading: const Center(
                 child: CircularProgressIndicator(),
               ),
-              onEmpty: EmptyState(),
+              onEmpty: Column(
+                children: [
+                  EmptyState(),
+                  StandartButton(
+                    leadingIcon: Icons.refresh_rounded,
+                    text: 'Atualizar',
+                    function: () async => await controller.getData(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

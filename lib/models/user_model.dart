@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:tcc_app/models/trainer_user_model.dart';
+import 'package:play_workout/models/trainer_user_model.dart';
 
 class UserModel {
   String? id;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class StandartButton extends StatelessWidget {
   String text;
@@ -13,6 +13,7 @@ class StandartButton extends StatelessWidget {
   bool dense;
   double height;
   double width;
+  Color textColor;
 
   StandartButton({
     Key? key,
@@ -25,6 +26,7 @@ class StandartButton extends StatelessWidget {
     this.dense = false,
     this.height = 48,
     this.width = 0,
+    this.textColor = CustomColors.whiteStandard,
   }) : super(key: key);
 
   @override
@@ -82,13 +84,13 @@ class StandartButton extends StatelessWidget {
               Icon(
                 leadingIcon,
                 size: smallText ? 16 : 24,
-                color: CustomColors.whiteStandard,
+                color: textColor,
               ),
               Expanded(
                 child: Text(
                   text,
                   style: GoogleFonts.poppins(
-                    color: CustomColors.containerButton,
+                    color: textColor,
                     fontSize: smallText ? 16 : 24,
                   ),
                   textAlign: TextAlign.center,
@@ -97,7 +99,7 @@ class StandartButton extends StatelessWidget {
               Icon(
                 finalIcon,
                 size: smallText ? 16 : 24,
-                color: CustomColors.whiteStandard,
+                color: textColor,
               ),
             ],
           ),

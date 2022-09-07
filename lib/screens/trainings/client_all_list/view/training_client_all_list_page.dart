@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/screens/trainings/client_all_list/controller/training_client_all_list_controller.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/empty_state.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/screens/trainings/client_all_list/controller/training_client_all_list_controller.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/utils/empty_state.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_icon_button.dart';
+import 'package:play_workout/widgets/standart_container.dart';
 
 class TrainingClientAllListPage
     extends GetView<TrainingClientAllListController> {
@@ -111,7 +111,17 @@ class TrainingClientAllListPage
       onLoading: const Center(
         child: CircularProgressIndicator(),
       ),
-      onEmpty: EmptyState(),
+      onEmpty: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          EmptyState(),
+          StandartButton(
+            leadingIcon: Icons.refresh_rounded,
+            text: 'Atualizar',
+            function: () async => await controller.getData(),
+          ),
+        ],
+      ),
     );
   }
 }

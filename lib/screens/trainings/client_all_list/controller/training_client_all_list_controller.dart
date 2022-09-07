@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/workouts_model.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/screens/contract_trainer/controller/contract_trainer_controller.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/workouts_model.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/screens/contract_trainer/controller/contract_trainer_controller.dart';
 
 class TrainingClientAllListController extends GetxController
     with StateMixin<List<WorkoutsModel>> {
@@ -21,15 +21,21 @@ class TrainingClientAllListController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    change(state, status: RxStatus.loading());
     getData();
   }
 
   Future<void> getData() async {
+    change(state, status: RxStatus.loading());
     workouts.clear();
     try {
+      int maxCount = 0;
       while (ContractTrainerController.i.trainers.isEmpty) {
         await Future.delayed(const Duration(seconds: 2));
+        maxCount++;
+        if (maxCount >= 10) {
+          change(state, status: RxStatus.empty());
+          return;
+        }
       }
       var response = await db
           .collection(DB.workouts)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class StandartBackButton extends StatelessWidget {
   const StandartBackButton({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/profile/controller/profile_controller.dart';
-import 'package:tcc_app/screens/profile/service/profile_service.dart';
+import 'package:play_workout/screens/profile/controller/profile_controller.dart';
+import 'package:play_workout/screens/profile/service/profile_service.dart';
 
 class ProfileBinding implements Bindings {
   @override

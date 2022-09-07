@@ -1,4 +1,4 @@
-# tcc_app
+# play_workout
 
 A new Flutter project.
 

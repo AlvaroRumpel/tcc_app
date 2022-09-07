@@ -1,4 +1,4 @@
-package com.acr.tcc_app
+package com.acr.play_workout
 
 import io.flutter.embedding.android.FlutterActivity
 

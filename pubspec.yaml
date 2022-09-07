@@ -1,5 +1,5 @@
-name: tcc_app
-description: A new Flutter project.
+name: play_workout
+description: A new app for workout.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

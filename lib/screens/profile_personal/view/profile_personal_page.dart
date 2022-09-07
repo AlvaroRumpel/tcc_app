@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tcc_app/screens/profile_personal/controller/profile_personal_controller.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/empty_state.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
-import 'package:tcc_app/widgets/standart_scaffold.dart';
-import 'package:tcc_app/widgets/texts/price_text.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/screens/profile_personal/controller/profile_personal_controller.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/utils/empty_state.dart';
+import 'package:play_workout/widgets/standart_container.dart';
+import 'package:play_workout/widgets/standart_scaffold.dart';
+import 'package:play_workout/widgets/texts/price_text.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class ProfilePersonalPage extends GetView<ProfilePersonalController> {
   const ProfilePersonalPage({Key? key}) : super(key: key);

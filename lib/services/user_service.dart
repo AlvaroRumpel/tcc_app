@@ -2,17 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/config/notifications/custom_firebase_messaging.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/enum/user_type.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/models/trainer_user_model.dart';
-import 'package:tcc_app/models/user_model.dart';
-import 'package:tcc_app/models/user_trainer_model.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/services/local_storage.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/config/notifications/custom_firebase_messaging.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/enum/user_type.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/models/trainer_user_model.dart';
+import 'package:play_workout/models/user_model.dart';
+import 'package:play_workout/models/user_trainer_model.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/local_storage.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
 import 'package:uuid/uuid.dart';
 
 class UserService {
@@ -24,6 +24,7 @@ class UserService {
         email: email,
         password: GetUtils.removeAllWhitespace(password),
       );
+
       return checkIsClient();
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(
@@ -74,20 +75,32 @@ class UserService {
       );
       await FirebaseAuth.instance.currentUser
           ?.updateDisplayName(await LocalStorage.getUserName());
+
+      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+
+      await CustomFirebaseMessaging().getTokenFirebase();
+      String fcmToken = await LocalStorage.getFirebaseToken() ?? "";
+
       if (trainerModel != null) {
         trainerModel.trainerId = FirebaseAuth.instance.currentUser?.uid;
-        trainerModel.fcmToken = await LocalStorage.getFirebaseToken();
+        trainerModel.fcmToken = fcmToken;
         await FirebaseFirestore.instance
             .collection(DB.trainers)
             .add(trainerModel.toMap());
+
+        globalController.trainer = trainerModel;
+
         LocalStorage.setIsClients(false);
       } else if (userModel != null) {
         userModel.clientId = FirebaseAuth.instance.currentUser?.uid;
         userModel.name = await LocalStorage.getUserName();
-        userModel.fcmToken = await LocalStorage.getFirebaseToken();
+        userModel.fcmToken = fcmToken;
         await FirebaseFirestore.instance
             .collection(DB.clients)
             .add(userModel.toMap());
+
+        globalController.client = userModel;
+
         await LocalStorage.setIsClients(true);
       }
     } on FirebaseAuthException catch (e) {
@@ -95,6 +108,10 @@ class UserService {
         message: e.message,
         code: e.code,
       );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -104,7 +121,7 @@ class UserService {
     globalController.trainer = null;
     globalController.progress = [];
     await LocalStorage.clearAllData();
-    Get.offAndToNamed(Routes.toLogin);
+    Get.offAllNamed(Routes.toLogin);
   }
 
   static Future<void> contractTrainer(
@@ -202,6 +219,7 @@ class UserService {
           trainerModel.fcmToken!,
           'Novo cliente!!',
           'Alguém quer que você o treine, responda o quanto antes',
+          false,
         );
       }
 

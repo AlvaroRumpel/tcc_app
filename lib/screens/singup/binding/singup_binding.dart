@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/singup/controller/singup_controller.dart';
+import 'package:play_workout/screens/singup/controller/singup_controller.dart';
 
 class SingupBinding implements Bindings {
   @override

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/home_personal/controller/home_trainer_controller.dart';
+import 'package:play_workout/screens/home_personal/controller/home_trainer_controller.dart';
 
 class HomeTrainerBinding implements Bindings {
   @override

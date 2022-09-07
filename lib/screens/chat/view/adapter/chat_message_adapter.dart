@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tcc_app/models/message_model.dart';
-import 'package:tcc_app/widgets/texts/message_text.dart';
+import 'package:play_workout/models/message_model.dart';
+import 'package:play_workout/widgets/texts/message_text.dart';
 
 class ChatMessageAdapter extends StatelessWidget {
   MessageModel message;

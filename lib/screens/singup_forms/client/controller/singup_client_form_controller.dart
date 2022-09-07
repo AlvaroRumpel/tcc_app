@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/models/user_model.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/services/user_service.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
-import 'package:tcc_app/utils/validators.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/models/user_model.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/user_service.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:play_workout/utils/validators.dart';
 
 class SingupClientFormController extends GetxController with StateMixin<int> {
   SingupClientFormController({Key? key});
@@ -85,7 +85,7 @@ class SingupClientFormController extends GetxController with StateMixin<int> {
         ),
       );
 
-      Get.offAndToNamed(Routes.toHomeClient);
+      Get.offAllNamed(Routes.toHomeClient);
       Get.deleteAll();
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(

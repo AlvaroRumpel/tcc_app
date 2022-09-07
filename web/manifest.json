@@ -1,6 +1,6 @@
 {
-    "name": "tcc_app",
-    "short_name": "tcc_app",
+    "name": "play_workout",
+    "short_name": "play_workout",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

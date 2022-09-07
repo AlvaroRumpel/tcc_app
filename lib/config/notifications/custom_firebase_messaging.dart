@@ -1,12 +1,13 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/config/notifications/custom_local_notification.dart';
+import 'package:play_workout/config/notifications/custom_local_notification.dart';
 import 'package:http/http.dart' as http;
-import 'package:tcc_app/config/notifications/firebase_variables.dart';
+import 'package:play_workout/config/notifications/firebase_variables.dart';
+import 'package:play_workout/routes/routes.dart';
 import 'dart:convert' show json;
 
-import 'package:tcc_app/services/local_storage.dart';
+import 'package:play_workout/services/local_storage.dart';
 
 class CustomFirebaseMessaging {
   final CustomLocalNotification _customLocalNotification;
@@ -37,7 +38,8 @@ class CustomFirebaseMessaging {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      Get.offAllNamed(event.data['goTD']);
+      Get.offAllNamed(
+          event.data['toClient'] ? Routes.toHomeClient : Routes.toHomeTrainer);
     });
   }
 
@@ -47,11 +49,15 @@ class CustomFirebaseMessaging {
     if (token.isNotEmpty) await LocalStorage.setFirebaseToken(token);
   }
 
-  Future<void> sendNotification(String to, String title, String body) async {
+  Future<void> sendNotification(
+      String to, String title, String body, bool toClient) async {
     try {
       final dynamic data = json.encode({
         'to': to,
         'priority': 'high',
+        'data': {
+          'toClient': toClient,
+        },
         'notification': {
           'title': title,
           'body': body,

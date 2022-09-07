@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/login/controller/login_controller.dart';
+import 'package:play_workout/screens/login/controller/login_controller.dart';
 
 class LoginBinding implements Bindings {
   @override

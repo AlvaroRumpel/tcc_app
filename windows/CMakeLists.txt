@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(tcc_app LANGUAGES CXX)
+project(play_workout LANGUAGES CXX)
 
-set(BINARY_NAME "tcc_app")
+set(BINARY_NAME "play_workout")
 
 cmake_policy(SET CMP0063 NEW)
 

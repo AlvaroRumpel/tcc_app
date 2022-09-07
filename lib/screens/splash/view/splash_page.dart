@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/splash/controller/splash_controller.dart';
-import 'package:tcc_app/utils/svg_logo_icon.dart';
+import 'package:play_workout/screens/splash/controller/splash_controller.dart';
+import 'package:play_workout/utils/svg_logo_icon.dart';
 
 class SplashPage extends GetView<SplashController> {
   const SplashPage({Key? key}) : super(key: key);

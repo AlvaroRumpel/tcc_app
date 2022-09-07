@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class ChatTextfield extends StatelessWidget {
   TextEditingController controller;
@@ -32,6 +32,7 @@ class ChatTextfield extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: TextFormField(
+          maxLength: 255,
           maxLines: 1,
           keyboardType: keyboardType,
           controller: controller,
@@ -40,6 +41,7 @@ class ChatTextfield extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
+            counterText: '',
             fillColor: CustomColors.whiteSecondary,
             filled: true,
             enabledBorder: OutlineInputBorder(

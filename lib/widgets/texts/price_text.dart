@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class PriceText extends StatelessWidget {
   String text;

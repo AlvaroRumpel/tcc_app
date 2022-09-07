@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/chat/controller/chat_controller.dart';
-import 'package:tcc_app/screens/chat/view/adapter/chat_message_adapter.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/empty_state.dart';
-import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
-import 'package:tcc_app/widgets/chat_textfield.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
-import 'package:tcc_app/widgets/standart_scaffold.dart';
+import 'package:play_workout/screens/chat/controller/chat_controller.dart';
+import 'package:play_workout/screens/chat/view/adapter/chat_message_adapter.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/utils/empty_state.dart';
+import 'package:play_workout/widgets/buttons/standart_icon_button.dart';
+import 'package:play_workout/widgets/chat_textfield.dart';
+import 'package:play_workout/widgets/standart_container.dart';
+import 'package:play_workout/widgets/standart_scaffold.dart';
 
 class ChatPage extends GetView<ChatController> {
   const ChatPage({Key? key}) : super(key: key);
@@ -17,14 +17,18 @@ class ChatPage extends GetView<ChatController> {
     return StandartScaffold(
       appBar: true,
       title: "Chat",
-      bottomNavigationBar: const Visibility(
-        visible: false,
-        child: Text(''),
-      ),
       body: StandartContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: StandartIconButton(
+                circle: true,
+                function: () => Get.back(),
+                icon: Icons.arrow_back,
+              ),
+            ),
             Expanded(
               flex: 10,
               child: controller.obx(

@@ -4,14 +4,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tcc_app/models/trainer_model.dart';
+import 'package:play_workout/models/trainer_model.dart';
 
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/texts/number_clients_text.dart';
-import 'package:tcc_app/widgets/texts/price_text.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/texts/number_clients_text.dart';
+import 'package:play_workout/widgets/texts/price_text.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class TrainerCardContainer extends StatelessWidget {
   Function onTap;

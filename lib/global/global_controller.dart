@@ -4,13 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_background/flutter_background.dart';
 import 'package:get/get.dart';
 
-import 'package:tcc_app/global/global_service.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/models/trainer_user_model.dart';
-import 'package:tcc_app/models/training_finished_model.dart';
-import 'package:tcc_app/models/user_model.dart';
-import 'package:tcc_app/models/user_trainer_model.dart';
-import 'package:tcc_app/services/local_storage.dart';
+import 'package:play_workout/global/global_service.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/models/trainer_user_model.dart';
+import 'package:play_workout/models/training_finished_model.dart';
+import 'package:play_workout/models/user_model.dart';
+import 'package:play_workout/models/user_trainer_model.dart';
+import 'package:play_workout/services/local_storage.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
 
 class GlobalController extends GetxController {
   GlobalController({
@@ -25,9 +26,9 @@ class GlobalController extends GetxController {
   TrainerModel? trainer;
   List<TrainingFinishedModel> progress = [];
   var androidConfig = const FlutterBackgroundAndroidConfig(
-    notificationTitle: "Training App",
+    notificationTitle: "Play Workout",
     notificationText: "O aplicativo está rodando em segundo plano",
-    notificationImportance: AndroidNotificationImportance.Default,
+    notificationImportance: AndroidNotificationImportance.High,
     notificationIcon:
         AndroidResource(name: 'ic_launcher', defType: 'mipmap-hdpi'),
   );
@@ -35,6 +36,18 @@ class GlobalController extends GetxController {
   void onInit() async {
     super.onInit();
     await FlutterBackground.initialize(androidConfig: androidConfig);
+    isEmailVerified();
+  }
+
+  void isEmailVerified() {
+    bool? emailVerified = FirebaseAuth.instance.currentUser?.emailVerified;
+
+    if (emailVerified != null && !emailVerified) {
+      UtilsWidgets.emailVerifiedSnackbar(
+        () async =>
+            await FirebaseAuth.instance.currentUser!.sendEmailVerification(),
+      );
+    }
   }
 
   Future<void> getClient({String? idClient}) async {

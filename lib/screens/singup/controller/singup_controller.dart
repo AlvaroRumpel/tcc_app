@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/services/local_storage.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
-import 'package:tcc_app/utils/validators.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/local_storage.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:play_workout/utils/validators.dart';
 
 class SingupController extends GetxController {
   SingupController({Key? key});

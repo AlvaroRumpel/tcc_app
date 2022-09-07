@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:tcc_app/models/message_model.dart';
+import 'package:play_workout/models/message_model.dart';
 
 class ChatConversationModel {
   String? id;

@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -32,6 +29,16 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for macos - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -39,21 +46,31 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAH_XdCycsBRdrOJu_CUeDVe_CX38tCsqo',
+    appId: '1:160626613561:web:2e47d6c03a3775862d1ce8',
+    messagingSenderId: '160626613561',
+    projectId: 'play-workout',
+    authDomain: 'play-workout.firebaseapp.com',
+    storageBucket: 'play-workout.appspot.com',
+    measurementId: 'G-QT1Q32T3HV',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDvaV_AireuXQwSeEXwgVbezKbiXLfGhPM',
-    appId: '1:861066208446:android:6f324b27d25505a89daaef',
-    messagingSenderId: '861066208446',
-    projectId: 'tcc-app-acr',
-    storageBucket: 'tcc-app-acr.appspot.com',
+    apiKey: 'AIzaSyBzWfywIs4afGH6TFnZRVRLJJMpsYyzW8c',
+    appId: '1:160626613561:android:dc7e5433c4208b5a2d1ce8',
+    messagingSenderId: '160626613561',
+    projectId: 'play-workout',
+    storageBucket: 'play-workout.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCO6QgKcvmEkzOR2TKokPSiUhmdcecBzLg',
-    appId: '1:861066208446:ios:ae5f3f70dba244fb9daaef',
-    messagingSenderId: '861066208446',
-    projectId: 'tcc-app-acr',
-    storageBucket: 'tcc-app-acr.appspot.com',
-    iosClientId: '861066208446-9q14mloebu6qtm1fn1k7etkn2tc28kfm.apps.googleusercontent.com',
-    iosBundleId: 'com.example.tccApp',
+    apiKey: 'AIzaSyDd5vgYQJDmGTUQ9w-R_HrRIWARfFELLE0',
+    appId: '1:160626613561:ios:63e162f0f31b74fb2d1ce8',
+    messagingSenderId: '160626613561',
+    projectId: 'play-workout',
+    storageBucket: 'play-workout.appspot.com',
+    iosClientId: '160626613561-tede0hbceb89go2ejr3k5k6td09tom51.apps.googleusercontent.com',
+    iosBundleId: 'com.example.playWorkout',
   );
 }

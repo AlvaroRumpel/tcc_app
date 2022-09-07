@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:search_cep/search_cep.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/services/user_service.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
-import 'package:tcc_app/utils/validators.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/user_service.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:play_workout/utils/validators.dart';
 
 class SingupTrainerFormController extends GetxController with StateMixin<int> {
   TextEditingController nameController = TextEditingController();
@@ -78,7 +78,7 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
           clients: [],
         ),
       );
-      Get.offAndToNamed(Routes.toHomeTrainer);
+      Get.offAllNamed(Routes.toHomeTrainer);
       Get.deleteAll();
     } on FirebaseAuthException catch (e) {
       UtilsWidgets.errorSnackbar(description: e.message.toString());

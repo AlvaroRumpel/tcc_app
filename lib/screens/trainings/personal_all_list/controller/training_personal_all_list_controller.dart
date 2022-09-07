@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/models/training_model.dart';
-import 'package:tcc_app/models/workouts_model.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/models/training_model.dart';
+import 'package:play_workout/models/workouts_model.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
 
 class TrainingPersonalAllListController extends GetxController
     with StateMixin<List<WorkoutsModel>> {

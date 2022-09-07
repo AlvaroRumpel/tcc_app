@@ -2,7 +2,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class StandartTextfield extends StatelessWidget {
   String labelText;
@@ -16,6 +16,8 @@ class StandartTextfield extends StatelessWidget {
   bool date = false;
   bool textBox = false;
   bool fit;
+  int? maxLength;
+  Function(String)? onChanged;
   StandartTextfield({
     Key? key,
     required this.labelText,
@@ -29,6 +31,8 @@ class StandartTextfield extends StatelessWidget {
     this.hintText,
     this.textBox = false,
     this.fit = false,
+    this.maxLength,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -111,6 +115,7 @@ class StandartTextfield extends StatelessWidget {
                 // onSaved: (val) => print(val),
               )
             : TextFormField(
+                maxLength: maxLength,
                 maxLines: textBox ? 3 : 1,
                 keyboardType: keyboardType,
                 controller: controller,
@@ -120,6 +125,7 @@ class StandartTextfield extends StatelessWidget {
                   fontSize: 16,
                 ),
                 decoration: InputDecoration(
+                  counterText: '',
                   fillColor: CustomColors.whiteSecondary,
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -164,6 +170,7 @@ class StandartTextfield extends StatelessWidget {
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => validator(value) ? null : errorText,
+                onChanged: onChanged,
               ),
       ),
     );

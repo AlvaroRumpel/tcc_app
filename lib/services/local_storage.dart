@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/models/user_model.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/models/user_model.dart';
 
 String emailKey = 'email';
 String passwordKey = 'password';

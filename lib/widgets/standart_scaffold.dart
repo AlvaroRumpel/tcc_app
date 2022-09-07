@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/services/user_service.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/user_service.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class StandartScaffold extends StatelessWidget {
   Widget body;

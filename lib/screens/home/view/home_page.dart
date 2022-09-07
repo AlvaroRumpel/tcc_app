@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/contract_trainer/view/contract_trainer_view.dart';
-import 'package:tcc_app/screens/home/controller/home_controller.dart';
-import 'package:tcc_app/screens/home/view/adapter/home_page_adapter.dart';
-import 'package:tcc_app/screens/ranking/view/ranking_page.dart';
-import 'package:tcc_app/screens/trainings/client_all_list/view/training_client_all_list_page.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/standart_scaffold.dart';
+import 'package:play_workout/screens/contract_trainer/view/contract_trainer_view.dart';
+import 'package:play_workout/screens/home/controller/home_controller.dart';
+import 'package:play_workout/screens/home/view/adapter/home_page_adapter.dart';
+import 'package:play_workout/screens/ranking/view/ranking_page.dart';
+import 'package:play_workout/screens/trainings/client_all_list/view/training_client_all_list_page.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/standart_scaffold.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);

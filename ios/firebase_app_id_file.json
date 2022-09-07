@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:861066208446:ios:ae5f3f70dba244fb9daaef",
-  "FIREBASE_PROJECT_ID": "tcc-app-acr",
-  "GCM_SENDER_ID": "861066208446"
+  "GOOGLE_APP_ID": "1:160626613561:ios:63e162f0f31b74fb2d1ce8",
+  "FIREBASE_PROJECT_ID": "play-workout",
+  "GCM_SENDER_ID": "160626613561"
 }

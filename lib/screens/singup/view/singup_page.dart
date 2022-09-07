@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/singup/controller/singup_controller.dart';
-import 'package:tcc_app/utils/svg_logo_icon.dart';
-import 'package:tcc_app/widgets/buttons/standart_back_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_outlined_button.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
-import 'package:tcc_app/widgets/standart_scaffold.dart';
-import 'package:tcc_app/widgets/standart_textfield.dart';
-import 'package:tcc_app/widgets/texts/title_text.dart';
+import 'package:play_workout/screens/singup/controller/singup_controller.dart';
+import 'package:play_workout/utils/svg_logo_icon.dart';
+import 'package:play_workout/widgets/buttons/standart_back_button.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_outlined_button.dart';
+import 'package:play_workout/widgets/standart_container.dart';
+import 'package:play_workout/widgets/standart_scaffold.dart';
+import 'package:play_workout/widgets/standart_textfield.dart';
+import 'package:play_workout/widgets/texts/title_text.dart';
 
 class SingupPage extends GetView<SingupController> {
   const SingupPage({Key? key}) : super(key: key);

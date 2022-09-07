@@ -1,8 +1,8 @@
 import 'package:avatars/avatars.dart';
 import 'package:flutter/material.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/texts/small_text.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/texts/small_text.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class ClientCardContainer extends StatelessWidget {
   Alignment? alignment;

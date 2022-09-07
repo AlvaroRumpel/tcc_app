@@ -3,12 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_background/flutter_background.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/enum/timer_type.dart';
-import 'package:tcc_app/models/training_finished_model.dart';
-import 'package:tcc_app/models/training_model.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/enum/timer_type.dart';
+import 'package:play_workout/models/training_finished_model.dart';
+import 'package:play_workout/models/training_model.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
 
 class TrainingClientOneController extends GetxController
     with StateMixin<List<TrainingModel>> {

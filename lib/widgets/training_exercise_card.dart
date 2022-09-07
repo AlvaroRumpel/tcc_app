@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:tcc_app/models/training_model.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/validators.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
-import 'package:tcc_app/widgets/standart_textfield.dart';
+import 'package:play_workout/models/training_model.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/utils/validators.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_icon_button.dart';
+import 'package:play_workout/widgets/standart_textfield.dart';
 
 class TrainingExerciseCard extends StatelessWidget {
   TrainingModel training;

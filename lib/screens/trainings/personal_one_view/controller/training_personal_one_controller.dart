@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/models/training_model.dart';
-import 'package:tcc_app/models/workouts_model.dart';
-import 'package:tcc_app/screens/trainings/personal_all_list/controller/training_personal_all_list_controller.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/models/training_model.dart';
+import 'package:play_workout/models/workouts_model.dart';
+import 'package:play_workout/screens/trainings/personal_all_list/controller/training_personal_all_list_controller.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
 
 class TrainingPersonalOneController extends GetxController
     with StateMixin<WorkoutsModel> {
@@ -17,6 +17,7 @@ class TrainingPersonalOneController extends GetxController
   WorkoutsModel trainingArguments = Get.arguments ?? WorkoutsModel;
   List<TrainingModel> trainingSaved = [];
   RxBool edit = false.obs;
+  RxString workoutName = "".obs;
 
   @override
   void onInit() {
@@ -31,8 +32,13 @@ class TrainingPersonalOneController extends GetxController
           (trainingArguments.trainings.length - exerciseController.length) +
               exerciseController.length;
 
+      if (trainingNameController.text.isEmpty) {
+        trainingNameController.text = trainingArguments.trainings.first.name;
+      }
+
+      workoutName.value = trainingNameController.text;
+
       for (int i = exerciseController.length; i < timesToAddControllers; i++) {
-        trainingNameController.text = trainingArguments.trainings[i].name;
         exerciseController.insert(
             i,
             TextEditingController(

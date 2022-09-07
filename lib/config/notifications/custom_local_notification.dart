@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:play_workout/utils/custom_colors.dart';
 
 class CustomLocalNotification {
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -11,6 +12,7 @@ class CustomLocalNotification {
       'High Importance Notifications',
       description: 'This channel is used for important notifications',
       importance: Importance.high,
+      showBadge: true,
     );
 
     _configAndroid().then((value) {
@@ -55,6 +57,7 @@ class CustomLocalNotification {
           channel.name,
           channelDescription: channel.description,
           icon: android.smallIcon,
+          color: CustomColors.primaryColor,
         ),
       ),
     );

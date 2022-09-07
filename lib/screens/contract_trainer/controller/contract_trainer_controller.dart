@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
-import 'package:tcc_app/widgets/trainer_modal.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:play_workout/widgets/trainer_modal.dart';
 
 class ContractTrainerController extends GetxController
     with StateMixin<List<TrainerModel>> {
@@ -22,7 +22,6 @@ class ContractTrainerController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    change(state, status: RxStatus.loading());
     getData();
   }
 
@@ -37,6 +36,7 @@ class ContractTrainerController extends GetxController
 
   Future<void> getData() async {
     try {
+      change(state, status: RxStatus.loading());
       trainers.clear();
       var response = await db.collection(DB.trainers).get();
       for (var item in response.docs) {
@@ -49,7 +49,8 @@ class ContractTrainerController extends GetxController
           (element) => element.trainerId == trainerTemp.trainerId,
         );
       }
-      change(trainers, status: RxStatus.success());
+      change(trainers,
+          status: trainers.isNotEmpty ? RxStatus.success() : RxStatus.empty());
     } catch (e) {
       Logger().d(e);
       change(trainers, status: RxStatus.empty());

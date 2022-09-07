@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
-
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class EmptyState extends StatelessWidget {
   bool withContainer;

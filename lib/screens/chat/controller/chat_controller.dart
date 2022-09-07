@@ -3,14 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/config/database_variables.dart';
-import 'package:tcc_app/config/notifications/custom_firebase_messaging.dart';
-import 'package:tcc_app/models/chat_conversation_model.dart';
-import 'package:tcc_app/models/message_model.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/models/user_trainer_model.dart';
-import 'package:tcc_app/models/workouts_model.dart';
-import 'package:tcc_app/services/local_storage.dart';
+import 'package:play_workout/config/database_variables.dart';
+import 'package:play_workout/config/notifications/custom_firebase_messaging.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/chat_conversation_model.dart';
+import 'package:play_workout/models/message_model.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/models/user_trainer_model.dart';
+import 'package:play_workout/models/workouts_model.dart';
+import 'package:play_workout/services/local_storage.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
 
 class ChatController extends GetxController
     with StateMixin<ChatConversationModel> {
@@ -28,6 +30,7 @@ class ChatController extends GetxController
   String? docId;
   bool isClient = true;
   String id = "";
+  String? fcmTokenSend;
 
   @override
   void onInit() async {
@@ -41,11 +44,13 @@ class ChatController extends GetxController
   bool isClientCheck() {
     if (arguments is UserTrainerModel) {
       id = arguments.clientId;
+      fcmTokenSend = arguments.fcmToken;
       return false;
     } else if (arguments is WorkoutsModel) {
       id = arguments.trainerId;
     } else if (arguments is TrainerModel) {
       id = arguments.trainerId;
+      fcmTokenSend = arguments.fcmToken;
     }
     return true;
   }
@@ -100,6 +105,7 @@ class ChatController extends GetxController
     if (messageController.text.isEmpty) {
       return;
     }
+
     try {
       var message = MessageModel(
         message: messageController.text,
@@ -107,6 +113,8 @@ class ChatController extends GetxController
         whoReceived: id,
         whoSent: FirebaseAuth.instance.currentUser!.uid,
       );
+
+      messageController.clear();
 
       if (messageList != null) {
         messageList!.messages!.insert(0, message);
@@ -129,9 +137,9 @@ class ChatController extends GetxController
           trainer: !isClient ? FirebaseAuth.instance.currentUser!.uid : id,
           client: isClient ? FirebaseAuth.instance.currentUser!.uid : id,
           trainerFcmToken:
-              !isClient ? await LocalStorage.getFirebaseToken() : null,
+              !isClient ? await LocalStorage.getFirebaseToken() : fcmTokenSend,
           clientFcmToken:
-              isClient ? await LocalStorage.getFirebaseToken() : null,
+              isClient ? await LocalStorage.getFirebaseToken() : fcmTokenSend,
         );
         var response = await FirebaseFirestore.instance
             .collection(DB.conversation)
@@ -140,29 +148,29 @@ class ChatController extends GetxController
         listenMessages();
       }
 
-      if (messageList != null) {
-        String to = '';
+      if (messageList == null) return;
 
-        if (!isClient && messageList!.clientFcmToken != null) {
-          to = messageList!.clientFcmToken!;
-        } else if (isClient && messageList!.trainerFcmToken != null) {
-          to = messageList!.trainerFcmToken!;
-        }
+      String to = '';
 
-        if (to != '') {
-          await CustomFirebaseMessaging().sendNotification(
-            to,
-            'Nova Mensagem',
-            'Você recebeu uma nova mensagem',
-          );
-        }
+      if (!isClient && messageList!.clientFcmToken != null) {
+        to = messageList!.clientFcmToken!;
+      } else if (isClient && messageList!.trainerFcmToken != null) {
+        to = messageList!.trainerFcmToken!;
       }
 
-      messageController.clear();
+      if (to != '') {
+        await CustomFirebaseMessaging().sendNotification(
+          to,
+          'Nova Mensagem de ${isClient ? GlobalController.i.client!.name : GlobalController.i.trainer!.firstName}',
+          messageList!.messages!.first.message,
+          !isClient,
+        );
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
+      UtilsWidgets.errorSnackbar();
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/global/global_service.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/global/global_service.dart';
 
 class GlobalBinding implements Bindings {
   @override

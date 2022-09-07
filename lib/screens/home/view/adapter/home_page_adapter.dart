@@ -1,11 +1,13 @@
 import 'package:avatars/avatars.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:tcc_app/screens/home/controller/home_controller.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/screens/home/controller/home_controller.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/standart_container.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class HomePageAdapter extends GetView<HomeController> {
   const HomePageAdapter({Key? key}) : super(key: key);
@@ -72,16 +74,41 @@ class HomePageAdapter extends GetView<HomeController> {
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: StandartContainer(
-                  alignment: Alignment.topCenter,
-                  child: StandartText(
-                    padding: const EdgeInsets.all(0),
-                    align: TextAlign.center,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    text:
-                        'Obrigado por acessar o aplicativo, qualquer problema/dúvida pode me mandar em alvaroRumpel@gmail.com',
+              child: EasyRefresh(
+                header: ClassicHeader(
+                  dragText: 'Puxe para atualizar',
+                  armedText: 'Atualizar',
+                  processedText: 'Atualizado',
+                  processingText: 'Atualizando',
+                  readyText: 'Atualizando',
+                  textStyle: GoogleFonts.poppins(
+                    color: CustomColors.whiteStandard,
+                    fontSize: 16,
+                  ),
+                  messageStyle: GoogleFonts.poppins(
+                    color: CustomColors.whiteStandard,
+                    fontSize: 16,
+                  ),
+                  messageText: 'Ultima atualização as %T',
+                  iconTheme: const IconThemeData(
+                    color: CustomColors.whiteStandard,
+                  ),
+                  safeArea: true,
+                ),
+                onRefresh: () async {
+                  await controller.getData(isRefresh: true);
+                },
+                child: SingleChildScrollView(
+                  child: StandartContainer(
+                    alignment: Alignment.topCenter,
+                    child: StandartText(
+                      padding: const EdgeInsets.all(0),
+                      align: TextAlign.center,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      text:
+                          'Obrigado por acessar o aplicativo, qualquer problema/dúvida pode me mandar em alvaroRumpel@gmail.com',
+                    ),
                   ),
                 ),
               ),

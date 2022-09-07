@@ -2,10 +2,10 @@ import 'package:avatars/avatars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/screens/ranking/controller/ranking_controller.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/avatar_level.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/screens/ranking/controller/ranking_controller.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/avatar_level.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class RankingPage extends GetView<RankingController> {
   const RankingPage({Key? key}) : super(key: key);
@@ -31,29 +31,31 @@ class RankingPage extends GetView<RankingController> {
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                Positioned(
-                  left: 16,
-                  top: 80,
-                  child: AvatarLevel(
-                    size: 64,
-                    name: state[1].name ?? '#',
-                    level: state[1].level,
-                    borderColor: CustomColors.whiteSecondary,
-                    textColor: CustomColors.secondaryColor,
-                    fontWeight: FontWeight.w800,
+                if (state.length > 1)
+                  Positioned(
+                    left: 16,
+                    top: 80,
+                    child: AvatarLevel(
+                      size: 64,
+                      name: state[1].name ?? '#',
+                      level: state[1].level,
+                      borderColor: CustomColors.whiteSecondary,
+                      textColor: CustomColors.secondaryColor,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-                Positioned(
-                  right: 16,
-                  top: 80,
-                  child: AvatarLevel(
-                    size: 64,
-                    name: state[2].name ?? '#',
-                    level: state[2].level,
-                    borderColor: CustomColors.secondaryColor,
-                    fontWeight: FontWeight.w800,
+                if (state.length > 2)
+                  Positioned(
+                    right: 16,
+                    top: 80,
+                    child: AvatarLevel(
+                      size: 64,
+                      name: state[2].name ?? '#',
+                      level: state[2].level,
+                      borderColor: CustomColors.secondaryColor,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
               ],
             ),
           ),

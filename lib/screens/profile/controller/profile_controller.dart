@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/models/training_finished_model.dart';
-import 'package:tcc_app/models/user_model.dart';
-import 'package:tcc_app/screens/profile/service/profile_service.dart';
-import 'package:tcc_app/utils/utils_widgets.dart';
-import 'package:tcc_app/widgets/trainer_modal.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/models/training_finished_model.dart';
+import 'package:play_workout/models/user_model.dart';
+import 'package:play_workout/screens/profile/service/profile_service.dart';
+import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:play_workout/widgets/trainer_modal.dart';
 
 class ProfileController extends GetxController with StateMixin<UserModel> {
   ProfileController({required this.service});
@@ -44,11 +44,10 @@ class ProfileController extends GetxController with StateMixin<UserModel> {
 
     change(profile ?? state,
         status: profile != null ? RxStatus.success() : RxStatus.empty());
-    UtilsWidgets.sucessSnackbar();
 
-    if (profile != null) return;
-    UtilsWidgets.errorScreen();
-    UtilsWidgets.errorSnackbar(title: 'Usuario não encontrado');
+    if (profile == null) {
+      UtilsWidgets.errorScreen(message: 'Usuario não encontrado');
+    }
   }
 
   Future<void> getHistory() async {

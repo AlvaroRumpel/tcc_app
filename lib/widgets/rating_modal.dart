@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/models/trainer_model.dart';
-import 'package:tcc_app/services/user_service.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_outlined_button.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
+import 'package:play_workout/models/trainer_model.dart';
+import 'package:play_workout/services/user_service.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_outlined_button.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class RatingModal {
   RatingModal.defaultRatingModal({required TrainerModel trainer}) {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:tcc_app/models/enum/timer_type.dart';
-import 'package:tcc_app/screens/trainings/client_one_view/controller/training_client_one_controller.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/utils/empty_state.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_icon_button.dart';
-import 'package:tcc_app/widgets/standart_scaffold.dart';
-import 'package:tcc_app/widgets/texts/standart_text.dart';
-import 'package:tcc_app/widgets/training_exercise_card.dart';
+import 'package:play_workout/models/enum/timer_type.dart';
+import 'package:play_workout/screens/trainings/client_one_view/controller/training_client_one_controller.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/utils/empty_state.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_icon_button.dart';
+import 'package:play_workout/widgets/standart_scaffold.dart';
+import 'package:play_workout/widgets/texts/standart_text.dart';
+import 'package:play_workout/widgets/training_exercise_card.dart';
 
 class TrainingClientOnePage extends GetView<TrainingClientOneController> {
   TrainingClientOnePage({Key? key}) : super(key: key);

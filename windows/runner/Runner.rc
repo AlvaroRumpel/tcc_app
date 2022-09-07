@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "tcc_app" "\0"
+            VALUE "FileDescription", "play_workout" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "tcc_app" "\0"
+            VALUE "InternalName", "play_workout" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "tcc_app.exe" "\0"
-            VALUE "ProductName", "tcc_app" "\0"
+            VALUE "OriginalFilename", "play_workout.exe" "\0"
+            VALUE "ProductName", "play_workout" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

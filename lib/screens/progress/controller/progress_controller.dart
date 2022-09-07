@@ -3,9 +3,9 @@ import 'dart:collection';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/training_finished_model.dart';
-import 'package:tcc_app/models/user_model.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/training_finished_model.dart';
+import 'package:play_workout/models/user_model.dart';
 
 class ProgressController extends GetxController with StateMixin<UserModel> {
   GlobalController globalController = GlobalController.i;

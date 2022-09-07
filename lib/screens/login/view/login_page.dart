@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/screens/login/controller/login_controller.dart';
-import 'package:tcc_app/utils/svg_logo_icon.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_outlined_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_text_button.dart';
-import 'package:tcc_app/widgets/standart_scaffold.dart';
-import 'package:tcc_app/widgets/standart_container.dart';
-import 'package:tcc_app/widgets/standart_textfield.dart';
-import 'package:tcc_app/widgets/texts/title_text.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/screens/login/controller/login_controller.dart';
+import 'package:play_workout/utils/svg_logo_icon.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_outlined_button.dart';
+import 'package:play_workout/widgets/buttons/standart_text_button.dart';
+import 'package:play_workout/widgets/standart_scaffold.dart';
+import 'package:play_workout/widgets/standart_container.dart';
+import 'package:play_workout/widgets/standart_textfield.dart';
+import 'package:play_workout/widgets/texts/title_text.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class LoginPage extends GetView<LoginController> {
               StandartTextButton(
                 dense: true,
                 text: 'Esqueci a senha',
-                function: () {},
+                function: () => controller.forgotPass(),
               ),
               StandartButton(
                 text: 'Entrar',

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tcc_app/global/global_controller.dart';
-import 'package:tcc_app/models/user_model.dart';
+import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/user_model.dart';
 
 class HomeController extends GetxController with StateMixin<UserModel> {
   int currentIndex = 0;
@@ -21,7 +21,10 @@ class HomeController extends GetxController with StateMixin<UserModel> {
     await getData();
   }
 
-  Future<void> getData() async {
+  Future<void> getData({bool isRefresh = false}) async {
+    if (isRefresh) {
+      globalController.getClient();
+    }
     xpPercent =
         (globalController.client!.xp / globalController.xpNeededForNextLevel());
     xpPercent = xpPercent.isNaN ? 0 : xpPercent;

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tcc_app/routes/routes.dart';
-import 'package:tcc_app/utils/custom_colors.dart';
-import 'package:tcc_app/widgets/buttons/standart_button.dart';
-import 'package:tcc_app/widgets/buttons/standart_outlined_button.dart';
+import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_outlined_button.dart';
 
 class UtilsWidgets {
   UtilsWidgets.loadingDialog({String title = 'Loading...'}) {
@@ -48,8 +48,10 @@ class UtilsWidgets {
       colorText: CustomColors.whiteStandard,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: CustomColors.errorColor,
+      borderRadius: 20,
     );
   }
+
   UtilsWidgets.sucessSnackbar(
       {String title = 'Sucesso...',
       String description = 'Operação feita com sucesso'}) {
@@ -76,8 +78,10 @@ class UtilsWidgets {
       colorText: CustomColors.whiteStandard,
       snackPosition: SnackPosition.TOP,
       backgroundColor: CustomColors.sucessColor,
+      borderRadius: 20,
     );
   }
+
   UtilsWidgets.errorScreen(
       {String message = 'Erro na operação',
       IconData icon = FontAwesome.attention}) {
@@ -106,6 +110,7 @@ class UtilsWidgets {
       ),
     );
   }
+
   UtilsWidgets.buttonsDialog({
     required String title,
     required String description,
@@ -219,12 +224,13 @@ class UtilsWidgets {
       ),
     );
   }
+
   UtilsWidgets.levelUpModal(int nivel, Function onWillPop) {
     Get.defaultDialog(
       onWillPop: onWillPop(),
       barrierDismissible: true,
       title: 'Parabéns você subiu de nível',
-      titlePadding: const EdgeInsets.symmetric(vertical: 32),
+      titlePadding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16.0),
       titleStyle: GoogleFonts.poppins(
         color: CustomColors.primaryColor,
         fontSize: 24,
@@ -236,6 +242,48 @@ class UtilsWidgets {
         color: CustomColors.primaryColor,
         fontSize: 16,
       ),
+    );
+  }
+
+  UtilsWidgets.emailVerifiedSnackbar(Function sendEmailFunction) {
+    Get.snackbar(
+      'Verifique seu email!',
+      'Seu email não está verificado, por favor acesse seu email e confirme sua identidade',
+      backgroundColor: CustomColors.primaryColor,
+      titleText: Text(
+        'Verifique seu email!',
+        style: GoogleFonts.poppins(
+          color: CustomColors.whiteStandard,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      messageText: Column(
+        children: [
+          Text(
+            'Seu email não está verificado, por favor acesse seu email e confirme sua identidade',
+            style: GoogleFonts.poppins(
+              color: CustomColors.whiteStandard,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: StandartButton(
+              text: 'Enviar outro email',
+              function: sendEmailFunction,
+              dense: true,
+              color: CustomColors.whiteTertiary,
+              finalIcon: Icons.mark_email_unread_outlined,
+              textColor: CustomColors.primaryColor,
+            ),
+          ),
+        ],
+      ),
+      borderRadius: 20,
+      snackPosition: SnackPosition.BOTTOM,
+      duration: const Duration(seconds: 10),
     );
   }
 }
