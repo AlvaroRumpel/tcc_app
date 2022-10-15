@@ -62,7 +62,7 @@ class Validators {
   }
 
   bool hasErroSecondaryData() {
-    return !height || !weight || !bodyFat;
+    return !height || !weight;
   }
 
   bool isAlphabetic(value) {
