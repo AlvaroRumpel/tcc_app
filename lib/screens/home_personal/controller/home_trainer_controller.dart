@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:play_workout/config/database_variables.dart';
 import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/chat_pattern_model.dart';
 import 'package:play_workout/models/trainer_model.dart';
 import 'package:play_workout/models/user_trainer_model.dart';
 import 'package:play_workout/routes/routes.dart';
@@ -32,20 +33,20 @@ class HomeTrainerController extends GetxController
     await getData();
   }
 
-  Future<void> getData() async {
+  Future<void> getData({isRefresh = false}) async {
     try {
       change(state, status: RxStatus.loading());
-      if (globalController.trainer == null) {
+      if (globalController.trainer == null || isRefresh) {
         await globalController.getTrainer(idTrainer: trainer?.trainerId);
       }
       trainer = globalController.trainer;
+      List<UserTrainerModel> clients = [];
+      if (trainer != null) {
+        clients = trainer!.clients.where((element) => element.active).toList();
+      }
       change(
-        trainer != null ? trainer!.clients : state,
-        status: trainer != null
-            ? trainer!.clients.isEmpty
-                ? RxStatus.empty()
-                : RxStatus.success()
-            : RxStatus.empty(),
+        clients,
+        status: clients.isEmpty ? RxStatus.empty() : RxStatus.success(),
       );
     } catch (e) {
       change(state, status: RxStatus.empty());
@@ -195,7 +196,12 @@ class HomeTrainerController extends GetxController
             text: 'Chat',
             function: () => Get.toNamed(
               Routes.toChat,
-              arguments: client,
+              arguments: ChatPatternModel(
+                isClient: false,
+                senderId: FirebaseAuth.instance.currentUser!.uid,
+                receiverId: client.clientId,
+                fcmTokenToSend: client.fcmToken,
+              ),
             ),
             leadingIcon: FontAwesome.chat_empty,
           ),

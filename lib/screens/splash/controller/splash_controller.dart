@@ -21,6 +21,7 @@ class SplashController extends GetxController {
       await Get.offAndToNamed(Routes.toLogin);
       return;
     }
+    GlobalController.i.getNotifications();
     if (await LocalStorage.getIsClients()) {
       await GlobalController.i.getClient();
       await Get.offAndToNamed(Routes.toHomeClient);

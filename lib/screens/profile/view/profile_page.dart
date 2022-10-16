@@ -6,9 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/screens/profile/controller/profile_controller.dart';
+import 'package:play_workout/services/user_service.dart';
 import 'package:play_workout/utils/custom_colors.dart';
 import 'package:play_workout/utils/empty_state.dart';
 import 'package:play_workout/widgets/avatar_level.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
 import 'package:play_workout/widgets/buttons/standart_icon_button.dart';
 import 'package:play_workout/widgets/standart_container.dart';
 import 'package:play_workout/widgets/standart_scaffold.dart';
@@ -207,6 +209,14 @@ class ProfilePage extends GetView<ProfileController> {
                             circle: true,
                           )
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: StandartButton(
+                        text: 'Sair',
+                        finalIcon: Icons.logout_outlined,
+                        function: () => UserService.logout(),
                       ),
                     ),
                   ],

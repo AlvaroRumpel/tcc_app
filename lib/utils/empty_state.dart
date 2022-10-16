@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:play_workout/utils/custom_colors.dart';
@@ -5,9 +7,12 @@ import 'package:play_workout/widgets/texts/standart_text.dart';
 
 class EmptyState extends StatelessWidget {
   bool withContainer;
+  String text;
+
   EmptyState({
     Key? key,
     this.withContainer = true,
+    this.text = 'Dados não encontrados no sistema',
   }) : super(key: key);
 
   @override
@@ -39,7 +44,7 @@ class EmptyState extends StatelessWidget {
               size: 48,
             ),
             StandartText(
-              text: 'Dados não encontrados no sistema',
+              text: text,
               align: TextAlign.center,
               fontSize: 24,
             ),

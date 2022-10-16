@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:play_workout/config/database_variables.dart';
 import 'package:play_workout/config/notifications/custom_firebase_messaging.dart';
 import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/enum/notification_type.dart';
 import 'package:play_workout/models/enum/user_type.dart';
 import 'package:play_workout/models/trainer_model.dart';
 import 'package:play_workout/models/trainer_user_model.dart';
@@ -37,6 +38,7 @@ class UserService {
   static Future<UserType> checkIsClient() async {
     try {
       await CustomFirebaseMessaging().getTokenFirebase();
+      globalController.getNotifications();
       var response = await FirebaseFirestore.instance
           .collection(DB.clients)
           .where('client_id',
@@ -100,8 +102,8 @@ class UserService {
             .add(userModel.toMap());
 
         globalController.client = userModel;
-
         await LocalStorage.setIsClients(true);
+        globalController.getNotifications();
       }
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(
@@ -120,6 +122,7 @@ class UserService {
     globalController.client = null;
     globalController.trainer = null;
     globalController.progress = [];
+    globalController.notifications = null;
     await LocalStorage.clearAllData();
     Get.offAllNamed(Routes.toLogin);
   }
@@ -216,10 +219,12 @@ class UserService {
 
       if (trainerModel.fcmToken != null) {
         await CustomFirebaseMessaging().sendNotification(
-          trainerModel.fcmToken!,
-          'Novo cliente!!',
-          'Alguém quer que você o treine, responda o quanto antes',
-          false,
+          to: trainerModel.fcmToken!,
+          title: 'Novo cliente!!',
+          body: 'Alguém quer que você o treine, responda o quanto antes',
+          toClient: false,
+          notificationType: NotificationType.contract,
+          personId: userModel.clientId!,
         );
       }
 

@@ -1,9 +1,11 @@
 import 'package:avatars/avatars.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:play_workout/models/chat_pattern_model.dart';
 import 'package:play_workout/models/trainer_model.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/services/user_service.dart';
@@ -117,7 +119,12 @@ class TrainerModal {
             function: () async {
               await Get.toNamed(
                 Routes.toChat,
-                arguments: trainer,
+                arguments: ChatPatternModel(
+                  fcmTokenToSend: trainer.fcmToken,
+                  senderId: FirebaseAuth.instance.currentUser?.uid,
+                  receiverId: trainer.trainerId!,
+                  isClient: true,
+                ),
               );
             },
           ),
