@@ -14,4 +14,5 @@ class Routes {
   static String toProgressClient = '/progress-client';
   static String toSplash = '/';
   static String toNotifications = '/notifications';
+  static String toChatList = '/chat-list';
 }

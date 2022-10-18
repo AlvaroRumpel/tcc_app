@@ -31,6 +31,7 @@ class GlobalController extends GetxController {
   TrainerModel? trainer;
   List<TrainingFinishedModel> progress = [];
   NotificationsListModel? notifications;
+  String notificationDocomentId = '';
   RxBool haveNewNotification = false.obs;
 
   var androidConfig = const FlutterBackgroundAndroidConfig(
@@ -146,12 +147,13 @@ class GlobalController extends GetxController {
   Future<void> getNotifications() async {
     notifications = await service.getNotifications();
     if (notifications != null && notifications!.id != null) {
+      notificationDocomentId = notifications!.id!;
       haveNewNotification.value =
           notifications?.notifications.any((element) => !element.read) ?? false;
 
       FirebaseFirestore.instance
           .collection(DB.notifications)
-          .doc(notifications!.id!)
+          .doc(notificationDocomentId)
           .snapshots()
           .listen(
         (event) {

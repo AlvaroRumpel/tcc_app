@@ -63,6 +63,7 @@ class CustomFirebaseMessaging {
   }
 
   Future<void> sendNotification({
+    String? relationId,
     required String to,
     required String title,
     required String body,
@@ -99,11 +100,11 @@ class CustomFirebaseMessaging {
       );
       GlobalController.i.setNotifications(
         notification: NotificationModel(
-          id: const Uuid().v4(),
+          id: relationId ?? const Uuid().v4(),
           title: title,
           body: body,
           type: notificationType,
-          plusData: plusData.toJson(),
+          plusData: plusData is String ? plusData : plusData.toJson(),
           date: DateTime.now(),
           read: false,
         ),

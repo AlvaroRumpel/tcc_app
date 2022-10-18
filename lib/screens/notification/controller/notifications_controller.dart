@@ -7,6 +7,7 @@ import 'package:play_workout/models/chat_pattern_model.dart';
 import 'package:play_workout/models/enum/notification_type.dart';
 import 'package:play_workout/models/notification_model.dart';
 import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/local_storage.dart';
 
 class NotificationsController extends GetxController
     with StateMixin<List<List<NotificationModel>>> {
@@ -37,6 +38,10 @@ class NotificationsController extends GetxController
 
   List<List<NotificationModel>> getNotifications() {
     var groups = <List<NotificationModel>>[];
+    if (globalController.notifications == null) {
+      change(state, status: RxStatus.empty());
+      return groups;
+    }
     for (var item in globalController.notifications!.notifications) {
       if (groups
           .any((element) => element.every((e) => e.title == item.title))) {
@@ -58,19 +63,32 @@ class NotificationsController extends GetxController
 
   Future<void> goToNotification(List<NotificationModel> notifications) async {
     try {
+      change(state, status: RxStatus.loading());
+      var isClient = await LocalStorage.getIsClients();
       List<String> ids = [];
       for (var item in notifications) {
         ids.add(item.id);
       }
       await globalController.readNotification(notificationIds: ids);
-      if (notifications.first.type == NotificationType.message) {
-        await Get.toNamed(
-          Routes.toChat,
-          arguments: ChatPatternModel.fromJson(notifications
-              .firstWhere((element) => element.plusData != '')
-              .plusData),
-        );
+
+      switch (notifications.first.type) {
+        case NotificationType.message:
+          await Get.toNamed(
+            Routes.toChat,
+            arguments: ChatPatternModel.fromJson(notifications
+                .firstWhere((element) => element.plusData != '')
+                .plusData),
+          );
+          break;
+        case NotificationType.contract:
+          await Get.offAllNamed(
+              !isClient ? Routes.toHomeTrainer : Routes.toHomeClient);
+          break;
+        case NotificationType.rating:
+          // TODO: Handle this case.
+          break;
       }
+
       change(
         getNotifications(),
         status: globalController.notifications == null ||

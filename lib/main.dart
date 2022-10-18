@@ -7,6 +7,8 @@ import 'package:play_workout/global/global_binding.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/screens/chat/binding/chat_binding.dart';
 import 'package:play_workout/screens/chat/view/chat_page.dart';
+import 'package:play_workout/screens/chat_list/binding/chat_list_binding.dart';
+import 'package:play_workout/screens/chat_list/view/chat_list_page.dart';
 import 'package:play_workout/screens/home/binding/home_binding.dart';
 import 'package:play_workout/screens/home/view/home_page.dart';
 import 'package:play_workout/screens/home_personal/binding/home_trainer_binding.dart';
@@ -138,6 +140,11 @@ class MyApp extends StatelessWidget {
               name: Routes.toNotifications,
               page: () => const NotificationsPage(),
               binding: NotificationsBinding(),
+            ),
+            GetPage(
+              name: Routes.toChatList,
+              page: () => const ChatListPage(),
+              binding: ChatListBinding(),
             ),
           ],
         ),

@@ -12,6 +12,7 @@ import 'package:play_workout/models/enum/notification_type.dart';
 import 'package:play_workout/models/message_model.dart';
 import 'package:play_workout/services/local_storage.dart';
 import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatController extends GetxController
     with StateMixin<ChatConversationModel> {
@@ -114,11 +115,13 @@ class ChatController extends GetxController
     }
 
     try {
+      var notificationId = const Uuid().v4();
       var message = MessageModel(
         message: messageController.text,
         sendDate: DateTime.now().toString(),
         whoReceived: chatArguments!.receiverId,
         whoSent: FirebaseAuth.instance.currentUser!.uid,
+        notificationId: notificationId,
       );
 
       messageController.clear();
@@ -165,7 +168,12 @@ class ChatController extends GetxController
         listenMessages();
       }
 
-      if (messageList == null) return;
+      while (messageList == null) {
+        await Future.delayed(
+          const Duration(seconds: 2),
+        );
+        if (messageList == null) return;
+      }
 
       String to = '';
 
@@ -178,6 +186,7 @@ class ChatController extends GetxController
 
       if (to != '') {
         await CustomFirebaseMessaging().sendNotification(
+          relationId: notificationId,
           to: to,
           title:
               'Nova Mensagem de ${chatArguments!.isClient ? GlobalController.i.client!.name : GlobalController.i.trainer!.firstName}',

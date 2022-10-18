@@ -42,7 +42,9 @@ class HomeTrainerController extends GetxController
       trainer = globalController.trainer;
       List<UserTrainerModel> clients = [];
       if (trainer != null) {
-        clients = trainer!.clients.where((element) => element.active).toList();
+        clients = trainer!.clients
+            .where((element) => element.active || !element.hasResponse)
+            .toList();
       }
       change(
         clients,

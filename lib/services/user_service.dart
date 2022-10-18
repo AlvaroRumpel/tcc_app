@@ -221,10 +221,11 @@ class UserService {
         await CustomFirebaseMessaging().sendNotification(
           to: trainerModel.fcmToken!,
           title: 'Novo cliente!!',
-          body: 'Alguém quer que você o treine, responda o quanto antes',
+          body:
+              '${userModel.name} quer seu treinamento, responda o quanto antes',
           toClient: false,
           notificationType: NotificationType.contract,
-          personId: userModel.clientId!,
+          personId: trainerModel.trainerId!,
         );
       }
 
@@ -279,6 +280,8 @@ class UserService {
           .set(
             userModel.toMap(),
           );
+
+      trainerModel.numberClients--;
       await FirebaseFirestore.instance
           .collection(DB.trainers)
           .doc(trainerModel.id)

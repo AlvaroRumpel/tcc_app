@@ -54,15 +54,22 @@ class ProfilePage extends GetView<ProfileController> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 8, top: 8),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: StandartIconButton(
-                          circle: true,
-                          icon: Icons.refresh_outlined,
-                          function: () async {
-                            await controller.getData(isRefresh: true);
-                          },
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          StandartIconButton(
+                            circle: true,
+                            icon: Icons.arrow_back_rounded,
+                            function: () => Get.back(),
+                          ),
+                          StandartIconButton(
+                            circle: true,
+                            icon: Icons.refresh_outlined,
+                            function: () async {
+                              await controller.getData(isRefresh: true);
+                            },
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
