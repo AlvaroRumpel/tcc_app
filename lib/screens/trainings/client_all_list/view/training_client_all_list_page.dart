@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:play_workout/models/chat_pattern_model.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/screens/trainings/client_all_list/controller/training_client_all_list_controller.dart';
 import 'package:play_workout/utils/custom_colors.dart';
@@ -29,7 +30,13 @@ class TrainingClientAllListPage
                 function: () async {
                   await Get.toNamed(
                     Routes.toChat,
-                    arguments: state!.first,
+                    arguments: ChatPatternModel(
+                      senderId: state!.first.clientId,
+                      fcmTokenToSend:
+                          controller.globalController.trainer?.fcmToken,
+                      receiverId: state.first.trainerId,
+                      isClient: true,
+                    ),
                   );
                 },
               ),

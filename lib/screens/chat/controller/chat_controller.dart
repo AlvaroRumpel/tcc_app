@@ -7,12 +7,12 @@ import 'package:play_workout/config/database_variables.dart';
 import 'package:play_workout/config/notifications/custom_firebase_messaging.dart';
 import 'package:play_workout/global/global_controller.dart';
 import 'package:play_workout/models/chat_conversation_model.dart';
+import 'package:play_workout/models/chat_pattern_model.dart';
+import 'package:play_workout/models/enum/notification_type.dart';
 import 'package:play_workout/models/message_model.dart';
-import 'package:play_workout/models/trainer_model.dart';
-import 'package:play_workout/models/user_trainer_model.dart';
-import 'package:play_workout/models/workouts_model.dart';
 import 'package:play_workout/services/local_storage.dart';
 import 'package:play_workout/utils/utils_widgets.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatController extends GetxController
     with StateMixin<ChatConversationModel> {
@@ -28,45 +28,53 @@ class ChatController extends GetxController
 
   ChatConversationModel? messageList;
   String? docId;
-  bool isClient = true;
-  String id = "";
-  String? fcmTokenSend;
+  // bool isClient = true;
+  // String id = "";
+  // String? fcmTokenSend;
+  ChatPatternModel? chatArguments;
 
   @override
   void onInit() async {
     super.onInit();
     change(state, status: RxStatus.loading());
-    isClient = isClientCheck();
+    // isClient = isClientCheck();
+    chatArguments = arguments;
     await getConversationId();
     listenMessages();
   }
 
-  bool isClientCheck() {
-    if (arguments is UserTrainerModel) {
-      id = arguments.clientId;
-      fcmTokenSend = arguments.fcmToken;
-      return false;
-    } else if (arguments is WorkoutsModel) {
-      id = arguments.trainerId;
-    } else if (arguments is TrainerModel) {
-      id = arguments.trainerId;
-      fcmTokenSend = arguments.fcmToken;
-    }
-    return true;
-  }
+  // bool isClientCheck() {
+  //   if (arguments is UserTrainerModel) {
+  //     id = arguments.clientId;
+  //     fcmTokenSend = arguments.fcmToken;
+  //     return false;
+  //   } else if (arguments is WorkoutsModel) {
+  //     id = arguments.trainerId;
+  //   } else if (arguments is TrainerModel) {
+  //     id = arguments.trainerId;
+  //     fcmTokenSend = arguments.fcmToken;
+  //   }
+  //   return true;
+  // }
 
   Future<void> getConversationId() async {
     try {
       response = await db
           .where(
             'client',
-            isEqualTo:
-                isClient ? FirebaseAuth.instance.currentUser?.uid ?? '' : id,
+            isEqualTo: chatArguments!.isClient
+                ? chatArguments!.senderId ??
+                    FirebaseAuth.instance.currentUser?.uid
+                : chatArguments!.receiverId,
+            // isClient ? FirebaseAuth.instance.currentUser?.uid ?? '' : id,
           )
           .where(
             'trainer',
-            isEqualTo:
-                !isClient ? FirebaseAuth.instance.currentUser?.uid ?? '' : id,
+            isEqualTo: !chatArguments!.isClient
+                ? chatArguments!.senderId ??
+                    FirebaseAuth.instance.currentUser?.uid
+                : chatArguments!.receiverId,
+            // !isClient ? FirebaseAuth.instance.currentUser?.uid ?? '' : id,
           )
           .get();
       docId = response?.docs.first.id;
@@ -107,21 +115,23 @@ class ChatController extends GetxController
     }
 
     try {
+      var notificationId = const Uuid().v4();
       var message = MessageModel(
         message: messageController.text,
         sendDate: DateTime.now().toString(),
-        whoReceived: id,
+        whoReceived: chatArguments!.receiverId,
         whoSent: FirebaseAuth.instance.currentUser!.uid,
+        notificationId: notificationId,
       );
 
       messageController.clear();
 
       if (messageList != null) {
         messageList!.messages!.insert(0, message);
-        messageList!.clientFcmToken = isClient
+        messageList!.clientFcmToken = chatArguments!.isClient
             ? await LocalStorage.getFirebaseToken()
             : messageList!.clientFcmToken;
-        messageList!.trainerFcmToken = !isClient
+        messageList!.trainerFcmToken = !chatArguments!.isClient
             ? await LocalStorage.getFirebaseToken()
             : messageList!.trainerFcmToken;
         await FirebaseFirestore.instance
@@ -134,12 +144,22 @@ class ChatController extends GetxController
       } else {
         var messageComplete = ChatConversationModel(
           messages: [message],
-          trainer: !isClient ? FirebaseAuth.instance.currentUser!.uid : id,
-          client: isClient ? FirebaseAuth.instance.currentUser!.uid : id,
-          trainerFcmToken:
-              !isClient ? await LocalStorage.getFirebaseToken() : fcmTokenSend,
-          clientFcmToken:
-              isClient ? await LocalStorage.getFirebaseToken() : fcmTokenSend,
+          trainer: !chatArguments!.isClient
+              ? chatArguments!.senderId ??
+                  FirebaseAuth.instance.currentUser?.uid ??
+                  ''
+              : chatArguments!.receiverId,
+          client: chatArguments!.isClient
+              ? chatArguments!.senderId ??
+                  FirebaseAuth.instance.currentUser?.uid ??
+                  ''
+              : chatArguments!.receiverId,
+          trainerFcmToken: !chatArguments!.isClient
+              ? await LocalStorage.getFirebaseToken()
+              : chatArguments!.fcmTokenToSend,
+          clientFcmToken: chatArguments!.isClient
+              ? await LocalStorage.getFirebaseToken()
+              : chatArguments!.fcmTokenToSend,
         );
         var response = await FirebaseFirestore.instance
             .collection(DB.conversation)
@@ -148,22 +168,40 @@ class ChatController extends GetxController
         listenMessages();
       }
 
-      if (messageList == null) return;
+      while (messageList == null) {
+        await Future.delayed(
+          const Duration(seconds: 2),
+        );
+        if (messageList == null) return;
+      }
 
       String to = '';
 
-      if (!isClient && messageList!.clientFcmToken != null) {
+      if (!chatArguments!.isClient && messageList!.clientFcmToken != null) {
         to = messageList!.clientFcmToken!;
-      } else if (isClient && messageList!.trainerFcmToken != null) {
+      } else if (chatArguments!.isClient &&
+          messageList!.trainerFcmToken != null) {
         to = messageList!.trainerFcmToken!;
       }
 
       if (to != '') {
         await CustomFirebaseMessaging().sendNotification(
-          to,
-          'Nova Mensagem de ${isClient ? GlobalController.i.client!.name : GlobalController.i.trainer!.firstName}',
-          messageList!.messages!.first.message,
-          !isClient,
+          relationId: notificationId,
+          to: to,
+          title:
+              'Nova Mensagem de ${chatArguments!.isClient ? GlobalController.i.client!.name : GlobalController.i.trainer!.firstName}',
+          body: messageList!.messages!.first.message,
+          toClient: !chatArguments!.isClient,
+          notificationType: NotificationType.message,
+          personId: chatArguments!.receiverId,
+          plusData: ChatPatternModel(
+            isClient: !chatArguments!.isClient,
+            receiverId: chatArguments?.senderId ??
+                FirebaseAuth.instance.currentUser?.uid ??
+                '',
+            fcmTokenToSend: await LocalStorage.getFirebaseToken(),
+            senderId: chatArguments!.receiverId,
+          ),
         );
       }
     } catch (e) {

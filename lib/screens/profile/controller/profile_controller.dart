@@ -38,7 +38,13 @@ class ProfileController extends GetxController with StateMixin<UserModel> {
       await globalController.getHistory();
     }
     profile = globalController.client;
-    trainerComplete = globalController.trainer;
+    trainerComplete = globalController.trainer?.clients.firstWhereOrNull(
+                (element) =>
+                    element.active &&
+                    element.clientId == globalController.client!.clientId) !=
+            null
+        ? globalController.trainer
+        : null;
     historic = globalController.progress;
     await getHistory();
 

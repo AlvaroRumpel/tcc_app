@@ -73,7 +73,9 @@ class SingupClientFormController extends GetxController with StateMixin<int> {
         userModel: UserModel(
           clientId: FirebaseAuth.instance.currentUser?.uid ?? '',
           name: FirebaseAuth.instance.currentUser?.displayName ?? '',
-          bodyFat: int.parse(bodyFatController.text),
+          bodyFat: bodyFatController.text == ''
+              ? 0
+              : int.parse(bodyFatController.text),
           goal: objectiveController.value.toString(),
           height: int.parse(heightController.text),
           weight: int.parse(weightController.text),

@@ -5,12 +5,14 @@ class MessageModel {
   String whoSent;
   String whoReceived;
   String sendDate;
+  String notificationId;
 
   MessageModel({
     required this.message,
     required this.whoSent,
     required this.whoReceived,
     required this.sendDate,
+    required this.notificationId,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,6 +21,7 @@ class MessageModel {
       'who_sent': whoSent,
       'who_received': whoReceived,
       'send_date': sendDate,
+      'notification_id': notificationId,
     };
   }
 
@@ -28,6 +31,7 @@ class MessageModel {
       whoSent: map['who_sent'] ?? '',
       whoReceived: map['who_received'] ?? '',
       sendDate: map['send_date'] ?? '',
+      notificationId: map['notification_id'] ?? '',
     );
   }
 

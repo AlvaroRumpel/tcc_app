@@ -7,12 +7,16 @@ import 'package:play_workout/global/global_binding.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/screens/chat/binding/chat_binding.dart';
 import 'package:play_workout/screens/chat/view/chat_page.dart';
+import 'package:play_workout/screens/chat_list/binding/chat_list_binding.dart';
+import 'package:play_workout/screens/chat_list/view/chat_list_page.dart';
 import 'package:play_workout/screens/home/binding/home_binding.dart';
 import 'package:play_workout/screens/home/view/home_page.dart';
 import 'package:play_workout/screens/home_personal/binding/home_trainer_binding.dart';
 import 'package:play_workout/screens/home_personal/view/home_trainer_page.dart';
 import 'package:play_workout/screens/login/binding/login_binding.dart';
 import 'package:play_workout/screens/login/view/login_page.dart';
+import 'package:play_workout/screens/notification/binding/notifications_binding.dart';
+import 'package:play_workout/screens/notification/view/notifications_page.dart';
 import 'package:play_workout/screens/profile/binding/profile_binding.dart';
 import 'package:play_workout/screens/profile/view/profile_page.dart';
 import 'package:play_workout/screens/profile_personal/binding/profile_personal_binding.dart';
@@ -131,6 +135,16 @@ class MyApp extends StatelessWidget {
               name: Routes.toPersonalProfile,
               page: () => const ProfilePersonalPage(),
               binding: ProfilePersonalBinding(),
+            ),
+            GetPage(
+              name: Routes.toNotifications,
+              page: () => const NotificationsPage(),
+              binding: NotificationsBinding(),
+            ),
+            GetPage(
+              name: Routes.toChatList,
+              page: () => const ChatListPage(),
+              binding: ChatListBinding(),
             ),
           ],
         ),

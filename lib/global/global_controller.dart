@@ -1,10 +1,15 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_background/flutter_background.dart';
 import 'package:get/get.dart';
+import 'package:play_workout/config/database_variables.dart';
 
 import 'package:play_workout/global/global_service.dart';
+import 'package:play_workout/models/notification_model.dart';
+import 'package:play_workout/models/notifications_list_model.dart';
 import 'package:play_workout/models/trainer_model.dart';
 import 'package:play_workout/models/trainer_user_model.dart';
 import 'package:play_workout/models/training_finished_model.dart';
@@ -25,6 +30,10 @@ class GlobalController extends GetxController {
   UserModel? client;
   TrainerModel? trainer;
   List<TrainingFinishedModel> progress = [];
+  NotificationsListModel? notifications;
+  String notificationDocomentId = '';
+  RxBool haveNewNotification = false.obs;
+
   var androidConfig = const FlutterBackgroundAndroidConfig(
     notificationTitle: "Play Workout",
     notificationText: "O aplicativo está rodando em segundo plano",
@@ -133,5 +142,46 @@ class GlobalController extends GetxController {
 
     trainer!.clients[trainer!.clients
         .indexWhere((element) => element.id == newModel.id)] = newModel;
+  }
+
+  Future<void> getNotifications() async {
+    notifications = await service.getNotifications();
+    if (notifications != null && notifications!.id != null) {
+      notificationDocomentId = notifications!.id!;
+      haveNewNotification.value =
+          notifications?.notifications.any((element) => !element.read) ?? false;
+
+      FirebaseFirestore.instance
+          .collection(DB.notifications)
+          .doc(notificationDocomentId)
+          .snapshots()
+          .listen(
+        (event) {
+          notifications =
+              NotificationsListModel.fromMap(event.data()!, event.id);
+        },
+      );
+      Timer.periodic(
+        const Duration(seconds: 20),
+        (timer) {
+          haveNewNotification.value =
+              notifications?.notifications.any((element) => !element.read) ??
+                  false;
+        },
+      );
+    } else {
+      haveNewNotification.value = false;
+    }
+  }
+
+  Future<void> setNotifications({
+    required NotificationModel notification,
+    required String personId,
+  }) async {
+    await service.setNotifications(notification, personId);
+  }
+
+  Future<void> readNotification({required List<String> notificationIds}) async {
+    await service.readNotification(notificationIds);
   }
 }

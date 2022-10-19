@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:play_workout/global/global_controller.dart';
 import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/local_storage.dart';
 import 'package:play_workout/services/user_service.dart';
 import 'package:play_workout/utils/custom_colors.dart';
 
@@ -40,12 +43,25 @@ class StandartScaffold extends StatelessWidget {
         appBar: appBar
             ? AppBar(
                 actions: [
-                  IconButton(
-                      padding: const EdgeInsets.all(16),
-                      iconSize: 32,
-                      onPressed: () => UserService.logout(),
+                  Obx(
+                    () => IconButton(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 8),
+                      iconSize: 24,
+                      onPressed: () => Get.toNamed(Routes.toNotifications),
                       color: CustomColors.whiteStandard,
-                      icon: const Icon(Icons.logout)),
+                      icon: GlobalController.i.haveNewNotification.isTrue
+                          ? const Icon(Icons.notifications_active)
+                          : const Icon(Icons.notifications_none),
+                    ),
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    iconSize: 24,
+                    onPressed: () => Get.toNamed(Routes.toChatList),
+                    color: CustomColors.whiteStandard,
+                    icon: const Icon(FontAwesome.chat_empty),
+                  ),
                 ],
                 title: Align(
                   alignment: Alignment.center,
@@ -62,7 +78,7 @@ class StandartScaffold extends StatelessWidget {
                 toolbarHeight: 60,
                 leadingWidth: 60,
                 leading: GestureDetector(
-                  onTap: () => bottomNavigationBar != null
+                  onTap: () async => await LocalStorage.getIsClients()
                       ? Get.toNamed(Routes.toClientProfile)
                       : Get.toNamed(Routes.toPersonalProfile),
                   child: Container(

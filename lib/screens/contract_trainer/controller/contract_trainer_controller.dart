@@ -44,11 +44,13 @@ class ContractTrainerController extends GetxController
       }
       var trainerTemp = globalController.client?.trainers
           .firstWhereOrNull((element) => element.active);
-      if (trainerTemp != null) {
-        actualTrainer = trainers.firstWhereOrNull(
-          (element) => element.trainerId == trainerTemp.trainerId,
-        );
-      }
+
+      actualTrainer = trainerTemp != null
+          ? trainers.firstWhereOrNull(
+              (element) => element.trainerId == trainerTemp.trainerId,
+            )
+          : null;
+
       change(trainers,
           status: trainers.isNotEmpty ? RxStatus.success() : RxStatus.empty());
     } catch (e) {
