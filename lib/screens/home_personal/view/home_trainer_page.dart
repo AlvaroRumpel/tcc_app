@@ -61,7 +61,10 @@ class HomeTrainerPage extends GetView<HomeTrainerController> {
             clipBehavior: Clip.none,
             child: Column(
               children: [
-                EmptyState(text: 'Nenhum cliente encontrado'),
+                EmptyState(
+                  text: 'Você não tem clientes, aguarde',
+                  icon: Icons.watch_later_outlined,
+                ),
                 StandartButton(
                   text: 'Recarregar',
                   function: () async {

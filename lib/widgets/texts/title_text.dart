@@ -19,7 +19,7 @@ class TitleText extends StatelessWidget {
         text,
         style: GoogleFonts.poppins(
           color: CustomColors.primaryColor,
-          fontSize: subtitle ? 40 : 56,
+          fontSize: subtitle ? 32 : 48,
           fontWeight: FontWeight.bold,
         ),
       ),

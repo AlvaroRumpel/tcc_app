@@ -23,7 +23,7 @@ class LoginController extends GetxController {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future<void> login() async {
-    if (validator.hasError() ||
+    if (!validator.hasError.success ||
         validator.isEmpty(emailController.text, passController.text)) {
       UtilsWidgets.errorSnackbar();
       return;

@@ -47,12 +47,15 @@ class SingupClientFormController extends GetxController with StateMixin<int> {
   }
 
   void next() {
+    if (!validator.hasError.success) {
+      UtilsWidgets.errorSnackbar(
+          title: 'Existe erro no campo ${validator.hasError.message}');
+      return;
+    }
     if (currentStep == 0) {
       currentStep++;
-    } else if (currentStep == 1 && !validator.hasErroSecondaryData()) {
+    } else if (currentStep == 1 && validator.hasError.success) {
       singUp();
-    } else {
-      UtilsWidgets.errorSnackbar(title: 'Existe algum erro ainda');
     }
     change(currentStep, status: RxStatus.success());
   }
@@ -60,8 +63,10 @@ class SingupClientFormController extends GetxController with StateMixin<int> {
   void back() {
     if (currentStep > 0) {
       currentStep--;
+      validator.resetToAllClear();
     } else {
       Get.back();
+      return;
     }
     change(currentStep, status: RxStatus.success());
   }

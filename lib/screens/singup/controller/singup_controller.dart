@@ -13,7 +13,7 @@ class SingupController extends GetxController {
   Validators validator = Validators();
 
   Future<void> singup({isPersonal = false}) async {
-    if (validator.hasError(withUser: true) ||
+    if (!validator.hasError.success ||
         validator.isEmpty(
           emailController.text,
           passController.text,

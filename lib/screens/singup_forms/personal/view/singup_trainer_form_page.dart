@@ -151,6 +151,7 @@ class PersonalForm2 extends GetView<SingupTrainerFormController> {
             errorText: "Celular inválido",
             controller: controller.phoneController,
             keyboardType: TextInputType.number,
+            maxLength: 11,
           ),
           StandartText(text: 'Seu CPF'),
           StandartTextfield(
@@ -161,6 +162,7 @@ class PersonalForm2 extends GetView<SingupTrainerFormController> {
             controller: controller.cpfController,
             keyboardType: TextInputType.number,
             hintText: '333.333.333-33',
+            maxLength: 11,
           ),
           StandartText(text: 'Seu CEP'),
           StandartTextfield(
@@ -171,6 +173,7 @@ class PersonalForm2 extends GetView<SingupTrainerFormController> {
             errorText: "CEP inválido",
             controller: controller.cepController,
             keyboardType: TextInputType.number,
+            maxLength: 8,
           ),
         ],
       ),
@@ -192,7 +195,8 @@ class PersonalForm3 extends GetView<SingupTrainerFormController> {
           ),
           StandartTextfield(
             textBox: true,
-            labelText: 'Fale um pouco sobre você, para saberem quem você é',
+            hintText: 'Fale um pouco sobre você, para saberem quem você é',
+            labelText: 'Sobre você',
             validator: controller.validator.simpleValidation,
             errorText: 'Texto inválido',
             controller: controller.aboutController,

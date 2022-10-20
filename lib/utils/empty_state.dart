@@ -8,11 +8,13 @@ import 'package:play_workout/widgets/texts/standart_text.dart';
 class EmptyState extends StatelessWidget {
   bool withContainer;
   String text;
+  IconData icon;
 
   EmptyState({
     Key? key,
     this.withContainer = true,
     this.text = 'Dados não encontrados no sistema',
+    this.icon = Typicons.warning_empty,
   }) : super(key: key);
 
   @override
@@ -38,8 +40,8 @@ class EmptyState extends StatelessWidget {
             : null,
         child: Column(
           children: [
-            const Icon(
-              Typicons.warning_empty,
+            Icon(
+              icon,
               color: CustomColors.primaryColor,
               size: 48,
             ),

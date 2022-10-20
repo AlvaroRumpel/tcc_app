@@ -1,108 +1,153 @@
 import 'package:get/utils.dart';
+import 'package:play_workout/models/enum/return_type.dart';
 
 class Validators {
-  bool email, pass, user;
+  List<ReturnType> returnType = [ReturnType.allError];
 
-  bool height = false, weight = false, bodyFat = false;
+  void _changeStatus(ReturnType returnTypeParameter, [bool isClear = false]) {
+    if (isClear && returnType.first == ReturnType.allError) {
+      returnType = [ReturnType.allClear];
+    }
+    if ((returnType.contains(returnTypeParameter) ||
+            returnType.first == ReturnType.allClear) &&
+        isClear) {
+      returnType.removeWhere(
+          (e) => e == returnTypeParameter || e == ReturnType.allClear);
+      if (returnType.isEmpty) {
+        returnType = [ReturnType.allClear];
+      }
+      return;
+    }
+    if (!returnType.contains(returnTypeParameter) && !isClear) {
+      if (returnType.first == ReturnType.allError ||
+          returnType.first == ReturnType.allClear) {
+        returnType.removeAt(0);
+      }
+      returnType.add(returnTypeParameter);
+    }
+  }
 
-  bool alphabetic = false,
-      number = false,
-      phone = false,
-      cpf = false,
-      cep = false,
-      simple = false;
+  ReturnType get hasError => returnType.first;
 
-  Validators({
-    this.user = false,
-    this.email = false,
-    this.pass = false,
-  });
+  void resetValidator() => returnType = [ReturnType.allError];
+
+  void resetToAllClear() => returnType = [ReturnType.allClear];
 
   bool emailValidator(value) {
     if (!GetUtils.isEmail(value)) {
-      return email = false;
+      _changeStatus(ReturnType.emailError);
+      return false;
     }
-    return email = true;
+    _changeStatus(ReturnType.emailError, true);
+    return true;
   }
 
   bool passValidator(value) {
     if (!GetUtils.isLengthGreaterOrEqual(
         GetUtils.removeAllWhitespace(value), 8)) {
-      return pass = false;
+      _changeStatus(ReturnType.passwordError);
+      return false;
     }
-    return pass = true;
+    _changeStatus(ReturnType.passwordError, true);
+    return true;
   }
 
   bool userValidator(value) {
     if (!GetUtils.isUsername(value)) {
-      return user = false;
+      _changeStatus(ReturnType.userError);
+      return false;
     }
-    return user = true;
+    _changeStatus(ReturnType.userError, true);
+    return true;
   }
 
   bool isHeight(value) {
     if (value.length < 1 || int.parse(value) < 50 || int.parse(value) > 250) {
-      return height = false;
+      _changeStatus(ReturnType.heightError);
+      return false;
     }
-    return height = true;
+    _changeStatus(ReturnType.heightError, true);
+    return true;
   }
 
   bool isBodyFat(value) {
     if (value.length < 1 || int.parse(value) < 0 || int.parse(value) > 100) {
-      return bodyFat = false;
+      _changeStatus(ReturnType.bodyFatError);
+      return false;
     }
-    return bodyFat = true;
+    _changeStatus(ReturnType.bodyFatError, true);
+    return true;
   }
 
   bool isWeight(value) {
     if (value.length < 1 || int.parse(value) < 10 || int.parse(value) > 200) {
-      return weight = false;
+      _changeStatus(ReturnType.weightError);
+      return false;
     }
-    return weight = true;
-  }
-
-  bool hasErroSecondaryData() {
-    return !height || !weight;
+    _changeStatus(ReturnType.weightError, true);
+    return true;
   }
 
   bool isAlphabetic(value) {
-    return alphabetic = RegExp(
+    if (!RegExp(
       r"^[\p{L} ,.'-]*$",
       caseSensitive: false,
       unicode: true,
       dotAll: true,
-    ).hasMatch(value);
+    ).hasMatch(value)) {
+      _changeStatus(ReturnType.notAlphabeticError);
+      return false;
+    }
+    _changeStatus(ReturnType.notAlphabeticError, true);
+    return true;
   }
 
   bool isNumber(value) {
-    return number = RegExp(r'^[0-9]+$').hasMatch(value);
+    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+      _changeStatus(ReturnType.notNumberError);
+      return false;
+    }
+    _changeStatus(ReturnType.notNumberError, true);
+    return true;
   }
 
   bool isPhone(value) {
-    return phone = GetUtils.isPhoneNumber(value);
+    if (!GetUtils.isPhoneNumber(value)) {
+      _changeStatus(ReturnType.phoneError);
+      return false;
+    }
+    _changeStatus(ReturnType.phoneError, true);
+    return true;
   }
 
   bool isCPF(value) {
-    return cpf = GetUtils.isCpf(value);
+    if (!GetUtils.isCpf(value)) {
+      _changeStatus(ReturnType.cpfError);
+      return false;
+    }
+    _changeStatus(ReturnType.cpfError, true);
+    return true;
   }
 
   bool isCEP(value) {
-    return cep = value.length == 8;
+    if (value.length != 8) {
+      _changeStatus(ReturnType.cepError);
+      return false;
+    }
+    _changeStatus(ReturnType.cepError, true);
+    return true;
   }
 
   bool simpleValidation(value) {
-    return simple = value.length > 0;
-  }
-
-  bool hasErrorPersonalValidation() {
-    return alphabetic && number && phone && cpf && cep && simple;
+    if (value.length <= 0) {
+      _changeStatus(ReturnType.lengthError);
+      return false;
+    }
+    _changeStatus(ReturnType.lengthError, true);
+    return true;
   }
 
   bool isEmpty(String email, String pass, {String? user}) {
     return email.isEmpty && pass.isEmpty && (user?.isEmpty ?? true);
-  }
-
-  bool hasError({bool withUser = false}) {
-    return !email || !pass || !(withUser ? user : true);
   }
 }

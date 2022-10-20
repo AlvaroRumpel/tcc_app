@@ -29,12 +29,16 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
   }
 
   void next() async {
+    if (!validator.hasError.success) {
+      UtilsWidgets.errorSnackbar(
+          title: 'Existe erro no campo ${validator.hasError.message}');
+      return;
+    }
     if (currentStep < 2) {
       currentStep++;
-    } else if (currentStep == 2 && validator.hasErrorPersonalValidation()) {
+      validator.resetValidator();
+    } else if (currentStep == 2 && validator.hasError.success) {
       singUp();
-    } else {
-      UtilsWidgets.errorSnackbar(title: 'Existe algum erro ainda');
     }
     change(currentStep, status: RxStatus.success());
   }
@@ -42,8 +46,10 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
   void back() {
     if (currentStep > 0) {
       currentStep--;
+      validator.resetToAllClear();
     } else {
       Get.back();
+      return;
     }
     change(currentStep, status: RxStatus.success());
   }
@@ -59,10 +65,10 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
   }
 
   void singUp() async {
+    UtilsWidgets.loadingDialog();
     if (!await checkCep()) return;
     try {
-      UtilsWidgets.loadingDialog();
-      UserService.singup(
+      await UserService.singup(
         trainerModel: TrainerModel(
           trainerId: FirebaseAuth.instance.currentUser?.uid ?? '',
           firstName: nameController.text,
@@ -81,6 +87,7 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
       Get.offAllNamed(Routes.toHomeTrainer);
       Get.deleteAll();
     } on FirebaseAuthException catch (e) {
+      Get.closeAllSnackbars();
       UtilsWidgets.errorSnackbar(description: e.message.toString());
       return;
     }
