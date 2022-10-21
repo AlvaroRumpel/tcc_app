@@ -8,6 +8,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:play_workout/config/database_variables.dart';
 import 'package:play_workout/global/global_controller.dart';
 import 'package:play_workout/models/chat_pattern_model.dart';
+import 'package:play_workout/models/enum/user_type.dart';
 import 'package:play_workout/models/trainer_model.dart';
 import 'package:play_workout/models/user_trainer_model.dart';
 import 'package:play_workout/routes/routes.dart';
@@ -39,6 +40,7 @@ class HomeTrainerController extends GetxController
       if (globalController.trainer == null || isRefresh) {
         await globalController.getTrainer(idTrainer: trainer?.trainerId);
       }
+      globalController.acceptTerms(UserType.trainer);
       trainer = globalController.trainer;
       List<UserTrainerModel> clients = [];
       if (trainer != null) {

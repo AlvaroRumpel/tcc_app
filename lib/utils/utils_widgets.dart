@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:play_workout/global/global_controller.dart';
 import 'package:play_workout/routes/routes.dart';
+import 'package:play_workout/services/local_storage.dart';
 import 'package:play_workout/utils/custom_colors.dart';
 import 'package:play_workout/widgets/buttons/standart_button.dart';
 import 'package:play_workout/widgets/buttons/standart_outlined_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UtilsWidgets {
   UtilsWidgets.loadingDialog({String title = 'Loading...'}) {
@@ -284,6 +287,46 @@ class UtilsWidgets {
       borderRadius: 20,
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 10),
+    );
+  }
+
+  UtilsWidgets.termsModal(
+    Function() onClickAccept,
+  ) {
+    // GlobalController globalController = GlobalController.i;
+    Get.defaultDialog(
+      barrierDismissible: true,
+      title: 'Termos de uso',
+      titlePadding: const EdgeInsets.only(top: 8),
+      titleStyle: GoogleFonts.poppins(
+        color: CustomColors.primaryColor,
+        fontSize: 24,
+      ),
+      backgroundColor: CustomColors.whiteStandard,
+      radius: 10,
+      content: Column(
+        children: [
+          StandartOutlinedButton(
+            text: 'ler os termos',
+            function: () async {
+              var uri = Uri.parse(
+                  'https://pages.flycricket.io/play-workout-0/terms.html');
+              if (!await launchUrl(uri)) {
+                throw 'Erro';
+              }
+            },
+          ),
+          StandartButton(
+            text: 'Aceitar termos',
+            smallText: true,
+            function: () async {
+              await LocalStorage.setTermsAccepted(true);
+              Get.back();
+              onClickAccept();
+            },
+          ),
+        ],
+      ),
     );
   }
 }

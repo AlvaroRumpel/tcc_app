@@ -10,6 +10,7 @@ String clientKey = 'clients';
 String clientModel = 'clientModel';
 String trainerModel = 'trainerModel';
 String firebaseToken = 'firebaseToken';
+String termsAccepted = 'termsAccepted';
 
 class LocalStorage {
   static Future<String> getEmail() async {
@@ -51,6 +52,11 @@ class LocalStorage {
     return storage.getString(firebaseToken);
   }
 
+  static Future<bool?> getTermsAccepted() async {
+    var storage = await SharedPreferences.getInstance();
+    return storage.getBool(termsAccepted);
+  }
+
   static Future<void> setEmail(String email) async {
     var storage = await SharedPreferences.getInstance();
     storage.setString(emailKey, email);
@@ -84,6 +90,11 @@ class LocalStorage {
   static Future<void> setFirebaseToken(String token) async {
     var storage = await SharedPreferences.getInstance();
     storage.setString(firebaseToken, token);
+  }
+
+  static Future<bool?> setTermsAccepted(bool accepted) async {
+    var storage = await SharedPreferences.getInstance();
+    return storage.setBool(termsAccepted, accepted);
   }
 
   static Future<void> clearAllData() async {

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:play_workout/global/global_controller.dart';
+import 'package:play_workout/models/enum/user_type.dart';
 import 'package:play_workout/models/user_model.dart';
 
 class HomeController extends GetxController with StateMixin<UserModel> {
@@ -26,6 +27,7 @@ class HomeController extends GetxController with StateMixin<UserModel> {
     if (isRefresh) {
       globalController.getClient();
     }
+    globalController.acceptTerms(UserType.client);
     xpPercent =
         (globalController.client!.xp / globalController.xpNeededForNextLevel());
     xpPercent = xpPercent.isNaN ? 0 : xpPercent;

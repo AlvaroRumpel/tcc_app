@@ -22,20 +22,27 @@ class SingupController extends GetxController {
       UtilsWidgets.errorSnackbar(title: 'Preencha os dados corretamente');
       return;
     }
+    UtilsWidgets.termsModal(
+      () async => await toSingUpForms(isPersonal: isPersonal),
+    );
+  }
+
+  Future<void> toSingUpForms({isPersonal = false}) async {
     try {
       UtilsWidgets.loadingDialog();
-      LocalStorage.setUserName(userController.text);
-      LocalStorage.setPassword(passController.text);
-      LocalStorage.setEmail(emailController.text);
+      await LocalStorage.setUserName(userController.text);
+      await LocalStorage.setPassword(passController.text);
+      await LocalStorage.setEmail(emailController.text);
       Get.back();
       UtilsWidgets.sucessSnackbar(
-          title: 'Obrigado pelo acesso!',
-          description: 'Por favor preencha os campos com suas informações');
+        title: 'Obrigado pelo acesso!',
+        description: 'Por favor preencha os campos com suas informações',
+      );
 
       if (!isPersonal) {
-        Get.toNamed(Routes.toClientSingUp);
+        await Get.toNamed(Routes.toClientSingUp);
       } else {
-        Get.toNamed(Routes.toTrainerSingUp);
+        await Get.toNamed(Routes.toTrainerSingUp);
       }
     } catch (e) {
       Get.back();

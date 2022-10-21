@@ -19,6 +19,7 @@ class TrainerModel {
   String? fcmToken;
   int? numberOfRatings;
   double? totalOfRatings;
+  bool termsAccepted;
 
   TrainerModel({
     this.id,
@@ -37,6 +38,7 @@ class TrainerModel {
     this.fcmToken,
     this.numberOfRatings,
     this.totalOfRatings,
+    this.termsAccepted = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -56,6 +58,7 @@ class TrainerModel {
       'fcm_token': fcmToken,
       'number_of_ratings': numberOfRatings,
       'total_of_ratings': totalOfRatings,
+      'terms_accepted': termsAccepted,
     };
   }
 
@@ -83,6 +86,7 @@ class TrainerModel {
       fcmToken: fcmToken ?? map['fcm_token'] ?? '',
       numberOfRatings: map['number_of_ratings'] ?? 0,
       totalOfRatings: map['total_of_ratings']?.toDouble() ?? 0.0,
+      termsAccepted: map['terms_accepted'] ?? false,
     );
   }
 

@@ -180,4 +180,32 @@ class GlobalService {
       }
     }
   }
+
+  Future<void> updateTerms({
+    UserModel? client,
+    TrainerModel? trainer,
+  }) async {
+    try {
+      if (client != null) {
+        client.termsAccepted = true;
+        await db.collection(DB.clients).doc(client.id).set(
+              client.toMap(),
+              SetOptions(merge: true),
+            );
+        return;
+      }
+      if (trainer != null) {
+        trainer.termsAccepted = true;
+        await db.collection(DB.trainers).doc(trainer.id).set(
+              trainer.toMap(),
+              SetOptions(merge: true),
+            );
+        return;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 }

@@ -16,6 +16,7 @@ class UserModel {
   String birthDate;
   List<TrainerUserModel> trainers;
   String? fcmToken;
+  bool termsAccepted;
 
   UserModel({
     this.id,
@@ -31,6 +32,7 @@ class UserModel {
     required this.birthDate,
     required this.trainers,
     this.fcmToken,
+    this.termsAccepted = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +49,7 @@ class UserModel {
       'name': name,
       'trainers': trainers.map((e) => e.toMap()).toList(),
       'fcm_token': fcmToken,
+      'terms_accepted': termsAccepted,
     };
   }
 
@@ -69,6 +72,7 @@ class UserModel {
       name: map['name'] ?? '',
       trainers: trainers,
       fcmToken: fcmToken ?? map['fcm_token'] ?? '',
+      termsAccepted: map['terms_accepted'] ?? false,
     );
   }
 

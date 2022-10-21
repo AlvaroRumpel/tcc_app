@@ -39,8 +39,8 @@ class LoginController extends GetxController {
             ? Routes.toHomeClient
             : Routes.toHomeTrainer,
       );
-
       GlobalController.i.isEmailVerified();
+      GlobalController.i.acceptTerms(typeOfUser);
     } on FirebaseAuthException catch (e) {
       Get.back();
       UtilsWidgets.errorSnackbar(description: e.message.toString());

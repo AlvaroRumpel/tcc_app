@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:play_workout/config/database_variables.dart';
 
 import 'package:play_workout/global/global_service.dart';
+import 'package:play_workout/models/enum/user_type.dart';
 import 'package:play_workout/models/notification_model.dart';
 import 'package:play_workout/models/notifications_list_model.dart';
 import 'package:play_workout/models/trainer_model.dart';
@@ -179,5 +180,24 @@ class GlobalController extends GetxController {
 
   Future<void> readNotification({required List<String> notificationIds}) async {
     await service.readNotification(notificationIds);
+  }
+
+  Future<void> acceptTerms(UserType userType) async {
+    if (userType == UserType.client) {
+      if (!client!.termsAccepted) {
+        UtilsWidgets.termsModal(
+          () async => await service.updateTerms(client: client),
+        );
+      }
+      return;
+    }
+    if (userType == UserType.trainer) {
+      if (!trainer!.termsAccepted) {
+        UtilsWidgets.termsModal(
+          () async => await service.updateTerms(trainer: trainer),
+        );
+      }
+      return;
+    }
   }
 }
