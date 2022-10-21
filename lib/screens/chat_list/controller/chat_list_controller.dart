@@ -35,7 +35,8 @@ class ChatListController extends GetxController
       await Future.delayed(const Duration(seconds: 30));
       change(
         await getLastMessagesFromNotifications(),
-        status: RxStatus.success(),
+        status:
+            notificationMessage.isEmpty ? RxStatus.empty() : RxStatus.success(),
       );
     }
   }
@@ -45,9 +46,10 @@ class ChatListController extends GetxController
     notificationMessage.clear();
     var conversations = await service.getConversations();
 
-    if (conversations.isEmpty || globalController.notifications == null) {
+    if (conversations.isEmpty) {
       return notificationMessage;
     }
+
     var peopleIds = <String>[];
 
     for (var item in conversations) {
@@ -83,20 +85,22 @@ class ChatListController extends GetxController
                   (element) => element.client == person['client_id']);
         }
       }
-      if (notifications!.any(
-        (element) => notificationMessage[index]
-            .chatConversation!
-            .messages!
-            .any((e) => e.notificationId == element.id),
-      )) {
-        notificationMessage[index].notifications = notifications.where(
-          (element) {
-            return notificationMessage[index]
-                .chatConversation!
-                .messages!
-                .any((e) => e.notificationId == element.id);
-          },
-        ).toList();
+      if (notifications != null) {
+        if (notifications.any(
+          (element) => notificationMessage[index]
+              .chatConversation!
+              .messages!
+              .any((e) => e.notificationId == element.id),
+        )) {
+          notificationMessage[index].notifications = notifications.where(
+            (element) {
+              return notificationMessage[index]
+                  .chatConversation!
+                  .messages!
+                  .any((e) => e.notificationId == element.id);
+            },
+          ).toList();
+        }
       }
       index++;
     }
@@ -104,17 +108,25 @@ class ChatListController extends GetxController
     return notificationMessage;
   }
 
+  Future<void> getLastMessagesFromConversation() async {
+    isClient ? globalController.getTrainer() : globalController.getClient();
+  }
+
   Future<void> goToChat(ChatPatternModel chatPattern,
-      List<NotificationModel> notifications) async {
+      List<NotificationModel>? notifications) async {
     change(
       state,
       status: RxStatus.loading(),
     );
     List<String> ids = [];
-    for (var item in notifications) {
-      ids.add(item.id);
+    if (notifications != null) {
+      for (var item in notifications) {
+        if (!item.read) {
+          ids.add(item.id);
+        }
+      }
+      await globalController.readNotification(notificationIds: ids);
     }
-    await globalController.readNotification(notificationIds: ids);
     change(
       await getLastMessagesFromNotifications(),
       status: RxStatus.success(),

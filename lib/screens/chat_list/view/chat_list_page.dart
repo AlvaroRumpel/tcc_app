@@ -36,82 +36,87 @@ class ChatListPage extends GetView<ChatListController> {
                       ? state[index].chatConversation!.trainer
                       : state[index].chatConversation!.client,
                 ),
-                state[index].notifications!,
+                state[index].notifications,
               ),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          spreadRadius: 0,
-                          blurRadius: 0,
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(20),
-                      color: CustomColors.whiteStandard,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        StandartText(
-                          text: state[index].name ?? '',
-                          fontSize: 16,
-                          padding: const EdgeInsets.all(0),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: StandartText(
-                                text:
-                                    '${state[index].chatConversation!.messages!.first.whoSent == controller.service.userId ? 'Você' : state[index].name!}: ${state[index].chatConversation!.messages!.first.message}',
+              child: Padding(
+                padding: index == 0
+                    ? const EdgeInsets.only(bottom: 8)
+                    : const EdgeInsets.symmetric(vertical: 8.0),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.25),
+                            spreadRadius: 0,
+                            blurRadius: 0,
+                            offset: const Offset(2, 2),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(20),
+                        color: CustomColors.whiteStandard,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          StandartText(
+                            text: state[index].name ?? '',
+                            fontSize: 16,
+                            padding: const EdgeInsets.all(0),
+                            fontWeight: FontWeight.w600,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: StandartText(
+                                  text:
+                                      '${state[index].chatConversation!.messages!.first.whoSent == controller.service.userId ? 'Você' : state[index].name!}: ${state[index].chatConversation!.messages!.first.message}',
+                                  fontSize: 16,
+                                  padding: const EdgeInsets.all(0),
+                                  color: CustomColors.blackStandard,
+                                ),
+                              ),
+                              StandartText(
+                                text: state[index]
+                                        .chatConversation
+                                        ?.messages
+                                        ?.first
+                                        .sendDate
+                                        .substring(11, 16) ??
+                                    '',
                                 fontSize: 16,
                                 padding: const EdgeInsets.all(0),
                                 color: CustomColors.blackStandard,
                               ),
-                            ),
-                            StandartText(
-                              text: state[index]
-                                      .chatConversation
-                                      ?.messages
-                                      ?.first
-                                      .sendDate
-                                      .substring(11, 16) ??
-                                  '',
-                              fontSize: 16,
-                              padding: const EdgeInsets.all(0),
-                              color: CustomColors.blackStandard,
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Visibility(
-                    visible: state[index]
-                            .notifications
-                            ?.any((element) => !element.read) ??
-                        false,
-                    child: const Positioned(
-                      top: -4,
-                      right: -4,
-                      child: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircleAvatar(
-                          backgroundColor: CustomColors.primaryColor,
+                    Visibility(
+                      visible: state[index]
+                              .notifications
+                              ?.any((element) => !element.read) ??
+                          false,
+                      child: const Positioned(
+                        top: -4,
+                        right: -4,
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircleAvatar(
+                            backgroundColor: CustomColors.primaryColor,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

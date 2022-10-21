@@ -151,6 +151,9 @@ class GlobalService {
 
   Future<void> readNotification(List<String> notificationIds) async {
     try {
+      if (notificationIds.isEmpty) {
+        return;
+      }
       NotificationsListModel? notifications;
       var response = await db
           .collection(DB.notifications)
