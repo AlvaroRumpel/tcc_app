@@ -244,7 +244,7 @@ class ClientForm2 extends GetView<SingupClientFormController> {
             date: true,
             spaced: true,
             labelText: 'Data de nascimento',
-            hintText: 'dd/mm/yyyy',
+            hintText: 'dd/mm/aaaa',
             validator: () {},
             errorText: 'Data de nascimento inválida',
             controller: controller.dateController,

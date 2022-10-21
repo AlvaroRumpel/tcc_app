@@ -1,6 +1,8 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import 'package:play_workout/utils/custom_colors.dart';
 
@@ -62,6 +64,14 @@ class StandartTextfield extends StatelessWidget {
                   color: CustomColors.secondaryColor,
                   fontSize: 16,
                 ),
+                calendarTitle: 'Selecione uma data',
+                cancelText: 'Cancelar',
+                confirmText: 'Salvar',
+                dateHintText: 'dd/mm/aaaa',
+                fieldLabelText: 'Insira a data do seu nascimento',
+                initialEntryMode: DatePickerEntryMode.calendar,
+                initialDatePickerMode: DatePickerMode.year,
+                smartDashesType: SmartDashesType.enabled,
                 decoration: InputDecoration(
                   fillColor: CustomColors.whiteSecondary,
                   filled: true,
@@ -109,10 +119,9 @@ class StandartTextfield extends StatelessWidget {
                 type: DateTimePickerType.date,
                 dateMask: 'dd/MM/yyyy',
                 firstDate: DateTime(1900),
-                lastDate: DateTime(2100),
-                dateLabelText: 'Date',
+                lastDate: DateTime.now(),
+                dateLabelText: 'Data',
                 validator: (value) => validator(value) ? null : errorText,
-                // onSaved: (val) => print(val),
               )
             : TextFormField(
                 maxLength: maxLength,
