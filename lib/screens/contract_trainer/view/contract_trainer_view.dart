@@ -9,7 +9,7 @@ import 'package:play_workout/widgets/buttons/standart_button.dart';
 import 'package:play_workout/widgets/trainer_card_container.dart';
 
 class ContractTrainerView extends GetView<ContractTrainerController> {
-  ContractTrainerView({Key? key}) : super(key: key);
+  const ContractTrainerView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

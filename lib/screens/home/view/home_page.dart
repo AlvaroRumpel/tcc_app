@@ -18,7 +18,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return StandartScaffold(
       appBar: true,
-      title: 'Bem-vindo',
+      titleObs: controller.pageTitle,
       bottomNavigationBar: ConvexAppBar(
         initialActiveIndex: controller.currentIndex,
         curveSize: 80,
@@ -44,11 +44,11 @@ class HomePage extends GetView<HomeController> {
         pageSnapping: false,
         physics: const NeverScrollableScrollPhysics(),
         controller: controller.pageController,
-        children: [
-          const HomePageAdapter(),
+        children: const [
+          HomePageAdapter(),
           ContractTrainerView(),
-          const TrainingClientAllListPage(),
-          const RankingPage(),
+          TrainingClientAllListPage(),
+          RankingPage(),
         ],
       ),
     );

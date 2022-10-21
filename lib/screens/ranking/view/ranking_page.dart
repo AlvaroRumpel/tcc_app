@@ -16,7 +16,7 @@ class RankingPage extends GetView<RankingController> {
       (state) => Column(
         children: [
           Expanded(
-            flex: 4,
+            flex: 5,
             child: Stack(
               fit: StackFit.expand,
               alignment: Alignment.topCenter,
@@ -24,7 +24,7 @@ class RankingPage extends GetView<RankingController> {
                 Positioned(
                   top: 0,
                   child: AvatarLevel(
-                    size: 64,
+                    size: 56,
                     name: state!.first.name ?? '#',
                     level: state.first.level,
                     borderColor: CustomColors.tertiaryColor,
@@ -34,9 +34,9 @@ class RankingPage extends GetView<RankingController> {
                 if (state.length > 1)
                   Positioned(
                     left: 16,
-                    top: 80,
+                    top: 64,
                     child: AvatarLevel(
-                      size: 64,
+                      size: 56,
                       name: state[1].name ?? '#',
                       level: state[1].level,
                       borderColor: CustomColors.whiteSecondary,
@@ -47,9 +47,9 @@ class RankingPage extends GetView<RankingController> {
                 if (state.length > 2)
                   Positioned(
                     right: 16,
-                    top: 80,
+                    top: 72,
                     child: AvatarLevel(
-                      size: 64,
+                      size: 56,
                       name: state[2].name ?? '#',
                       level: state[2].level,
                       borderColor: CustomColors.secondaryColor,
@@ -60,7 +60,7 @@ class RankingPage extends GetView<RankingController> {
             ),
           ),
           Expanded(
-            flex: 8,
+            flex: 7,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Container(
@@ -69,7 +69,7 @@ class RankingPage extends GetView<RankingController> {
                   color: CustomColors.whiteTertiary,
                 ),
                 child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(8),
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemCount: state.length,
@@ -81,7 +81,7 @@ class RankingPage extends GetView<RankingController> {
                               FirebaseAuth.instance.currentUser!.uid
                           ? CustomColors.tertiaryColor
                           : CustomColors.whiteSecondary,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.25),
@@ -99,8 +99,8 @@ class RankingPage extends GetView<RankingController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Avatar(
-                              name: state[index].name ?? '#',
-                              shape: AvatarShape.circle(40),
+                              name: state[index].name?.toUpperCase() ?? '#',
+                              shape: AvatarShape.circle(24),
                             ),
                             StandartText(text: state[index].name ?? '#'),
                           ],

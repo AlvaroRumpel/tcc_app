@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:play_workout/global/global_controller.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/services/local_storage.dart';
-import 'package:play_workout/services/user_service.dart';
 import 'package:play_workout/utils/custom_colors.dart';
 
 class StandartScaffold extends StatelessWidget {
@@ -13,6 +12,7 @@ class StandartScaffold extends StatelessWidget {
   bool appBar = false;
   IconData iconAppBar;
   String? title;
+  RxString? titleObs;
 
   Widget? bottomNavigationBar;
 
@@ -21,6 +21,7 @@ class StandartScaffold extends StatelessWidget {
     required this.body,
     this.appBar = false,
     this.title,
+    this.titleObs,
     this.bottomNavigationBar,
     this.iconAppBar = Icons.person_outline,
   }) : super(key: key);
@@ -65,9 +66,11 @@ class StandartScaffold extends StatelessWidget {
                 ],
                 title: Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    title ?? '',
-                  ),
+                  child: titleObs != null
+                      ? Obx(
+                          () => Text(titleObs!.value),
+                        )
+                      : Text(title ?? ''),
                 ),
                 titleTextStyle: GoogleFonts.poppins(
                   color: CustomColors.whiteStandard,

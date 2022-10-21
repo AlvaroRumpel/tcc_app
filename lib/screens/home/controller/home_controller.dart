@@ -8,6 +8,7 @@ class HomeController extends GetxController with StateMixin<UserModel> {
   int currentIndex = 0;
   GlobalController globalController = GlobalController.i;
   double xpPercent = 0;
+  RxString pageTitle = 'Bem-vindo'.obs;
   var user = FirebaseAuth.instance.currentUser;
   PageController pageController = PageController(
     initialPage: 0,
@@ -33,6 +34,23 @@ class HomeController extends GetxController with StateMixin<UserModel> {
 
   void nextPage(int index) {
     currentIndex = index;
+    switch (index) {
+      case 0:
+        pageTitle.value = 'Bem-vindo';
+        break;
+      case 1:
+        pageTitle.value = 'Treinadores';
+        break;
+      case 2:
+        pageTitle.value = 'Treinos';
+        break;
+      case 3:
+        pageTitle.value = 'Ranking';
+        break;
+      default:
+        pageTitle.value = 'Bem-vindo';
+    }
+
     pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 500),
