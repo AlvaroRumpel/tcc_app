@@ -73,10 +73,6 @@ class GlobalController extends GetxController {
       trainer = await service.getTrainer(
         idTrainer: trainerUserModel.trainerId,
       );
-
-      if (trainer == null) return;
-
-      await LocalStorage.setTrainer(trainer!);
     }
   }
 

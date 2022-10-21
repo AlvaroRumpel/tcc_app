@@ -24,127 +24,129 @@ class TrainerModal {
     bool actualTrainer = false,
   }) {
     Get.defaultDialog(
-      contentPadding: const EdgeInsets.only(
-        top: 0,
-        bottom: 8,
-        left: 8,
-        right: 8,
-      ),
+      contentPadding: const EdgeInsets.all(8),
       title: '',
+      titleStyle: const TextStyle(fontSize: 0),
       titlePadding: const EdgeInsets.all(0),
       radius: 20,
-      content: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xff364151),
-                  Color(0xff4D6382),
-                ],
-              ),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Avatar(
-                    name: '${trainer.firstName} ${trainer.lastName}'
-                        .toUpperCase(),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RatingBarIndicator(
-                    itemSize: 32,
-                    itemCount: 5,
-                    rating: trainer.rating,
-                    itemBuilder: ((context, index) => const Icon(
-                          Icons.star,
-                          color: CustomColors.tertiaryColor,
-                        )),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '${trainer.firstName} ${trainer.lastName}',
-                    style: GoogleFonts.poppins(
-                      color: CustomColors.labelColor,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      NumberClientsText(
-                        color: CustomColors.labelColor,
-                        text: trainer.numberClients.toString(),
-                      ),
-                      PriceText(
-                        color: CustomColors.labelColor,
-                        text:
-                            '${trainer.price.toString().split('.')[0]},${trainer.price.toString().split('.')[1]}',
-                      ),
+      content: Expanded(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xff364151),
+                      Color(0xff4D6382),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              trainer.about,
-              style: GoogleFonts.poppins(
-                color: CustomColors.blackStandard,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Avatar(
+                        name: '${trainer.firstName} ${trainer.lastName}'
+                            .toUpperCase(),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RatingBarIndicator(
+                        itemSize: 32,
+                        itemCount: 5,
+                        rating: trainer.rating,
+                        itemBuilder: ((context, index) => const Icon(
+                              Icons.star,
+                              color: CustomColors.tertiaryColor,
+                            )),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${trainer.firstName} ${trainer.lastName}',
+                        style: GoogleFonts.poppins(
+                          color: CustomColors.labelColor,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          NumberClientsText(
+                            color: CustomColors.labelColor,
+                            text: trainer.numberClients.toString(),
+                          ),
+                          PriceText(
+                            color: CustomColors.labelColor,
+                            text:
+                                '${trainer.price.toString().split('.')[0]},${trainer.price.toString().split('.')[1]}',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              textAlign: TextAlign.center,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          StandartButton(
-            leadingIcon: FontAwesome.chat_empty,
-            text: 'Chat',
-            function: () async {
-              await Get.toNamed(
-                Routes.toChat,
-                arguments: ChatPatternModel(
-                  fcmTokenToSend: trainer.fcmToken,
-                  senderId: FirebaseAuth.instance.currentUser?.uid,
-                  receiverId: trainer.trainerId!,
-                  isClient: true,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  trainer.about,
+                  style: GoogleFonts.poppins(
+                    color: CustomColors.blackStandard,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              );
-            },
+              ),
+              StandartButton(
+                leadingIcon: FontAwesome.chat_empty,
+                text: 'Chat',
+                function: () async {
+                  await Get.toNamed(
+                    Routes.toChat,
+                    arguments: ChatPatternModel(
+                      fcmTokenToSend: trainer.fcmToken,
+                      senderId: FirebaseAuth.instance.currentUser?.uid,
+                      receiverId: trainer.trainerId!,
+                      isClient: true,
+                    ),
+                  );
+                },
+              ),
+              StandartButton(
+                text: 'Faça uma avaliação',
+                color: CustomColors.sucessColor,
+                function: () =>
+                    RatingModal.defaultRatingModal(trainer: trainer),
+              ),
+              dismissTrainer || actualTrainer
+                  ? StandartButton(
+                      function: () => dismissTrainerConfirm(trainer.trainerId!),
+                      text: 'Demitir',
+                      color: CustomColors.errorColor,
+                    )
+                  : SuccessButton(
+                      text: 'Contratar',
+                      function: () async =>
+                          await UserService.contractTrainer(trainer.trainerId!),
+                    ),
+            ],
           ),
-          StandartButton(
-            text: 'Faça uma avaliação',
-            color: CustomColors.sucessColor,
-            function: () => RatingModal.defaultRatingModal(trainer: trainer),
-          ),
-          dismissTrainer || actualTrainer
-              ? StandartButton(
-                  function: () => dismissTrainerConfirm(trainer.trainerId!),
-                  text: 'Demitir',
-                  color: CustomColors.errorColor,
-                )
-              : SuccessButton(
-                  text: 'Contratar',
-                  function: () =>
-                      UserService.contractTrainer(trainer.trainerId!),
-                ),
-        ],
+        ),
       ),
     );
   }

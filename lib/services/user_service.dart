@@ -134,8 +134,10 @@ class UserService {
     TrainerModel? trainerModel;
     var uuid = const Uuid();
     try {
+      UtilsWidgets.loadingDialog();
       userModel = globalController.client;
       if (userModel!.trainers.any((element) => element.active)) {
+        Get.back();
         UtilsWidgets.errorSnackbar(
           title: 'Não pode contratar',
           description:
@@ -143,6 +145,18 @@ class UserService {
         );
         return;
       }
+
+      if (!userModel.trainers.every(
+        (element) => element.trainerId != trainerId,
+      )) {
+        Get.back();
+        UtilsWidgets.errorSnackbar(
+          title: 'Não é possivel contratar esse personal',
+          description: 'Você já fez uma requisão',
+        );
+        return;
+      }
+
       var trainers = await FirebaseFirestore.instance
           .collection(DB.trainers)
           .where(
@@ -150,6 +164,7 @@ class UserService {
             isEqualTo: trainerId,
           )
           .get();
+
       for (var item in trainers.docs) {
         trainerModel = TrainerModel.fromMap(item.data(), item.id);
       }
@@ -168,15 +183,6 @@ class UserService {
         fcmToken: trainerModel.fcmToken,
       );
 
-      if (!userModel.trainers.every(
-        (element) => element.trainerId != trainerUserModel.trainerId,
-      )) {
-        UtilsWidgets.errorSnackbar(
-          title: 'Não é possivel contratar esse personal',
-          description: 'Ele já respondeu sua contratação',
-        );
-        return;
-      }
       userModel.trainers.add(trainerUserModel);
 
       UserTrainerModel userTrainerModel = UserTrainerModel(
