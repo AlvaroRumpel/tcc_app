@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:play_workout/global/global_controller.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/services/local_storage.dart';
 import 'package:play_workout/utils/custom_colors.dart';
@@ -293,7 +292,6 @@ class UtilsWidgets {
   UtilsWidgets.termsModal(
     Function() onClickAccept,
   ) {
-    // GlobalController globalController = GlobalController.i;
     Get.defaultDialog(
       barrierDismissible: true,
       title: 'Termos de uso',

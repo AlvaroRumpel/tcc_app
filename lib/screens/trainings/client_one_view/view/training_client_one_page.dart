@@ -12,7 +12,7 @@ import 'package:play_workout/widgets/texts/standart_text.dart';
 import 'package:play_workout/widgets/training_exercise_card.dart';
 
 class TrainingClientOnePage extends GetView<TrainingClientOneController> {
-  TrainingClientOnePage({Key? key}) : super(key: key);
+  const TrainingClientOnePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

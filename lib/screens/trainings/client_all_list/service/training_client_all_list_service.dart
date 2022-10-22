@@ -22,6 +22,10 @@ class TrainingClientAllListService {
             'trainer_id',
             isEqualTo: trainerId,
           )
+          .where(
+            'deleted',
+            isEqualTo: false,
+          )
           .get();
 
       if (response.docs.isEmpty) {

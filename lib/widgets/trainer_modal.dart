@@ -155,7 +155,8 @@ class TrainerModal {
       title: 'Deseja demitir o profissional?',
       description:
           'Confirmar a demissão deste profissional, você pode recontrata-lo, mas irá perder os treinos.',
-      button1: () => UserService.dismissTrainer(trainerId, timesBack: 2),
+      button1: () async =>
+          await UserService.dismissTrainer(trainerId, timesBack: 2),
       textButton1: 'Demitir',
       button1IsOutline: true,
       button2: () {

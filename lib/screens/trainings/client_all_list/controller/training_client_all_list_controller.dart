@@ -28,7 +28,13 @@ class TrainingClientAllListController extends GetxController
   Future<void> getData() async {
     change(state, status: RxStatus.loading());
     workouts.clear();
-    if (globalController.trainer != null) {
+
+    var isTrainerActive = globalController.trainer!.clients.firstWhereOrNull(
+        (element) => element.clientId == globalController.client!.clientId!);
+
+    if (globalController.trainer != null &&
+        isTrainerActive != null &&
+        isTrainerActive.active) {
       workouts = await service.getWorkoutList(
         clientId: globalController.client!.clientId!,
         trainerId: globalController.trainer!.trainerId!,

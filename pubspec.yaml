@@ -61,6 +61,7 @@ dependencies:
   flutter_local_notifications: ^9.9.1
   http: ^0.13.5
   url_launcher: ^6.1.6
+  firebase_crashlytics: ^2.9.0
 
 dev_dependencies:
   flutter_test:

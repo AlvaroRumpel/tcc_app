@@ -29,6 +29,13 @@
             {
               "client_id": "160626613561-82u9higplv8gs7dv4v9mph1m048u34a1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "160626613561-tede0hbceb89go2ejr3k5k6td09tom51.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.playWorkout"
+              }
             }
           ]
         }

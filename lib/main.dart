@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:play_workout/config/notifications/custom_firebase_messaging.dart';
@@ -46,6 +47,7 @@ void main() async {
   );
   await CustomFirebaseMessaging().initialize();
   await CustomFirebaseMessaging().getTokenFirebase();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   runApp(const MyApp());
 }
@@ -123,7 +125,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: Routes.toTrainingClientOne,
-              page: () => TrainingClientOnePage(),
+              page: () => const TrainingClientOnePage(),
               binding: TrainingClientOneBinding(),
             ),
             GetPage(

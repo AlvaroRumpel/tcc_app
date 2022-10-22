@@ -11,6 +11,7 @@ import 'package:play_workout/models/trainer_model.dart';
 import 'package:play_workout/models/trainer_user_model.dart';
 import 'package:play_workout/models/user_model.dart';
 import 'package:play_workout/models/user_trainer_model.dart';
+import 'package:play_workout/models/workouts_model.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/services/local_storage.dart';
 import 'package:play_workout/utils/utils_widgets.dart';
@@ -250,6 +251,7 @@ class UserService {
     UserModel? userModel;
     TrainerModel? trainerModel;
     try {
+      UtilsWidgets.loadingDialog();
       userModel = globalController.client;
 
       var trainers = await FirebaseFirestore.instance
@@ -297,6 +299,7 @@ class UserService {
 
       globalController.client = userModel;
       globalController.trainer = trainerModel;
+      Get.back();
       for (var i = 0; i < timesBack; i++) {
         Get.back();
       }
