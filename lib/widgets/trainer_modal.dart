@@ -100,16 +100,29 @@ class TrainerModal {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  trainer.about,
-                  style: GoogleFonts.poppins(
-                    color: CustomColors.blackStandard,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                child: GestureDetector(
+                  onTap: () => Get.defaultDialog(
+                    title: '',
+                    titleStyle: const TextStyle(fontSize: 0),
+                    middleText: trainer.about,
+                    middleTextStyle: GoogleFonts.poppins(
+                      color: CustomColors.blackStandard,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    radius: 10,
                   ),
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                  child: Text(
+                    trainer.about,
+                    style: GoogleFonts.poppins(
+                      color: CustomColors.blackStandard,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               StandartButton(

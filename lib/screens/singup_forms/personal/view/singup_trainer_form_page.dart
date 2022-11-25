@@ -20,8 +20,9 @@ class SingupTrainerFormPage extends GetView<SingupTrainerFormController> {
     return StandartScaffold(
       body: StandartContainer(
         child: Theme(
-          data: Theme.of(context)
-              .copyWith(canvasColor: CustomColors.whiteStandard),
+          data: Theme.of(context).copyWith(
+            canvasColor: CustomColors.whiteStandard,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -34,6 +35,7 @@ class SingupTrainerFormPage extends GetView<SingupTrainerFormController> {
                     child: TitleText(
                       text: 'Insira seus dados',
                       subtitle: true,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],

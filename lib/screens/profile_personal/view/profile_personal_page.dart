@@ -9,6 +9,7 @@ import 'package:play_workout/services/user_service.dart';
 import 'package:play_workout/utils/custom_colors.dart';
 import 'package:play_workout/utils/empty_state.dart';
 import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_icon_button.dart';
 import 'package:play_workout/widgets/standart_container.dart';
 import 'package:play_workout/widgets/standart_scaffold.dart';
 import 'package:play_workout/widgets/texts/price_text.dart';
@@ -51,6 +52,26 @@ class ProfilePersonalPage extends GetView<ProfilePersonalController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8, top: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      StandartIconButton(
+                        circle: true,
+                        icon: Icons.arrow_back_rounded,
+                        function: () => Get.back(),
+                      ),
+                      StandartIconButton(
+                        circle: true,
+                        icon: Icons.refresh_outlined,
+                        function: () async {
+                          await controller.getData(isRefresh: true);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 Avatar(
                   name: '${state!.firstName} ${state.lastName}'.toUpperCase(),
                   shape: AvatarShape.circle(100),
@@ -73,8 +94,22 @@ class ProfilePersonalPage extends GetView<ProfilePersonalController> {
                     text: '${state.firstName} ${state.lastName}',
                   ),
                 ),
-                StandartContainer(
-                  isReactive: true,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  width: (MediaQuery.of(context).size.width) * 0.85,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        spreadRadius: 0,
+                        blurRadius: 0,
+                        offset:
+                            const Offset(2, 2), // changes position of shadow
+                      ),
+                    ],
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    color: CustomColors.whiteStandard,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -85,6 +120,7 @@ class ProfilePersonalPage extends GetView<ProfilePersonalController> {
                       StandartText(
                         text: state.about,
                         color: CustomColors.blackStandard,
+                        align: TextAlign.center,
                       ),
                     ],
                   ),

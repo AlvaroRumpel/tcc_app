@@ -50,7 +50,7 @@ class RatingModal {
                   glow: false,
                   allowHalfRating: true,
                   initialRating: 0,
-                  itemSize: 48,
+                  itemSize: Get.width < 360 ? 32 : 48,
                   itemCount: 5,
                   unratedColor: CustomColors.blackSecondary,
                   itemBuilder: (_, index) => const Icon(

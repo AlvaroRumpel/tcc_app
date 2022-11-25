@@ -75,7 +75,7 @@ class StandartScaffold extends StatelessWidget {
                 titleTextStyle: GoogleFonts.poppins(
                   color: CustomColors.whiteStandard,
                   fontWeight: FontWeight.bold,
-                  fontSize: 32,
+                  fontSize: MediaQuery.of(context).size.width < 360 ? 24 : 32,
                   backgroundColor: Colors.transparent,
                 ),
                 toolbarHeight: 60,

@@ -35,6 +35,7 @@ class SingupClientFormPage extends GetView<SingupClientFormController> {
                     child: TitleText(
                       text: 'Insira seus dados',
                       subtitle: true,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],

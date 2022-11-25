@@ -89,6 +89,7 @@ class SingupClientFormController extends GetxController with StateMixin<int> {
           sex: radioValue.value,
           birthDate: dateController.text,
           trainers: [],
+          termsAccepted: true,
         ),
       );
 

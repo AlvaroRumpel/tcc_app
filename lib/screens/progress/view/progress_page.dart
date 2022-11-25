@@ -91,32 +91,76 @@ class ProgressPage extends GetView<ProgressController> {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      StandartContainer(
-                        isReactive: true,
-                        child: StandartText(
-                          padding: const EdgeInsets.all(0),
-                          text:
-                              ('${state.height.toString().substring(0, 1)}.${state.height.toString().substring(1)} m'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      alignment: WrapAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.25),
+                                spreadRadius: 0,
+                                blurRadius: 0,
+                                offset: const Offset(2, 2),
+                              ),
+                            ],
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            color: CustomColors.whiteStandard,
+                          ),
+                          child: StandartText(
+                            padding: const EdgeInsets.all(0),
+                            text:
+                                ('${state.height.toString().substring(0, 1)}.${state.height.toString().substring(1)} m'),
+                          ),
                         ),
-                      ),
-                      StandartContainer(
-                        isReactive: true,
-                        child: StandartText(
-                          padding: const EdgeInsets.all(0),
-                          text: ('${state.weight} kg'),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.25),
+                                spreadRadius: 0,
+                                blurRadius: 0,
+                                offset: const Offset(2, 2),
+                              ),
+                            ],
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            color: CustomColors.whiteStandard,
+                          ),
+                          child: StandartText(
+                            padding: const EdgeInsets.all(0),
+                            text: ('${state.weight} kg'),
+                          ),
                         ),
-                      ),
-                      StandartContainer(
-                        isReactive: true,
-                        child: StandartText(
-                          padding: const EdgeInsets.all(0),
-                          text: ('BF ${state.bodyFat}%'),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.25),
+                                spreadRadius: 0,
+                                blurRadius: 0,
+                                offset: const Offset(2, 2),
+                              ),
+                            ],
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            color: CustomColors.whiteStandard,
+                          ),
+                          child: StandartText(
+                            padding: const EdgeInsets.all(0),
+                            text: ('BF ${state.bodyFat}%'),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),

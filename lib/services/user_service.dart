@@ -115,6 +115,7 @@ class UserService {
       if (kDebugMode) {
         print(e);
       }
+      throw Exception(e);
     }
   }
 

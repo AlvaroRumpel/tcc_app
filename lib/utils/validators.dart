@@ -103,7 +103,7 @@ class Validators {
   }
 
   bool isNumber(value) {
-    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+    if (!RegExp(r'^[0-9]').hasMatch(value)) {
       _changeStatus(ReturnType.notNumberError);
       return false;
     }

@@ -6,10 +6,12 @@ import 'package:play_workout/utils/custom_colors.dart';
 class TitleText extends StatelessWidget {
   String text;
   bool subtitle = false;
+  TextAlign textAlign;
   TitleText({
     Key? key,
     required this.text,
     this.subtitle = false,
+    this.textAlign = TextAlign.left,
   }) : super(key: key);
 
   double screenWidth = Get.width;
@@ -31,6 +33,7 @@ class TitleText extends StatelessWidget {
           fontSize: subtitle ? 32 : 48,
           fontWeight: FontWeight.bold,
         ),
+        textAlign: textAlign,
       ),
     );
   }

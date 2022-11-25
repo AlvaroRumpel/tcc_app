@@ -71,8 +71,8 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
       await UserService.singup(
         trainerModel: TrainerModel(
           trainerId: FirebaseAuth.instance.currentUser?.uid ?? '',
-          firstName: nameController.text,
-          lastName: lastNameController.text,
+          firstName: nameController.text.trim(),
+          lastName: lastNameController.text.trim(),
           price: priceValue(priceController.text),
           phone: int.parse(phoneController.text),
           cpf: cpfController.text,
@@ -82,12 +82,13 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
           rating: 0.0,
           numberClients: 0,
           clients: [],
+          termsAccepted: true,
         ),
       );
       Get.offAllNamed(Routes.toHomeTrainer);
       Get.deleteAll();
     } on FirebaseAuthException catch (e) {
-      Get.closeAllSnackbars();
+      Get.back();
       UtilsWidgets.errorSnackbar(description: e.message.toString());
       return;
     }
