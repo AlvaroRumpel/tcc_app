@@ -11,7 +11,6 @@ import 'package:play_workout/models/trainer_model.dart';
 import 'package:play_workout/models/trainer_user_model.dart';
 import 'package:play_workout/models/user_model.dart';
 import 'package:play_workout/models/user_trainer_model.dart';
-import 'package:play_workout/models/workouts_model.dart';
 import 'package:play_workout/routes/routes.dart';
 import 'package:play_workout/services/local_storage.dart';
 import 'package:play_workout/utils/utils_widgets.dart';
@@ -72,35 +71,48 @@ class UserService {
     UserModel? userModel,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: await LocalStorage.getEmail(),
-        password: await LocalStorage.getPassword(),
-      );
-      await FirebaseAuth.instance.currentUser
-          ?.updateDisplayName(await LocalStorage.getUserName());
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      FirebaseAuth auth = FirebaseAuth.instance;
 
-      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+      String email = await LocalStorage.getEmail();
+      String password = await LocalStorage.getPassword();
+      String username = await LocalStorage.getUserName();
+
+      await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      await auth.currentUser?.updateDisplayName(username);
+
+      await auth.currentUser?.sendEmailVerification();
 
       await CustomFirebaseMessaging().getTokenFirebase();
+
       String fcmToken = await LocalStorage.getFirebaseToken() ?? "";
 
       if (trainerModel != null) {
-        trainerModel.trainerId = FirebaseAuth.instance.currentUser?.uid;
+        trainerModel.trainerId = auth.currentUser?.uid;
         trainerModel.fcmToken = fcmToken;
-        await FirebaseFirestore.instance
+
+        var response = await db
             .collection(DB.trainers)
-            .add(trainerModel.toMap());
+            .where('trainer_id', isEqualTo: trainerModel.trainerId)
+            .get();
+
+        if (response.docs.isNotEmpty) {
+          throw Exception('Cadastro já existe');
+        }
+
+        await db.collection(DB.trainers).add(trainerModel.toMap());
 
         globalController.trainer = trainerModel;
 
         LocalStorage.setIsClients(false);
       } else if (userModel != null) {
-        userModel.clientId = FirebaseAuth.instance.currentUser?.uid;
+        userModel.clientId = auth.currentUser?.uid;
         userModel.name = await LocalStorage.getUserName();
         userModel.fcmToken = fcmToken;
-        await FirebaseFirestore.instance
-            .collection(DB.clients)
-            .add(userModel.toMap());
+        await db.collection(DB.clients).add(userModel.toMap());
 
         globalController.client = userModel;
         await LocalStorage.setIsClients(true);

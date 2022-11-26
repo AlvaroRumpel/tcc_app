@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:play_workout/global/global_controller.dart';
 import 'package:play_workout/models/enum/user_type.dart';
 import 'package:play_workout/models/user_model.dart';
+import 'package:play_workout/services/user_service.dart';
 
 class HomeController extends GetxController with StateMixin<UserModel> {
   int currentIndex = 0;
@@ -24,8 +25,16 @@ class HomeController extends GetxController with StateMixin<UserModel> {
   }
 
   Future<void> getData({bool isRefresh = false}) async {
-    if (isRefresh) {
-      globalController.getClient();
+    var timesGetClient = 0;
+    while (globalController.client == null) {
+      timesGetClient++;
+      if (globalController.client == null || isRefresh) {
+        globalController.getClient();
+      }
+      if (timesGetClient >= 3) {
+        UserService.logout();
+        return;
+      }
     }
     globalController.acceptTerms(UserType.client);
     xpPercent =

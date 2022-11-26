@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_background/flutter_background.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:play_workout/utils/custom_colors.dart';
+import 'package:play_workout/widgets/buttons/standart_button.dart';
+import 'package:play_workout/widgets/buttons/standart_outlined_button.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:play_workout/config/database_variables.dart';
 import 'package:play_workout/global/global_controller.dart';
@@ -52,14 +57,14 @@ class TrainingClientOneController extends GetxController
         timerController.rawTime.value,
         milliSecond: false,
       );
-      timerController.onExecute.add(StopWatchExecute.stop);
+      timerController.onStopTimer();
       await FlutterBackground.disableBackgroundExecution();
       return;
     }
     if (timerIsRunning.value == TimerType.stop) {
-      timerController.onExecute.add(StopWatchExecute.reset);
+      timerController.onResetTimer();
       timerIsRunning.value = TimerType.running;
-      timerController.onExecute.add(StopWatchExecute.start);
+      timerController.onStartTimer();
       await FlutterBackground.enableBackgroundExecution();
       return;
     }
@@ -69,11 +74,9 @@ class TrainingClientOneController extends GetxController
       timerIsRunning.value = timerIsRunning.value == TimerType.pause
           ? TimerType.running
           : TimerType.pause;
-      timerController.onExecute.add(
-        timerIsRunning.value == TimerType.pause
-            ? StopWatchExecute.stop
-            : StopWatchExecute.start,
-      );
+      timerIsRunning.value == TimerType.pause
+          ? timerController.onStopTimer()
+          : timerController.onStartTimer();
       return;
     }
   }
@@ -126,5 +129,69 @@ class TrainingClientOneController extends GetxController
     } catch (e) {
       UtilsWidgets.errorSnackbar();
     }
+  }
+
+  Future<bool> canBack() async {
+    return await showDialog(
+      context: Get.context!,
+      builder: (context) => AlertDialog(
+        titlePadding: const EdgeInsets.symmetric(vertical: 8),
+        titleTextStyle: GoogleFonts.poppins(
+          color: CustomColors.primaryColor,
+          fontSize: 24,
+        ),
+        title: const Text(
+          'Sair?',
+          textAlign: TextAlign.center,
+        ),
+        content: Flex(
+          direction: Axis.vertical,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Você perderá todo o progresso feito neste treino, tem certeza que deseja sair?',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                color: CustomColors.primaryColor,
+                fontSize: 16,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: StandartOutlinedButton(
+                      dense: true,
+                      smallText: true,
+                      text: 'Sim, sair',
+                      function: () {
+                        FlutterBackground.disableBackgroundExecution();
+                        return Navigator.of(context).pop(true);
+                      },
+                    ),
+                  ),
+                  const Expanded(
+                    flex: 1,
+                    child: Divider(),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: StandartButton(
+                      dense: true,
+                      smallText: true,
+                      color: CustomColors.primaryColor,
+                      text: 'Não, ficar',
+                      function: () => Navigator.of(context).pop(false),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

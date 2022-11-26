@@ -8,7 +8,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:play_workout/screens/progress/controller/progress_controller.dart';
 import 'package:play_workout/utils/custom_colors.dart';
-import 'package:play_workout/widgets/standart_container.dart';
 import 'package:play_workout/widgets/standart_scaffold.dart';
 import 'package:play_workout/widgets/texts/standart_text.dart';
 

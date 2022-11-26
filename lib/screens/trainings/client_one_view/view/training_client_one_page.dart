@@ -16,106 +16,109 @@ class TrainingClientOnePage extends GetView<TrainingClientOneController> {
 
   @override
   Widget build(BuildContext context) {
-    return StandartScaffold(
-      appBar: true,
-      body: controller.obx(
-        (state) => Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Obx(
-                    () => controller.timerIsRunning.value != TimerType.stop
-                        ? Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: StandartIconButton(
-                                  function: () => controller.controlTimer(),
-                                  icon: controller.timerIsRunning.value ==
-                                          TimerType.running
-                                      ? Icons.pause_circle_outline_rounded
-                                      : Icons.play_circle_outline_outlined,
-                                  backgroundColor:
-                                      controller.timerIsRunning.value ==
-                                              TimerType.running
-                                          ? CustomColors.secondaryColor
-                                          : CustomColors.primaryColor,
-                                  size: 88,
+    return WillPopScope(
+      onWillPop: controller.canBack,
+      child: StandartScaffold(
+        appBar: true,
+        body: controller.obx(
+          (state) => Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Obx(
+                      () => controller.timerIsRunning.value != TimerType.stop
+                          ? Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: StandartIconButton(
+                                    function: () => controller.controlTimer(),
+                                    icon: controller.timerIsRunning.value ==
+                                            TimerType.running
+                                        ? Icons.pause_circle_outline_rounded
+                                        : Icons.play_circle_outline_outlined,
+                                    backgroundColor:
+                                        controller.timerIsRunning.value ==
+                                                TimerType.running
+                                            ? CustomColors.secondaryColor
+                                            : CustomColors.primaryColor,
+                                    size: 88,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: StandartIconButton(
-                                  function: () =>
-                                      controller.controlTimer(stop: true),
-                                  icon: Icons.stop_circle_outlined,
-                                  backgroundColor: CustomColors.errorColor,
-                                  size: 88,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: StandartIconButton(
+                                    function: () =>
+                                        controller.controlTimer(stop: true),
+                                    icon: Icons.stop_circle_outlined,
+                                    backgroundColor: CustomColors.errorColor,
+                                    size: 88,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )
-                        : StandartIconButton(
-                            function: () => controller.controlTimer(),
-                            icon: Icons.play_circle_outline_outlined,
-                            backgroundColor: CustomColors.sucessColor,
-                            size: 88,
-                          ),
-                  ),
-                ),
-                StreamBuilder<int>(
-                  stream: controller.timerController.rawTime,
-                  initialData: controller.timerController.rawTime.value,
-                  builder: (_, snap) => Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: CustomColors.containerButton,
-                      borderRadius: BorderRadius.circular(10),
+                              ],
+                            )
+                          : StandartIconButton(
+                              function: () => controller.controlTimer(),
+                              icon: Icons.play_circle_outline_outlined,
+                              backgroundColor: CustomColors.sucessColor,
+                              size: 88,
+                            ),
                     ),
-                    child: StandartText(
-                      text: StopWatchTimer.getDisplayTime(
-                        snap.data!,
-                        milliSecond: false,
+                  ),
+                  StreamBuilder<int>(
+                    stream: controller.timerController.rawTime,
+                    initialData: controller.timerController.rawTime.value,
+                    builder: (_, snap) => Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: CustomColors.containerButton,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      color: CustomColors.primaryColor,
-                      fontWeight: FontWeight.w600,
+                      child: StandartText(
+                        text: StopWatchTimer.getDisplayTime(
+                          snap.data!,
+                          milliSecond: false,
+                        ),
+                        color: CustomColors.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: state!.length,
-                itemBuilder: (_, index) => TrainingExerciseCard(
-                  isClient: true,
-                  training: state[index],
-                  concludeFunction: () => controller.setStatusTraining(
-                    index,
-                    conclude: true,
-                  ),
-                  cancelFunction: () => controller.setStatusTraining(
-                    index,
-                    conclude: false,
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: state!.length,
+                  itemBuilder: (_, index) => TrainingExerciseCard(
+                    isClient: true,
+                    training: state[index],
+                    concludeFunction: () => controller.setStatusTraining(
+                      index,
+                      conclude: true,
+                    ),
+                    cancelFunction: () => controller.setStatusTraining(
+                      index,
+                      conclude: false,
+                    ),
                   ),
                 ),
               ),
-            ),
-            StandartButton(
-              text: 'Ganhar ${controller.xpEarned} xp',
-              function: controller.finishTraining,
-            ),
-          ],
-        ),
-        onEmpty: EmptyState(),
-        onLoading: const Center(
-          child: CircularProgressIndicator(),
+              StandartButton(
+                text: 'Ganhar ${controller.xpEarned} xp',
+                function: controller.finishTraining,
+              ),
+            ],
+          ),
+          onEmpty: EmptyState(),
+          onLoading: const Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       ),
     );

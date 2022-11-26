@@ -65,8 +65,11 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
   }
 
   void singUp() async {
-    UtilsWidgets.loadingDialog();
-    if (!await checkCep()) return;
+    UtilsWidgets.loadingDialog(title: 'Salvando informações');
+    if (!await checkCep()) {
+      Get.back();
+      return;
+    }
     try {
       await UserService.singup(
         trainerModel: TrainerModel(
@@ -86,11 +89,12 @@ class SingupTrainerFormController extends GetxController with StateMixin<int> {
         ),
       );
       Get.offAllNamed(Routes.toHomeTrainer);
-      Get.deleteAll();
     } on FirebaseAuthException catch (e) {
       Get.back();
       UtilsWidgets.errorSnackbar(description: e.message.toString());
-      return;
+    } catch (e) {
+      Get.back();
+      UtilsWidgets.errorSnackbar(description: e.toString());
     }
   }
 

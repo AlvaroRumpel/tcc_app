@@ -114,6 +114,7 @@ class UtilsWidgets {
   }
 
   UtilsWidgets.buttonsDialog({
+    bool isDimissible = false,
     required String title,
     required String description,
     Function? button1,
@@ -130,7 +131,7 @@ class UtilsWidgets {
     Color? button3Color,
   }) {
     Get.defaultDialog(
-      barrierDismissible: false,
+      barrierDismissible: isDimissible,
       title: title,
       titlePadding: const EdgeInsets.symmetric(vertical: 8),
       titleStyle: GoogleFonts.poppins(

@@ -37,8 +37,16 @@ class HomeTrainerController extends GetxController
   Future<void> getData({isRefresh = false}) async {
     try {
       change(state, status: RxStatus.loading());
-      if (globalController.trainer == null || isRefresh) {
-        await globalController.getTrainer(idTrainer: trainer?.trainerId);
+      int timesGetTrainer = 0;
+      while (globalController.trainer == null) {
+        timesGetTrainer++;
+        if (globalController.trainer == null || isRefresh) {
+          await globalController.getTrainer(idTrainer: trainer?.trainerId);
+        }
+        if (timesGetTrainer >= 3) {
+          await UserService.logout();
+          return;
+        }
       }
       globalController.acceptTerms(UserType.trainer);
       trainer = globalController.trainer;

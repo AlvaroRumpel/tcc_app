@@ -39,14 +39,18 @@ class GlobalController extends GetxController {
     notificationTitle: "Play Workout",
     notificationText: "O aplicativo está rodando em segundo plano",
     notificationImportance: AndroidNotificationImportance.High,
-    notificationIcon:
-        AndroidResource(name: 'ic_launcher', defType: 'mipmap-hdpi'),
+    notificationIcon: AndroidResource(
+      name: 'ic_launcher',
+      defType: 'mipmap-hdpi',
+    ),
   );
   @override
   void onInit() async {
     super.onInit();
     await FlutterBackground.initialize(androidConfig: androidConfig);
-    isEmailVerified();
+    if (client != null || trainer != null) {
+      isEmailVerified();
+    }
   }
 
   void isEmailVerified() {

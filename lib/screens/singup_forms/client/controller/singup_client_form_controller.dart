@@ -94,11 +94,12 @@ class SingupClientFormController extends GetxController with StateMixin<int> {
       );
 
       Get.offAllNamed(Routes.toHomeClient);
-      Get.deleteAll();
     } on FirebaseAuthException catch (e) {
-      UtilsWidgets.errorSnackbar(
-        description: e.message.toString(),
-      );
+      Get.back();
+      UtilsWidgets.errorSnackbar(description: e.message.toString());
+    } catch (e) {
+      Get.back();
+      UtilsWidgets.errorSnackbar(description: e.toString());
     }
   }
 }
