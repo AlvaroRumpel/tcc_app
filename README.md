@@ -1,16 +1,19 @@
-# play_workout
+# Play Workout
 
-A new Flutter project.
+Developed in early 2022
 
-## Getting Started
+An app designed to provide a way for people to find personal trainers to help with their training.
+With small systems, such as chat, a small gamefication, training history, and assembly and maintenance of training routines.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Next plans include a complete refactoring, architecture change and re-design
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Desenvolvido no inicio de 2022
+
+Um app desenvolvido para oferecer um modo de pessoas encontrar personais trainers para auxiliar no seu treino.
+Com pequenos sistemas, como chat, um pequena gameficação, histórico de treinos e montagem e manutenção de rotinas de treino.
+
+
+Próximos planos incluem uma refatoração completa, mudança da arquitetura e re-design
